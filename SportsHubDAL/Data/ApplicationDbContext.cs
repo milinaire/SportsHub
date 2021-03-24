@@ -13,5 +13,13 @@ namespace SportsHubDAL.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Conference> Conferences { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Location> Locations { get; set; }
+
     }
 }

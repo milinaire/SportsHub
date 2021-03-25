@@ -1,0 +1,14 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=PT+Serif&display=swap');
+
+
+.title-a{
+    .font-family: 'Open Sans', sans-serif;
+}
+
+.img-a{
+    border: 2px;
+}
+.text-a{
+    font-family: 'PT Serif', serif;
+}

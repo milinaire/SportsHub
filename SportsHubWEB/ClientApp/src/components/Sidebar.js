@@ -10,8 +10,11 @@ export class Sidebar extends Component {
   render () {
     return (
 
-          <div className={"sidebar"}>
-              i am not a very beautiful Sidebar. hi
+          <div className={"right-panel-wrapper"}>
+              <div className="right-panel">
+                  <p>some content some content some content some content some content some content some content some
+                      content some content </p>
+              </div>
           </div>
 
     );

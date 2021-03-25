@@ -10,8 +10,11 @@ export class Navbar extends Component {
   render () {
     return (
 
-          <div className={"navbar"}>
-              i am not a very beautiful Navbar. hi
+          <div className={"left-panel-wrapper"}>
+              <div className="left-panel">
+                  some content some content some content some content some content some content some content some
+                  content some content
+              </div>
           </div>
 
     );

@@ -32,13 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\components\Admin" />
     <Folder Include="ClientApp\src\components\Category" />
     <Folder Include="ClientApp\src\components\User" />
-    <Folder Include="ClientApp\src\containers\Admin" />
-    <Folder Include="ClientApp\src\containers\Category" />
-    <Folder Include="ClientApp\src\containers\Main" />
-    <Folder Include="ClientApp\src\containers\User" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

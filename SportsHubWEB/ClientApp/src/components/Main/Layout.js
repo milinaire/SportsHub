@@ -8,6 +8,8 @@ import {Sidebar} from "./Sidebar";
 import {Footer} from "./Footer";
 
 export class Layout extends Component {
+
+
     static displayName = Layout.name;
 
     render() {

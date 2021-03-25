@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles.css';
 
-export class Navbar extends Component {
+export class Sidebar extends Component {
 
 
 
@@ -10,8 +10,8 @@ export class Navbar extends Component {
   render () {
     return (
 
-          <div className={"navbar"}>
-              i am not a very beautiful Navbar. hi
+          <div className={"sidebar"}>
+              i am not a very beautiful Sidebar. hi
           </div>
 
     );

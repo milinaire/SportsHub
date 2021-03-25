@@ -11,7 +11,7 @@ export class Sidebar extends Component {
     return (
 
           <div className={"right-panel-wrapper"}>
-              <div className="right-panel">
+              <div className="sidebar">
                   <p>some content some content some content some content some content some content some content some
                       content some content </p>
               </div>

@@ -3,7 +3,6 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import './Header.css';
-import './Styles.css';
 
 export class Header extends Component {
   static displayName = Header.name;

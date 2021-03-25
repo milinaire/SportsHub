@@ -33,24 +33,26 @@ export class NavMenu extends Component {
                 title: "Category2"
             },
             {
-                title: "Category2"
+                title: "Category3"
             },
             {
-                title: "Category3"
-            }
+                title: "Category1"
+            },
+
+
         ],
         follow: [
             {
-                title: "Category1"
+                show: true
             },
             {
-                title: "Category2"
+                show: true
             },
             {
-                title: "Category3"
+                show: true
             },
             {
-                title: "Category1"
+                show: true
             },
 
         ]
@@ -61,16 +63,19 @@ export class NavMenu extends Component {
 
             <div className={"left-panel-wrapper"}>
                 <div className="menu">
-                    <div className={"categories"}>
-                        <h3>Home</h3>
-                        {this.state.Categories.map(Category => (
-                            <h3>{Category.title}</h3>
-                        ))}
-                        <h3>TEAM HUB</h3>
-                        <h3>LIFESTYLE</h3>
-                        <h3>DEALBOOK</h3>
-                        <h3>VIDEO</h3>
+                    <div className="scrollbar" id="style-1">
+                        <div className={"categories"}>
+                            <h3>Home</h3>
+                            {this.state.Categories.map(Category => (
+                                <h3>{Category.title}</h3>
+                            ))}
+                            <h3>TEAM HUB</h3>
+                            <h3>LIFESTYLE</h3>
+                            <h3>DEALBOOK</h3>
+                            <h3>VIDEO</h3>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
 

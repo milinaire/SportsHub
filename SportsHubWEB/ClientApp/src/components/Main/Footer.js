@@ -14,6 +14,7 @@ export class Footer extends Component {
 
           <div className={"footer"}>
               i am not a very beautiful footer. hi
+
           </div>
 
       </footer>

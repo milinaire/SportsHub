@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {Container} from 'reactstrap';
-
 import {Header} from "./Header";
 import './Styles.css';
 import {NavMenu} from "./NavMenu";

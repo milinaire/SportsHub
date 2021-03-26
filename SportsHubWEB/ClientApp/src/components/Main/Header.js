@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Row} from 'reactstrap';
+import { Container, Navbar, NavLink, Row} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { LoginMenu } from '../api-authorization/LoginMenu';
 import './Header.css';
 
 export class Header extends Component {

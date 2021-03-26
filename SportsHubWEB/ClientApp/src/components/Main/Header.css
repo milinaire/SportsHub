@@ -1,4 +1,5 @@
 ﻿a.navbar-brand {
+  border: 1px solid #919191;
   white-space: normal;
   text-align: center;
   word-break: break-all;
@@ -13,6 +14,61 @@ html {
   }
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+
+.brand-card {
+  padding: 12px 50px 12px 50px;
+  font-size: 20px;
+  background-color: #D72130;
+  text-align: center;
+  text-decoration: none;
+}
+.brand-text:hover{
+  color: white;
+  text-decoration: none;
+}
+.brand-text{
+  text-align: center;
+  color: white;
+}
+
+.borders-card {
+  
+  background-color: #ffffff;
+  border: 1px solid grey;
+  border-left: none;
+}
+
+.search-card {
+  border-width: 0;
+}
+
+form.header-form input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+}
+
+form.header-form button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+form.header-form::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.share-card {
+  padding: 12px 50px 12px 50px;
+  font-size: 17px;
+  border: 0 none;
 }

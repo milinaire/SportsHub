@@ -14,5 +14,6 @@ namespace SportsHubDAL.Entities
         public Image Image { get; set; }
         public DateTime DateCreated { get; set; }
         public bool Show { get; set; }
+        public IEnumerable<TeamTranslation> TeamTranslations { get; set; }
     }
 }

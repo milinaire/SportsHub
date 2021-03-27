@@ -13,5 +13,8 @@ namespace SportsHubDAL.Entities
         public bool IsEditable { get; set; }
 
         public IEnumerable<Conference> Conferences { get; set; }
+        public IEnumerable<CategoryAd> CategoryAds { get; set; }
+        public IEnumerable<CategoryPartner> CategoryPartners { get; set; }
+        public IEnumerable<CategoryTranslation> CategoryTranslations { get; set; }
     }
 }

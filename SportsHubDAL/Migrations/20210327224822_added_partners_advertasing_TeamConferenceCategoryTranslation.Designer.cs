@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsHubDAL.Data;
 
 namespace SportsHubDAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210327224822_added_partners_advertasing_TeamConferenceCategoryTranslation")]
+    partial class added_partners_advertasing_TeamConferenceCategoryTranslation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -492,18 +494,23 @@ namespace SportsHubDAL.Migrations
 
             modelBuilder.Entity("SportsHubDAL.Entities.CategoryPartner", b =>
                 {
-                    b.Property<int>("NewsPartnerId")
+                    b.Property<int>("PartnerId")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("NewsPartnerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Sourses")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("NewsPartnerId", "CategoryId");
+                    b.HasKey("PartnerId", "CategoryId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("NewsPartnerId");
 
                     b.ToTable("CategoryPartners");
                 });
@@ -1212,9 +1219,7 @@ namespace SportsHubDAL.Migrations
 
                     b.HasOne("SportsHubDAL.Entities.NewsPartner", "NewsPartner")
                         .WithMany("CategoryPartners")
-                        .HasForeignKey("NewsPartnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NewsPartnerId");
 
                     b.Navigation("Category");
 

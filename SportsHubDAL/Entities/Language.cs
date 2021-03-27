@@ -23,5 +23,9 @@ namespace SportsHubDAL.Entities
         public IEnumerable<DeletableInfoSectionsTranslation> DeletableInfoSectionsTranslations { get; set; }
         public IEnumerable<ContactUsTranslation> ContactUsTranslations { get; set; }
         public IEnumerable<AboutSportHubTranslation> AboutSportHubTranslations { get; set; }
+        public IEnumerable<AdvertisingLocalization> AdvertisingLocalizations { get; set; }
+        public IEnumerable<TeamTranslation> TeamTranslations { get; set; }
+        public IEnumerable<ConferenceTranslation> ConferenceTranslations { get; set; }
+        public IEnumerable<CategoryTranslation> CategoryTranslations { get; set; }
     }
 }

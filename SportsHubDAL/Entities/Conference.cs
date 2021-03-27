@@ -14,5 +14,6 @@ namespace SportsHubDAL.Entities
         public Category Category { get; set; }
 
         public IEnumerable<Team> Teams { get; set; }
+        public IEnumerable<ConferenceTranslation> ConferenceTranslations { get; set; }
     }
 }

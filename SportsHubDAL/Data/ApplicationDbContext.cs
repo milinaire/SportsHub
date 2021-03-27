@@ -42,10 +42,15 @@ namespace SportsHubDAL.Data
         public DbSet<Privacy> Privacies { get; set; }
         public DbSet<SurveyOptionLocalization> SurveyOptionLocalizations { get; set; }
         public DbSet<Term> Terms { get; set; }
-
-
-
-
+        public DbSet<Advertising> Advertisings { get; set; }
+        public DbSet<AdvertisingLocalization> AdvertisingLocalizations { get; set; }
+        public DbSet<CategoryAd> CategoryAds { get; set; }
+        public DbSet<AllovedPartner> AllovedPartners { get; set; }
+        public DbSet<NewsPartner> NewsPartners { get; set; }
+        public DbSet<CategoryPartner> CategoryPartners { get; set; }
+        public DbSet<TeamTranslation> TeamTranslations { get; set; }
+        public DbSet<ConferenceTranslation> ConferenceTranslations { get; set; }
+        public DbSet<CategoryTranslation> CategoryTranslations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,8 +65,13 @@ namespace SportsHubDAL.Data
             modelBuilder.Entity<ContactUsTranslation>().HasKey(e => new { e.SectionId, e.LanguageId });
             modelBuilder.Entity<AboutSportHubTranslation>().HasKey(e => new { e.SectionId, e.LanguageId });
             //modelBuilder.Entity<CompanyInfoTranslation>().HasNoKey();
-            modelBuilder.Entity<Language>().HasMany(c => c.CompanyInfoTranslations).WithOne(s => s.Language);
-
+            //modelBuilder.Entity<Language>().HasMany(c => c.CompanyInfoTranslations).WithOne(s => s.Language);
+            modelBuilder.Entity<AdvertisingLocalization>().HasKey(e => new { e.AdvertisingId, e.LanguageId });
+            modelBuilder.Entity<CategoryAd>().HasKey(e => new { e.AdvertisingId, e.CategoryId });
+            modelBuilder.Entity<CategoryPartner>().HasKey(e => new { e.NewsPartnerId, e.CategoryId });
+            modelBuilder.Entity<TeamTranslation>().HasKey(e => new { e.TeamId, e.LanguageId });
+            modelBuilder.Entity<ConferenceTranslation>().HasKey(e => new { e.ConferenceId, e.LanguageId });
+            modelBuilder.Entity<CategoryTranslation>().HasKey(e => new { e.CategoryId, e.LanguageId });
         }
     }
 

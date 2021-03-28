@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Header } from "./Header";
+import { Header } from "./Header/Header";
 import "./Layout.css";
 import { NavMenu } from "./NavMenu";
 import { Sidebar } from "./Sidebar";

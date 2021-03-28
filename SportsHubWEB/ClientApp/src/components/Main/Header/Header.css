@@ -1,0 +1,176 @@
+﻿a.navbar-brand {
+  border: 1px solid #919191;
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.brand-card {
+  margin-right: 0!important;
+  width: 15%;
+  height: 90px;
+  font-size: 22px;
+  background-color: #d72130;
+  text-align: center;
+  text-decoration: none;
+}
+.brand-text:hover {
+  color: white;
+  text-decoration: none;
+}
+.brand-text {
+  justify-content: center;
+  padding-top: 25px;
+  text-align: center;
+  color: white;
+}
+@media screen and (max-width: 1674px) {
+  .search-card{
+    width: 35%!important;
+  }
+  .share-card{
+    width: 35%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .brand-card {
+    width: 100%;
+    font-size: 30px;
+  }
+  .search-card{
+    width: 45%!important;
+    font-size: 14px;
+  }
+  .search-card-button{
+    padding-bottom: 5px;
+  }
+  .profile-section{
+    width: 100px;
+    padding-left: 10px;
+    margin-left: 10px;
+  }
+  .avatar-img{
+    justify-content: center;
+  }
+  .dropdown-header{
+    text-align: left;
+  }
+  form.header-form input[type="text"] {
+    font-size: 14px;
+    width: 80%;
+  }
+  .share-card{
+    padding-left: 30px!important;
+  }
+  .navbar-fix{
+    border: none!important;
+  }
+}
+
+.borders-card {
+  margin-bottom: 10px;
+  max-height: 92px;
+  border: 1px solid rgba(126, 111, 111,20);
+  border-left: none;
+}
+
+.search-card {
+  padding-left: 20px;
+  font-size: 22px;
+  width: 50%;
+  border-width: 0;
+}
+.search-card-button{
+  font-size: 22px;
+  color: black;
+  background: transparent;
+  border: none !important;
+}
+.search-card-button:hover{
+  color: #4f4f4f;
+  background: transparent;
+  border: none !important;
+}
+
+form.header-form input[type="text"] {
+  padding-right: 100px;
+  padding-top: 10px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+}
+
+form.header-form button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+form.header-form::after {
+  content: "";
+  clear: both;
+  display: table;
+  text-decoration: none;
+}
+
+.share-card {
+  padding-left: 30px;
+  padding-right: 50px;
+  font-size: 17px;
+  border: 0 none;
+}
+.share-card h5 {
+  padding-right: 20px;
+  color: #919191;
+  font-size: 21px;
+}
+
+.share-card button {
+  width: 50px;
+  background: none;
+  border: none;
+}
+.search-card button{
+  background: none;
+  border: none;
+}
+
+.share-card i {
+  font-size: 19px;
+}
+
+.avatar-img{
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
+.profile-section{
+  margin-left: 150px;
+  float: right;
+}
+.dropdown-header{
+  font-size: 15px;
+  color: black;
+  padding-top: 25px;
+  text-align: left;
+}
+
+.navbar-fix{
+  margin-bottom: 10px;
+  padding: 0 0;
+}

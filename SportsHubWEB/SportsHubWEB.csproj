@@ -32,6 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\components\Main\NavBar" />
+    <Folder Include="ClientApp\src\components\Main\SideBar" />
     <Folder Include="ClientApp\src\components\User" />
   </ItemGroup>
 

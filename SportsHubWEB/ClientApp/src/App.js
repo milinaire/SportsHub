@@ -6,8 +6,9 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import {Article} from "./containers/Article/ArticlePage";
-
-
+import {CategoryArticles} from "./containers/Article/CategoryArticles";
+import {SubCategoryArticles} from "./containers/Article/SubCategoryArticles";
+import {TeamArticles} from "./containers/Article/TeamArticles";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -17,7 +18,10 @@ export default class App extends Component {
       <Fragment>
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route exact path='/article' component={Article} />
+        <Route exact path='/:category' component={CategoryArticles} />
+        <Route exact path='/:category/:subcategory' component={SubCategoryArticles} />
+        <Route exact path='/:category/:subcategory/:team' component={TeamArticles} />
+        <Route exact path='/:category/:subcategory/:team/:article' component={Article} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
       </Fragment>

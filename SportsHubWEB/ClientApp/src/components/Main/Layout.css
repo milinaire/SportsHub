@@ -1,0 +1,17 @@
+.page-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.content-wrapper {
+  width: calc(100% - 600px);
+  padding: 0 30px;
+  margin-left: 300px;
+}
+
+.content {
+  width: 100%;
+  margin: 0 auto;
+  z-index: 1000;
+}

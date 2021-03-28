@@ -1,72 +1,93 @@
-import React, {Component} from 'react';
-import './Styles.css';
+import React, {Component} from "react";
+import "./NavMenu.css";
+import {Category} from "./NavMenuCategory";
+import {NavLink} from "react-router-dom";
 
 export class NavMenu extends Component {
     state = {
+        isOpenSubcategory: false,
         Categories: [
-            {title: "NBA", key:1},
-            {title: "NFL", key:2},
-            {title: "FDS", key:3},
-            {title: "JSX", key:4},
-            {title: "FWT", key:5},
-            {title: "BER", key:6},
-            {title: "BQW", key:7},
-            {title: "HWU", key:8},
-            {title: "BDR", key:9},
-            {title: "QNR", key:10},
-            {title: "ASU", key:11},
+            {
+                title: "NBA",
+                key: 1,
+                show: true,
+                url: "/NBA",
+                subCategories: [
+                    {title: "1s", url:"1", teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"2",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"3",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"4",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                ],
+            },
+            {
+                title: "NBA",
+                key: 2,
+                show: true,
+                url: "/article",
+                subCategories: [
+                    {title: "1s", url:"1", teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"2",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"3",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"4",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                ],
+            },
+            {
+                title: "NBA",
+                key: 3,
+                show: true,
+                url: "/category",
+                subCategories: [
+                    {title: "1s", url:"1", teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"2",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"3",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                    {title: "1s", url:"4",teams:[{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},{title:"team",url:"1"},]},
+                ],
+            },
         ],
-        follow: [
-            {show: true},
-            {show: true},
-            {show: true},
-            {show: true},
-        ]
-    }
+        follow: [{show: true}, {show: true}, {show: true}, {show: true}],
+    };
 
     render() {
         return (
-
             <div className={"left-panel-wrapper"}>
                 <div className="scrollbar" id="style-1">
-                    <div className={"categories"}>
-                        <ul>
-                            <div className={"category"}>
-                                <a href={"/"}>
-                                    <li>HOME</li>
-                                </a>
-                            </div>
-                            {this.state.Categories.map((Category)=> (
-                                <div key={Category.key} className={"category"}><a href={"/"}>
-                                    <li>{Category.title}</li>
-                                </a></div>
-                            ))}
-                            <div className={"category"}><a href={"/"}>
-                                <li>TEAM HUB</li>
-                            </a></div>
-                            <div className={"category"}><a href={"/"}>
-                                <li>LIFESTYLE</li>
-                            </a></div>
-                            <div className={"category"}><a href={"/"}>
-                                <li>DEALBOOK</li>
-                            </a></div>
-                            <div className={"category"}><a href={"/"}>
-                                <li>VIDEO</li>
-                            </a></div>
-                        </ul>
-                    </div>
+                    <ul className="categories">
+                        <NavLink
+                            className="not-active"
+                            exact
+                            to={""}
+                            activeClassName={"active"}
+                        >
+                            <li className="category">HOME</li>
+                        </NavLink>
+                        {this.state.Categories.map((category) => (
+                            <Category
+                                title={category.title}
+                                show={category.show}
+                                url={category.url}
+
+                                subcategories={category.subCategories}
+                            />
+                        ))}
+                    </ul>
                 </div>
-                <div className={"follow"}>
+                <div className="follow">
                     <p>Follow</p>
+                    <button type="submit">
+                        <i className="fa fa-facebook-f "/>
+                    </button>
+                    <button type="submit">
+                        <i className="fa fa-twitter "/>
+                    </button>
                     <br/>
-                    <button type="submit"><i className="fa fa-facebook-f "/></button>
-                    <button type="submit"><i className="fa fa-twitter "/></button>
-                    <br/>
-                    <button type="submit"><i className="fa fa-google"/></button>
-                    <button type="submit"><i className="fa fa-youtube-play "/></button>
+                    <button type="submit">
+                        <i className="fa fa-google"/>
+                    </button>
+                    <button type="submit">
+                        <i className="fa fa-youtube-play "/>
+                    </button>
                 </div>
             </div>
-
         );
     }
 }

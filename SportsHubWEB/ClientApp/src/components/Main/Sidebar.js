@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
-import './Styles.css';
+import React, { Component } from "react";
+import "./Sidebar.css";
 
 export class Sidebar extends Component {
-
-
-
-
-  render () {
+  render() {
     return (
-
-          <div className={"right-panel-wrapper"}>
-              <div className="sidebar">
-                  <p>some content some content some content some content some content some content some content some
-                      content some content </p>
-              </div>
-          </div>
-
+      <div className={"right-panel-wrapper"}>
+        <div className="sidebar">
+          <p>
+            some content some content some content some content some content
+            some content some content some content some content{" "}
+          </p>
+        </div>
+      </div>
     );
   }
 }

@@ -1,0 +1,75 @@
+.modal-full {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 300px;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+}
+
+.active {
+  color: #d72130 !important;
+  background-color: cornflowerblue;
+  list-style-type: disc;
+  direction: ltr;
+}
+
+.not-active:hover {
+  color: lightslategray;
+}
+
+.dropdown-content {
+    padding-top: 62px;
+  display: none;
+  position: fixed;
+
+  top: 100px;
+  left: 265px;
+  width: 300px;
+  z-index: 999999;
+  background-color: #fff;
+    height: 100%;
+    box-shadow: #919191;
+
+}
+.dropdown-content-team
+{
+    display: none;
+  position: fixed;
+padding-top: 62px;
+  top: 100px;
+  left: 495px;
+  width: 300px;
+  z-index: 999999;
+  background-color: #fff;
+    height: 100%;
+}
+
+.category {
+  padding: 10px 0px;
+    margin-left: 20px;
+}
+.subcategory {
+  padding: 10px 0;
+
+}
+.subcategory:hover{
+    background: rgba(255,0,0,.1);
+}
+.category:hover {
+  border-right: 5px solid #d72130;
+}
+.category:hover .dropdown-content {
+  display: block;
+}
+.subcategory:hover .dropdown-content-team {
+  display: block;
+}
+
+.dropdown-content:hover {
+  display: block;
+}
+.dropdown-content-team:hover  {
+  display: block;
+}

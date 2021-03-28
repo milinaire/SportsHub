@@ -14,25 +14,23 @@ html {
   }
 }
 
-
 .brand-card {
   padding: 12px 50px 12px 50px;
   font-size: 20px;
-  background-color: #D72130;
+  background-color: #d72130;
   text-align: center;
   text-decoration: none;
 }
-.brand-text:hover{
+.brand-text:hover {
   color: white;
   text-decoration: none;
 }
-.brand-text{
+.brand-text {
   text-align: center;
   color: white;
 }
 
 .borders-card {
-  
   background-color: #ffffff;
   border: 1px solid grey;
   border-left: none;
@@ -42,7 +40,7 @@ html {
   border-width: 0;
 }
 
-form.header-form input[type=text] {
+form.header-form input[type="text"] {
   padding: 10px;
   font-size: 17px;
   border: none;

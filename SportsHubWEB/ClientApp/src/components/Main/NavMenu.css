@@ -39,6 +39,16 @@
   color: lightslategray;
     padding:0px;
 }
+.subcategories {
+  width: 230px;
+  margin: 0 auto;
+  display: inline-block;
+  font-weight: bold;
+  list-style-type: none;
+  text-decoration: none;
+  color: lightslategray;
+    padding:0px;
+}
 .categories a:hover {
   text-decoration: none;
 }

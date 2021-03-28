@@ -14,6 +14,14 @@
   list-style-type: disc;
   direction: ltr;
 }
+.active-subcategory {
+  color: #d72130 !important;
+
+}
+.active-team {
+  color: #d72130 !important;
+
+}
 
 .not-active:hover {
   color: lightslategray;
@@ -51,7 +59,11 @@ padding-top: 62px;
     margin-left: 20px;
 }
 .subcategory {
-  padding: 10px 0;
+  padding: 10px 50px;
+
+}
+.team {
+  padding: 10px 50px;
 
 }
 .subcategory:hover{

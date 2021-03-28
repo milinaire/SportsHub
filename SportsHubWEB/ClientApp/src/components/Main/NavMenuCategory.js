@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import "./NavMenuCategory.css";
-import {SubCategory} from "./NavMenySubCategory";
+import { SubCategory } from "./NavMenySubCategory";
 
 export class Category extends Component {
   state = {
@@ -14,7 +14,6 @@ export class Category extends Component {
         {this.state.isOpenSubcategory ? <div className="modal-full" /> : null}
         <NavLink
           className="not-active"
-
           to={`${this.props.url}`}
           activeClassName={"active"}
         >
@@ -31,7 +30,10 @@ export class Category extends Component {
           >
             {this.props.title}
             {this.props.subcategories.length ? (
-                <SubCategory url={this.props.url} subcategories={this.props.subcategories}/>
+              <SubCategory
+                url={this.props.url}
+                subcategories={this.props.subcategories}
+              />
             ) : null}
           </li>
         </NavLink>

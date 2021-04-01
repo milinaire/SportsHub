@@ -1,5 +1,4 @@
 ﻿a.navbar-brand {
-  border: 1px solid #919191;
   white-space: normal;
   text-align: center;
   word-break: break-all;
@@ -16,7 +15,6 @@ html {
 
 .brand-card {
   margin-right: 0!important;
-  width: 15%;
   height: 90px;
   font-size: 22px;
   background-color: #d72130;
@@ -28,19 +26,203 @@ html {
   text-decoration: none;
 }
 .brand-text {
+  padding-left: 10px;
+  padding-right: 10px;
   justify-content: center;
-  padding-top: 25px;
+  padding-top: 17px;
   text-align: center;
   color: white;
 }
-@media screen and (max-width: 1674px) {
-  .search-card{
-    width: 35%!important;
+.search-card {
+  padding-top: 10px;
+  font-size: 22px;
+  border-width: 0;
+}
+.search-card-button{
+  font-size: 22px;
+  color: black;
+  background: transparent;
+  border: none !important;
+}
+.search-card-button:hover{
+  color: #4f4f4f;
+  background: transparent;
+  border: none !important;
+}
+.from-width-fix{
+  width: auto;
+}
+form.header-form input[type="text"] {
+  padding-right: 100px;
+  padding-top: 10px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+}
+
+form.header-form button {
+  float: left;
+  width: 20%;
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+form.header-form::after {
+  content: "";
+  clear: both;
+  display: table;
+  text-decoration: none;
+}
+
+.share-card {
+  text-align: center;
+  padding-top: 10px;
+  padding-left: 50px;
+  font-size: 20px;
+  border: 0 none;
+}
+.share-card h5 {
+  padding-right: 20px;
+  color: #919191;
+  font-size: 25px;
+}
+
+.share-card button {
+  width: 50px;
+  background: none;
+  border: none;
+}
+.search-card button{
+  background: none;
+  border: none;
+}
+
+.share-card i {
+  font-size: 25px;
+}
+
+.avatar-img{
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
+.profile-section{
+  margin-left: 40px;
+  float: right;
+}
+.profile-section-row{
+  margin-left: 100px;
+}
+
+.dropdown-header{
+  font-family: "Calibri";
+  font-size: 17px;
+  color: #000000;
+  padding-top: 25px;
+  text-align: left;
+}
+
+.fa-twitter:hover{
+  color: #00b3ff;
+}
+.fa-facebook-f:hover{
+  color: #4867AA;
+}
+.fa-google:hover{
+  background-image:url("https://www.google.com/url?sa=i&url=https%3A%2F%2Ficons8.ru%2Ficon%2F17949%2Fgoogle&psig=AOvVaw0RDbRBMuOFShTytDXgcaFC&ust=1617209730010000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMDwru292O8CFQAAAAAdAAAAABAD");
+}
+.fa-youtube-play:hover{
+  color: #E94235;
+}
+
+
+/*New Styles for grid*/
+.grid-container {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.grid-container > div {
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 15px 0;
+}
+
+.item1 {
+  font-size: 22px;
+  width: 2fr;
+  background-color: #d72130!important;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.item2 {
+  
+  border: #c8c7c7 solid 1px;
+  border-left: none;
+  width: 2fr;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.item3 {
+ 
+  justify-content: center;
+  border: #c8c7c7 solid 1px;
+  border-left: none;
+  width: 1fr;
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+.item4 {
+  border: #c8c7c7 solid 1px;
+  border-left: none;
+  width: 1fr;
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
+.item5 {
+  display: none;
+  border: #c8c7c7 solid 1px;
+  border-left: none;
+  width: 1fr;
+  grid-column-start: 5;
+  grid-column-end: 6;
+}
+@media screen and (max-width: 1400px) {
+  .profile-section-row{
+    margin-left: 10px;
   }
-  .share-card{
-    width: 35%;
+  .from-width-fix{
+    width: 150px!important;
+  }
+  .share-card {
+    padding-left: 10px;
+  }
+  .brand-text{
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
+@media screen and (max-width: 1070px) {
+  .item1{
+    grid-column-end: 4;
+  }
+  .item2{
+    display: none;
+  }
+  .item3{
+    display: none;
+  }
+  .item5{
+    display: block;
+  }
+  
+}
+
+/*
 @media screen and (max-width: 1200px) {
   .brand-card {
     width: 100%;
@@ -74,103 +256,4 @@ html {
   .navbar-fix{
     border: none!important;
   }
-}
-
-.borders-card {
-  margin-bottom: 10px;
-  max-height: 92px;
-  border: 1px solid rgba(126, 111, 111,20);
-  border-left: none;
-}
-
-.search-card {
-  padding-left: 20px;
-  font-size: 22px;
-  width: 50%;
-  border-width: 0;
-}
-.search-card-button{
-  font-size: 22px;
-  color: black;
-  background: transparent;
-  border: none !important;
-}
-.search-card-button:hover{
-  color: #4f4f4f;
-  background: transparent;
-  border: none !important;
-}
-
-form.header-form input[type="text"] {
-  padding-right: 100px;
-  padding-top: 10px;
-  font-size: 17px;
-  border: none;
-  float: left;
-  width: 80%;
-}
-
-form.header-form button {
-  float: left;
-  width: 20%;
-  padding: 10px;
-  background: none;
-  border: none;
-  color: #000000;
-  font-size: 17px;
-  cursor: pointer;
-}
-
-form.header-form::after {
-  content: "";
-  clear: both;
-  display: table;
-  text-decoration: none;
-}
-
-.share-card {
-  padding-left: 30px;
-  padding-right: 50px;
-  font-size: 17px;
-  border: 0 none;
-}
-.share-card h5 {
-  padding-right: 20px;
-  color: #919191;
-  font-size: 21px;
-}
-
-.share-card button {
-  width: 50px;
-  background: none;
-  border: none;
-}
-.search-card button{
-  background: none;
-  border: none;
-}
-
-.share-card i {
-  font-size: 19px;
-}
-
-.avatar-img{
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-}
-.profile-section{
-  margin-left: 150px;
-  float: right;
-}
-.dropdown-header{
-  font-size: 15px;
-  color: black;
-  padding-top: 25px;
-  text-align: left;
-}
-
-.navbar-fix{
-  margin-bottom: 10px;
-  padding: 0 0;
-}
+}*/

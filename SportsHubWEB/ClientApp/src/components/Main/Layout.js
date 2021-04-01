@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Header } from "./Header/Header";
 import "./Layout.css";
-import { NavMenu } from "./NavMenu";
-import { Sidebar } from "./Sidebar";
-import { Footer } from "./Footer";
+import { NavMenu } from "./NavBar/NavMenu";
+import { Sidebar } from "./SideBar/Sidebar";
+import { Footer } from "./Footer/Footer";
 
 export class Layout extends Component {
   static displayName = Layout.name;

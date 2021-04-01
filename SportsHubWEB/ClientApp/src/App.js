@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Main/Layout';
-import { Home } from './components/Main/Home';
+import { Home } from './components/Main/Main/Home';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';

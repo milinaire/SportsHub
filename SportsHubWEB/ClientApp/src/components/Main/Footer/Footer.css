@@ -5,16 +5,19 @@
   border-top: 3px solid #ccc;
   display: flex;
   justify-content: space-between;
-  padding: 20px 20px;
+  padding: 40px 20px;
 }
 .footer-categiry {
   width: 33%;
+}
+.footer-categiry h4{
+  padding-bottom: 25px;
 }
 
 .footer-info {
   clear: both;
   margin-bottom: 0;
-  height: 5em;
+  height: 6em;
   background-color: #d72130 !important;
   display: flex;
   align-items: center;
@@ -53,25 +56,25 @@
   margin-right: 50px;
   text-align: right;
 }
-.copirating p{
+.copirating p {
   margin: 0;
 }
-.copirating a{
+.copirating a {
   text-decoration: none;
   color: white;
 }
-.input-email{
+.input-email {
   border-radius: 0;
   border: 3px solid #ccc;
   padding: 5px;
 }
-.submit-email{
+.submit-email {
   border-radius: 0;
   border: 3px solid #d72130;
   color: white;
-  background:#d72130 ;
+  background: #d72130;
   padding: 5px;
 }
-.footer-categiry p{
+.footer-categiry p {
   color: #aaa;
 }

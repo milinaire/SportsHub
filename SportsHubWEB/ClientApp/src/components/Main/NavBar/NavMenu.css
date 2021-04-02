@@ -4,7 +4,7 @@
 }
 
 .scrollbar {
-  height: 540px;
+  height: 35vh;
   width: 270px;
   overflow: auto;
   overflow-y: scroll;
@@ -63,6 +63,11 @@
   padding-left: 20px;
   margin: 0;
   font-size: large;
+}
+@media only screen and (max-height: 600px) {
+  .follow {
+    display: none;
+  }
 }
 
 .follow button {

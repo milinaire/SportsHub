@@ -1,4 +1,3 @@
-
 .footer-categiries {
   clear: both;
   margin-bottom: 0;
@@ -11,7 +10,7 @@
 .footer-categiry {
   width: 33%;
 }
-.footer-categiry h4{
+.footer-categiry h4 {
   padding-bottom: 25px;
 }
 
@@ -45,7 +44,7 @@
 }
 .footer-link {
   height: 100%;
-  width: 100%;
+  width: 265px;
   display: flex;
   align-items: center;
   justify-content: center;

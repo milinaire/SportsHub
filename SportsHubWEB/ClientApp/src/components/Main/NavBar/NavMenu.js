@@ -11,7 +11,7 @@ export class NavMenu extends Component {
         title: "NBA",
         key: 1,
         show: true,
-        url: "/NBA",
+        url: "NBA",
         subCategories: [
           {
             title: "NBA1",
@@ -59,7 +59,7 @@ export class NavMenu extends Component {
         title: "UFC",
         key: 2,
         show: true,
-        url: "/UFC",
+        url: "UFC",
         subCategories: [
           {
             title: "UFC1",
@@ -107,7 +107,7 @@ export class NavMenu extends Component {
         title: "KPD",
         key: 3,
         show: true,
-        url: "/KPD",
+        url: "KPD",
         subCategories: [{ title: "UFC1", url: "1", teams: [] }],
       },
     ],

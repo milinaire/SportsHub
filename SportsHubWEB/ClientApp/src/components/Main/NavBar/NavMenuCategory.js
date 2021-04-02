@@ -14,7 +14,7 @@ export class Category extends Component {
         {this.state.isOpenSubcategory ? <div className="modal-full" /> : null}
         <NavLink
           className="not-active"
-          to={`${this.props.url}`}
+          to={`/nav/${this.props.url}`}
           activeClassName={"active"}
         >
           <li

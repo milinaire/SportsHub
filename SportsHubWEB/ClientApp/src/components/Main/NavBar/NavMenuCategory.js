@@ -11,32 +11,36 @@ export class Category extends Component {
   render() {
     return (
       <Fragment>
-        {this.state.isOpenSubcategory ? <div className="modal-full" /> : null}
-        <NavLink
-          className="not-active"
-          to={`/nav/${this.props.url}`}
-          activeClassName={"active"}
+        {this.state.isOpenSubcategory ? (
+          <div className="hide-footer">
+            <div className="modal-full" />{" "}
+          </div>
+        ) : null}
+        <div
+          className="category"
+          onMouseEnter={() => {
+            if (this.props.subcategories.length > 0) {
+              this.setState({ isOpenSubcategory: true });
+            }
+          }}
+          onMouseLeave={() => {
+            this.setState({ isOpenSubcategory: false });
+          }}
         >
-          <li
-            onMouseEnter={() => {
-              if (this.props.subcategories.length > 0) {
-                this.setState({ isOpenSubcategory: true });
-              }
-            }}
-            onMouseLeave={() => {
-              this.setState({ isOpenSubcategory: false });
-            }}
-            className="category"
+          <NavLink
+            className="not-active"
+            to={`/nav/${this.props.url}`}
+            activeClassName={"active"}
           >
-            {this.props.title}
-            {this.props.subcategories.length ? (
-              <SubCategory
-                url={this.props.url}
-                subcategories={this.props.subcategories}
-              />
-            ) : null}
-          </li>
-        </NavLink>
+            <li>{this.props.title}</li>
+          </NavLink>
+          {this.props.subcategories.length ? (
+            <SubCategory
+              url={this.props.url}
+              subcategories={this.props.subcategories}
+            />
+          ) : null}
+        </div>
       </Fragment>
     );
   }

@@ -5,7 +5,7 @@
   border-top: 3px solid #ccc;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 20px 20px;
 }
 .footer-categiry {
   width: 33%;
@@ -59,4 +59,19 @@
 .copirating a{
   text-decoration: none;
   color: white;
+}
+.input-email{
+  border-radius: 0;
+  border: 3px solid #ccc;
+  padding: 5px;
+}
+.submit-email{
+  border-radius: 0;
+  border: 3px solid #d72130;
+  color: white;
+  background:#d72130 ;
+  padding: 5px;
+}
+.footer-categiry p{
+  color: #aaa;
 }

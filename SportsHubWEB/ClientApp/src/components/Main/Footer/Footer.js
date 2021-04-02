@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./Footer.css";
-import { NavLink, Row } from "reactstrap";
 
 export class Footer extends Component {
+
   state = {
     ContactUs: { HeadLine: "Contact Us", show: true, url: "contact" },
     AboutSportHub: { HeadLine: "About SportHub", show: true, url: "about" },
@@ -114,6 +114,7 @@ export class Footer extends Component {
             <a href="/privacy">Privacy</a>/<a href="/terms">Terms</a>
           </div>
         </div>
+
       </footer>
     );
   }

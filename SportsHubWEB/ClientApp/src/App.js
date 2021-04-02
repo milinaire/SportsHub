@@ -9,6 +9,9 @@ import {Article} from "./containers/Article/ArticlePage";
 import {CategoryArticles} from "./containers/Article/CategoryArticles";
 import {SubCategoryArticles} from "./containers/Article/SubCategoryArticles";
 import {TeamArticles} from "./containers/Article/TeamArticles";
+import { Privacy } from './components/Main/Footer/Privacy';
+import { Terms } from './components/Main/Footer/Terms';
+import { CompanyInfo } from './components/Main/Footer/CompanyInfo';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -18,10 +21,13 @@ export default class App extends Component {
       <Fragment>
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route exact path='/:category' component={CategoryArticles} />
-        <Route exact path='/:category/:subcategory' component={SubCategoryArticles} />
-        <Route exact path='/:category/:subcategory/:team' component={TeamArticles} />
-        <Route exact path='/:category/:subcategory/:team/:article' component={Article} />
+        <Route exact path='/companyinfo/:name' component={CompanyInfo} />
+        <Route exact path='/privacy' component={Privacy} />
+        <Route exact path='/terms' component={Terms} />
+        <Route exact path='/nav/:category' component={CategoryArticles} />
+        <Route exact path='/nav/:category/:subcategory' component={SubCategoryArticles} />
+        <Route exact path='/nav/:category/:subcategory/:team' component={TeamArticles} />
+        <Route exact path='/nav/:category/:subcategory/:team/:article' component={Article} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
       </Fragment>

@@ -15,7 +15,7 @@ export class Team extends Component {
             <NavLink
               className="not-active"
               activeClassName={"active-team"}
-              to={`${this.props.curl}/${this.props.surl}/${team.url}`}
+              to={`/nav/${this.props.curl}/${this.props.surl}/${team.url}`}
             >
               <li className={"team"}>{team.title}</li>
             </NavLink>

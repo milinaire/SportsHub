@@ -14,20 +14,14 @@ html {
 }
 
 .brand-card {
-  margin-right: 0!important;
-  height: 90px;
-  font-size: 22px;
-  background-color: #d72130;
-  text-align: center;
-  text-decoration: none;
+  text-decoration: none!important;
 }
 .brand-text:hover {
   color: white;
   text-decoration: none;
 }
 .brand-text {
-  padding-left: 10px;
-  padding-right: 10px;
+  text-decoration: none;
   justify-content: center;
   padding-top: 17px;
   text-align: center;
@@ -122,9 +116,10 @@ form.header-form::after {
   font-family: "Calibri";
   font-size: 17px;
   color: #000000;
-  padding-top: 25px;
+  padding-top: 15px;
   text-align: left;
 }
+
 
 .fa-twitter:hover{
   color: #00b3ff;
@@ -222,38 +217,46 @@ form.header-form::after {
   
 }
 
-/*
-@media screen and (max-width: 1200px) {
-  .brand-card {
-    width: 100%;
-    font-size: 30px;
-  }
-  .search-card{
-    width: 45%!important;
-    font-size: 14px;
-  }
-  .search-card-button{
-    padding-bottom: 5px;
-  }
-  .profile-section{
-    width: 100px;
-    padding-left: 10px;
-    margin-left: 10px;
-  }
-  .avatar-img{
-    justify-content: center;
-  }
-  .dropdown-header{
-    text-align: left;
-  }
-  form.header-form input[type="text"] {
-    font-size: 14px;
-    width: 80%;
-  }
-  .share-card{
-    padding-left: 30px!important;
-  }
-  .navbar-fix{
-    border: none!important;
-  }
+.login-button{
+  
+  width: 150px;
+  height: 50px;
+  border: none;
+  color: rgb(255,73,46);
+  background-color: white;
+}
+.signin-button{
+  width: 150px;
+  height: 50px;
+  border: none;
+  color: rgb(255,73,46);
+  background-color: #ffffff;
+}
+/*.login-button:hover{
+  color:black;
+  border: #D72130 1px solid;
+  border-radius: 0;
+  background-color: rgba(255,73,46,0.48);
+}
+.signin-button:hover{
+  color:black;
+  border: #D72130 1px solid;
+  border-radius: 0;
+  background-color: rgba(255,73,46,0.48);
 }*/
+.signin-button:hover,.login-button:hover,
+.signin-button:active,.login-button:active,
+.signin-button.active,.login-button.active,
+.signin-button:focus,.login-button:focus,
+.signin-button.focus,.login-button.focus {
+  color:black;
+  border: #D72130 1px solid;
+  border-radius: 0;
+  background-color: rgba(255,73,46,0.48);
+}
+a:hover{
+  color: #000000!important;
+}
+.dropdown-item:active{
+  background-color: #919191;
+}

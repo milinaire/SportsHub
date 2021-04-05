@@ -41,6 +41,10 @@ namespace SportsHubWEB
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
+            services.AddScoped<ApplicationDbContext>();
+            services.AddScoped(typeof(SportsHubDAL.Interfaces.IRepository<>),typeof(SportsHubBL.Common.Repository<>));
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 

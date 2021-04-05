@@ -46,6 +46,7 @@ namespace SportsHubWEB
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped(typeof(SportsHubDAL.Interfaces.IRepository<>),typeof(SportsHubBL.Common.Repository<>));
             services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<ITeamService, TeamService>();
 
 
             services.AddControllersWithViews();

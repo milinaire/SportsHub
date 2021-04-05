@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class TeamLocalization
+    public class TeamLocalization : DBEntity
     {
         public string Name { get; set; }
         public string Desctiption { get; set; }

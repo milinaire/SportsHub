@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class Team
+    public class Team : DBEntity
     {
         public int Id { get; set; }
         public Conference Conference { get; set; }
@@ -19,5 +20,6 @@ namespace SportsHubDAL.Entities
         public IEnumerable<TeamLocalization> TeamLocalizations { get; set; }
         public IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
         public IEnumerable<SportArticle> SportArticle { get; set; }
+        
     }
 }

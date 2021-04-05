@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class Conference
+    public class Conference : DBEntity
     {
         public int Id { get; set; }
         public bool Show { get; set; }

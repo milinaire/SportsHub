@@ -25,18 +25,18 @@ namespace SportsHubDAL.Data
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<SurveyOptions> SurveyOptions { get; set; }
         public DbSet<SurveyLocalization> SurveyLocalizations { get; set; }
-        public DbSet<AboutSportHubLocalization> AboutSportHubTranslations { get; set; }
+        public DbSet<AboutSportHubLocalization> AboutSportHubLocalizations { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<BannerLocalization> BannerLocalizations { get; set; }
         public DbSet<CompanyInfoSection> CompanyInfoSections { get; set; }
-        public DbSet<CompanyInfoLocalization> CompanyInfoTranslations { get; set; }
-        public DbSet<ContactUsLocalizationn> ContactUsTranslations { get; set; }
+        public DbSet<CompanyInfoLocalization> CompanyInfoLocalizations { get; set; }
+        public DbSet<ContactUsLocalizationn> ContactUsLocalizations { get; set; }
         public DbSet<ContributorsSection> ContributorsSections { get; set; }
-        public DbSet<ContributorsSectionsLocalization> ContributorsSectionsTranslations { get; set; }
-        public DbSet<ContributorsLocalization> ContributorsTranslations { get; set; }
-        public DbSet<DeletableInfoSectionsLocalization> DeletableInfoSectionsTranslations { get; set; }
+        public DbSet<ContributorsSectionsLocalization> ContributorsSectionsLocalizations { get; set; }
+        public DbSet<ContributorsLocalization> ContributorsLocalizations { get; set; }
+        public DbSet<DeletableInfoSectionsLocalization> DeletableInfoSectionsLocalizations { get; set; }
         public DbSet<Footer> Footers { get; set; }
-        public DbSet<NewsLetterLocalization> NewsLetterTranslations { get; set; }
+        public DbSet<NewsLetterLocalization> NewsLetterLocalizations { get; set; }
         public DbSet<PredefinedBanner> PredefinedBanners { get; set; }
         public DbSet<PredefinedBannerLocalization> PredefinedBannerLocalizations { get; set; }
         public DbSet<Privacy> Privacies { get; set; }
@@ -48,9 +48,9 @@ namespace SportsHubDAL.Data
         public DbSet<AllovedPartner> AllovedPartners { get; set; }
         public DbSet<NewsPartner> NewsPartners { get; set; }
         public DbSet<CategoryPartner> CategoryPartners { get; set; }
-        public DbSet<TeamLocalization> TeamTranslations { get; set; }
-        public DbSet<ConferenceLocalization> ConferenceTranslations { get; set; }
-        public DbSet<CategoryLocalization> CategoryTranslations { get; set; }
+        public DbSet<TeamLocalization> TeamLocalizations { get; set; }
+        public DbSet<ConferenceLocalization> ConferenceLocalizations { get; set; }
+        public DbSet<CategoryLocalization> CategoryLocalizations { get; set; }
         public DbSet<Period> Periods { get; set; }
         public DbSet<Home> Homes { get; set; }
         public DbSet<MainArticles> MainArticles { get; set; }

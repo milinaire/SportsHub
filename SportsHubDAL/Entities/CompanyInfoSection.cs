@@ -13,8 +13,8 @@ namespace SportsHubDAL.Entities
         public string Name { get; set; }
 
         public bool Show { get; set; }
-        public IEnumerable<DeletableInfoSectionsLocalization> DeletableInfoSectionsTranslations { get; set; }
-        public IEnumerable<ContactUsLocalizationn> ContactUsTranslations { get; set; }
-        public IEnumerable<AboutSportHubLocalization> AboutSportHubTranslations { get; set; }
+        public IEnumerable<DeletableInfoSectionsLocalization> DeletableInfoSectionsLocalizations { get; set; }
+        public IEnumerable<ContactUsLocalizationn> ContactUsLocalizations { get; set; }
+        public IEnumerable<AboutSportHubLocalization> AboutSportHubTLocalizations { get; set; }
     }
 }

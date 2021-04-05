@@ -19,9 +19,9 @@ namespace SportsHubBL.Common
             this.context = context;
             entities = context.Set<T>();
         }
-        public IQueryable<T> GetAll()
+        public IQueryable<T> Set()
         {
-            return entities.AsQueryable();
+            return entities;
         }
 
         public void Insert(T entity)

@@ -16,7 +16,7 @@ namespace SportsHubDAL.Entities
         public bool Show { get; set; }
         public IEnumerable<FollowedTeams> FolovedTeams { get; set; }
         public IEnumerable<BreakDown> BreakDowns { get; set; }
-        public IEnumerable<TeamLocalization> TeamTranslations { get; set; }
+        public IEnumerable<TeamLocalization> TeamLocalizations { get; set; }
         public IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
         public IEnumerable<SportArticle> SportArticle { get; set; }
     }

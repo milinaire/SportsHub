@@ -11,6 +11,6 @@ namespace SportsHubDAL.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Show { get; set; }
-        public IEnumerable<ContributorsSectionsLocalization> ContributorsSectionsTranslations { get; set; }
+        public IEnumerable<ContributorsSectionsLocalization> ContributorsSectionsLocalizations { get; set; }
     }
 }

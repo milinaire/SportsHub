@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SportsHubDAL.Interfaces
 {
     public interface IRepository<T> where T : class, DBEntity
     {
-        IQueryable<T> GetAll();
+        IQueryable<T> Set();
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);

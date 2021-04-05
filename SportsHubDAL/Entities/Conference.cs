@@ -13,7 +13,7 @@ namespace SportsHubDAL.Entities
         public Category Category { get; set; }
         public IEnumerable<BreakDown> BreakDowns { get; set; }
         public IEnumerable<Team> Teams { get; set; }
-        public IEnumerable<ConferenceLocalization> ConferenceTranslations { get; set; }
+        public IEnumerable<ConferenceLocalization> ConferenceLocalizations { get; set; }
         public IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
         public IEnumerable<SportArticle> SportArticle { get; set; }
     }

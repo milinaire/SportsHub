@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsHubDAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class Image
+    public class Image: DBEntity
     {
         public int Id { get; set; }
 

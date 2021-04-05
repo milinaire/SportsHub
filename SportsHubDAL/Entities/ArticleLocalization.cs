@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class ArticleLocalization
+    public class ArticleLocalization: DBEntity
     {
         public int ArticleId { get; set; }
         public int LanguageId { get; set; }

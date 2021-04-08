@@ -12,8 +12,6 @@ namespace SportsHubBL.Interfaces
     {
         public IEnumerable<Article> GetMainPageArticles(int count);
 
-        public IEnumerable<Article> GetArticlesByCategory(int categoryId, int count);
-
         public ArticleLocalization GetArticleLocalization(int articleId, int languageId);
 
         public Content GetArticleContent(Article article);
@@ -23,10 +21,6 @@ namespace SportsHubBL.Interfaces
         public void AddArticleFromModel(ArticleModel model);
 
         public void AddNewArticleLocalizationFromModel(ArticleModel model);
-
-        public ArticleModel GetArticleModel(Article article, Language language);
-
-        public ArticleModel GenerateArticleModel(Article article, int languageId);
 
         public void DeleteArticleById(int id);
 

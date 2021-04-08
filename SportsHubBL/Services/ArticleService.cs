@@ -15,37 +15,30 @@ namespace SportsHubBL.Services
     {
         private readonly IRepository<Article> articleRepository;
         private readonly IRepository<Language> languageRepository;
-        private readonly IRepository<Content> contentRepository;
-        private readonly IRepository<Category> categoryRepository;
-        private readonly IRepository<Image> imageRepository;
         private readonly IRepository<ArticleLocalization> articleLocalizationRepository;
+        private readonly IRepository<Content> _contentRepository;
+        private readonly IArticleModelService _articleModelService;
 
         public ArticleService(
             IRepository<Article> articleRepository,
             IRepository<Language> languageRepository,
-            IRepository<Content> contentRepository,
-            IRepository<Category> categoryRepository,
             IRepository<ArticleLocalization> articleLocalizationRepository,
-            IRepository<Image> imageRepository
+            IArticleModelService articleModelService,
+            IRepository<Content> contentRepository
             )
         {
+            _articleModelService = articleModelService;
             this.articleRepository = articleRepository;
             this.languageRepository = languageRepository;
-            this.contentRepository = contentRepository;
-            this.categoryRepository = categoryRepository;
             this.articleLocalizationRepository = articleLocalizationRepository;
-            this.imageRepository = imageRepository;
+            _contentRepository = contentRepository;
         }
 
         public void AddArticleFromModel(ArticleModel model)
         {
-            var article = GetArticleFromModel(model);
-
-            var articleLocalization = GetArticleLocalizationFromModel(article, model);
+            var article = _articleModelService.GetArticleFromModel(model);
 
             articleRepository.Insert(article);
-
-            articleLocalizationRepository.Insert(articleLocalization);
         }
 
         public void DeleteArticleById(int id)
@@ -69,7 +62,7 @@ namespace SportsHubBL.Services
                 throw new ArgumentException($"can\'t find article {id}", nameof(id));
             }
 
-            var article = GetArticleFromModel(model);
+            var article = _articleModelService.GetArticleFromModel(model);
 
 
             originalArticle.Image = article.Image;
@@ -77,125 +70,6 @@ namespace SportsHubBL.Services
             originalArticle.Content = article.Content;
 
             articleRepository.Update(originalArticle);
-        }
-
-        public ArticleModel GetArticleModel(Article article, Language language)
-        {
-            if (article == null)
-            {
-                throw new ArgumentNullException(nameof(article));
-            }
-
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
-
-            if (article.Content == null
-                || article.Category == null
-                || article.Image == null
-                || article.ArticleLocalizations == null)
-            {
-                article = articleRepository.Set()
-                    .Include(a => a.Content)
-                    .Include(a => a.Category)
-                    .Include(a => a.Image)
-                    .Include(a => a.ArticleLocalizations)
-                    .FirstOrDefault(a => a == article);
-
-                if (article == null)
-                {
-                    throw new ArgumentNullException(nameof(article));
-                }
-            }
-
-            var articleLocalization = article.ArticleLocalizations.FirstOrDefault(at => at.Language == language);
-
-            if (articleLocalization == null)
-            {
-                throw new ArgumentException("can\'t find localization for article");
-            }
-
-            return new ArticleModel
-            {
-                ArticleId = article.Id,
-                LanguageId = language.Id,
-                ImageId = article.Image.Id,
-                ImageUri = article.Image.Uri,
-                CategoryId = article.Category.Id,
-                ContentId = article.Content.Id,
-                IsPublished = article.Content.IsPublished,
-                DatePublished = article.Content.Datetime,
-                ShowComments = article.Content.ShowComments,
-                Headline = articleLocalization.Headline,
-                Text = articleLocalization.Text,
-                Caption = articleLocalization.Caption,
-                Alt = articleLocalization.Alt
-            };
-        }
-
-        private Article GetArticleFromModel(ArticleModel model)
-        {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            if (articleRepository.Set().Any(a => a.Id == model.ArticleId))
-            {
-                throw new ArgumentException($"article id {model.ArticleId} is already taken", nameof(model));
-            }
-
-            var category = categoryRepository.Set().FirstOrDefault(c => c.Id == model.CategoryId);
-
-            var image = imageRepository.Set().FirstOrDefault(i => i.Id == model.ImageId);
-
-            if (image == null && model.ImageUri != default)
-            {
-                image = new Image
-                {
-                    Uri = model.ImageUri
-                };
-            }
-
-            var content = contentRepository.Set().FirstOrDefault(c => c.Id == model.ContentId);
-
-            if (content == null && (model.DatePublished != null || model.IsPublished != null || model.ShowComments != null))
-            {
-                content = new Content
-                {
-                    IsPublished = (bool)model.IsPublished,
-                    Datetime = (DateTime)model.DatePublished,
-                    ShowComments = (bool)model.ShowComments
-                };
-            }
-
-            return new Article
-            {
-                Image = image,
-                Category = category,
-                Content = content
-            };
-        }
-
-        private ArticleLocalization GetArticleLocalizationFromModel(Article article, ArticleModel model)
-        {
-            var language = languageRepository.Set().FirstOrDefault(l => l.Id == model.LanguageId);
-
-            if (language == null)
-            {
-                throw new ArgumentException($"can\'t find language {model.LanguageId}", nameof(model));
-            }
-
-            return new ArticleLocalization
-            {
-                Article = article,
-                Language = language,
-                Headline = model.Headline,
-                Text = model.Text,
-                Caption = model.Caption,
-                Alt = model.Alt
-            };
         }
 
         public Article GetArticleById(int id)
@@ -212,9 +86,27 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(article));
             }
 
-            return contentRepository.Set().FirstOrDefault(c => c.Article == article);
+            return _contentRepository.Set().FirstOrDefault(c => c.Article == article);
         }
 
+        public IEnumerable<Article> GetMainPageArticles(int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Article> GetMostViewedArticles(TimeSpan timeSpan)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        //TODO: Move to localization service
+        #region Move to localization service
         public ArticleLocalization GetArticleLocalization(int articleId, int languageId)
         {
             var article = articleRepository.Set().FirstOrDefault(a => a.Id == articleId);
@@ -234,55 +126,20 @@ namespace SportsHubBL.Services
             return articleLocalizationRepository.Set().FirstOrDefault(al => al.Article == article && al.Language == language);
         }
 
-        public IEnumerable<Article> GetArticlesByCategory(int categoryId, int count)
+        public void AddArticleLocalizationFromModel(ArticleModel model)
         {
-            var category = categoryRepository.Set().FirstOrDefault(c => c.Id == categoryId);
+            var article = _articleModelService.GetArticleFromModel(model);
 
-            if (category == null)
-            {
-                throw new ArgumentException("category was null", nameof(categoryId));
-            }
+            var articleLocalization = _articleModelService.GetArticleLocalizationFromModel(article, model);
 
-            if (count <= 0)
-            {
-                throw new ArgumentException("unexpected count", nameof(count));
-            }
-
-            return articleRepository.Set().Where(a => a.Category == category).Take(count);
-        }
-
-        public IEnumerable<Article> GetMainPageArticles(int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Article> GetMostViewedArticles(TimeSpan timeSpan)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ArticleModel GenerateArticleModel(Article article, int languageId)
-        {
-            var language = languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
-
-            if (language == null)
-            {
-                throw new ArgumentException("language was null", nameof(language));
-            }
-
-            return this.GetArticleModel(article, language);
+            articleLocalizationRepository.Insert(articleLocalization);
         }
 
         public void AddNewArticleLocalizationFromModel(ArticleModel model)
         {
-            var article = GetArticleFromModel(model);
+            var article = _articleModelService.GetArticleFromModel(model);
 
-            var articleLocalization = GetArticleLocalizationFromModel(article, model);
+            var articleLocalization = _articleModelService.GetArticleLocalizationFromModel(article, model);
 
             if (articleLocalizationRepository.Set()
                 .Any(al => al.ArticleId == model.ArticleId && al.LanguageId == model.LanguageId))
@@ -295,7 +152,7 @@ namespace SportsHubBL.Services
 
         public void UpdateArticleLocalizationFromModel(ArticleModel model)
         {
-            var article = GetArticleFromModel(model);
+            var article = _articleModelService.GetArticleFromModel(model);
 
             var originalArticleLocalization = articleLocalizationRepository.Set()
                 .FirstOrDefault(al => al.ArticleId == article.Id && al.LanguageId == model.LanguageId);
@@ -305,7 +162,7 @@ namespace SportsHubBL.Services
                 throw new ArgumentException($"no previous localization in language {model.LanguageId} of article {model.ArticleId}", nameof(model));
             }
 
-            var newArticleLocalization = GetArticleLocalizationFromModel(article, model);
+            var newArticleLocalization = _articleModelService.GetArticleLocalizationFromModel(article, model);
 
             originalArticleLocalization.Headline = newArticleLocalization.Headline;
             originalArticleLocalization.Text = newArticleLocalization.Text;
@@ -327,5 +184,7 @@ namespace SportsHubBL.Services
 
             articleLocalizationRepository.Delete(articleLocalization);
         }
+
+        #endregion
     }
 }

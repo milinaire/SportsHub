@@ -1,3 +1,4 @@
+using SportsHubDAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class SportArticle
+    public class SportArticle: DBEntity
     {
         public int ArticleId { get; set; }
         public int LocationId { get; set; }

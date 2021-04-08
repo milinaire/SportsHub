@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SportsHubBL.Interfaces;
+using SportsHubBL.Services;
 using SportsHubDAL.Data;
 using SportsHubDAL.Entities;
 
@@ -40,6 +42,13 @@ namespace SportsHubWEB
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddScoped<ApplicationDbContext>();
+            services.AddScoped(typeof(SportsHubDAL.Interfaces.IRepository<>),typeof(SportsHubBL.Common.Repository<>));
+
+            services.AddScoped<IArticleModelService, ArticleModelService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<ISportArticleService, SportArticleService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

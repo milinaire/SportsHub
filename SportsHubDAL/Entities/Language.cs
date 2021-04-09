@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class Language: DBEntity
+    public class Language: NoIdDBEntity
     {
         public int Id { get; set; }
         public string language { get; set; }

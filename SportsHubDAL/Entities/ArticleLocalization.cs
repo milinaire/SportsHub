@@ -8,7 +8,7 @@ using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class ArticleLocalization: DBEntity
+    public class ArticleLocalization: NoIdDBEntity
     {
         public int ArticleId { get; set; }
         public int LanguageId { get; set; }

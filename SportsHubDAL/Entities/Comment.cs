@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class Comment
+    public class Comment: IDBEntityWithContent
     {
         public int Id { get; set; }
         public DateTime Datetime { get; set; }

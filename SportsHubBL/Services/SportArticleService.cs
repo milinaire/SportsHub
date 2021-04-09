@@ -15,18 +15,18 @@ namespace SportsHubBL.Services
     {
         private readonly IArticleService _articleService;
         private readonly IArticleModelService _articleModelService;
-        private readonly IRepository<Location> _locationRepository;
-        private readonly IRepository<Team> _teamRepository;
-        private readonly IRepository<Conference> _conferenceRepository;
-        private readonly IRepository<SportArticle> _sportArticleRepository;
+        private readonly INoIdRepository<Location> _locationRepository;
+        private readonly INoIdRepository<Team> _teamRepository;
+        private readonly INoIdRepository<Conference> _conferenceRepository;
+        private readonly INoIdRepository<SportArticle> _sportArticleRepository;
 
         public SportArticleService(
             IArticleService articleService,
             IArticleModelService articleModelService,
-            IRepository<SportArticle> sportArticleRepository,
-            IRepository<Location> locationRepository,
-            IRepository<Team> teamRepository,
-            IRepository<Conference> conferenceRepository)
+            INoIdRepository<SportArticle> sportArticleRepository,
+            INoIdRepository<Location> locationRepository,
+            INoIdRepository<Team> teamRepository,
+            INoIdRepository<Conference> conferenceRepository)
         {
             _articleService = articleService;
             _articleModelService = articleModelService;

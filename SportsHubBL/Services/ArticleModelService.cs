@@ -13,18 +13,18 @@ namespace SportsHubBL.Services
 {
     public class ArticleModelService: IArticleModelService
     {
-        private readonly IRepository<Article> _articleRepository;
-        private readonly IRepository<Language> _languageRepository;
-        private readonly IRepository<Content> _contentRepository;
-        private readonly IRepository<Category> _categoryRepository;
-        private readonly IRepository<Image> _imageRepository;
+        private readonly INoIdRepository<Article> _articleRepository;
+        private readonly INoIdRepository<Language> _languageRepository;
+        private readonly INoIdRepository<Content> _contentRepository;
+        private readonly INoIdRepository<Category> _categoryRepository;
+        private readonly INoIdRepository<Image> _imageRepository;
 
         public ArticleModelService(
-            IRepository<Language> languageRepository,
-            IRepository<Content> contentRepository,
-            IRepository<Category> categoryRepository,
-            IRepository<Image> imageRepository,
-            IRepository<Article> articleRepository
+            INoIdRepository<Language> languageRepository,
+            INoIdRepository<Content> contentRepository,
+            INoIdRepository<Category> categoryRepository,
+            INoIdRepository<Image> imageRepository,
+            INoIdRepository<Article> articleRepository
             )
         {
             _languageRepository = languageRepository;

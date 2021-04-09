@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class SportArticle: DBEntity
+    public class SportArticle: NoIdDBEntity
     {
         public int ArticleId { get; set; }
         public int LocationId { get; set; }

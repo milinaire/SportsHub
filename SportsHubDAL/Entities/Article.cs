@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class Article : DBEntity
+    public class Article : IDBEntityWithContent
     {
         public int Id { get; set; }
         public Image Image { get; set; }

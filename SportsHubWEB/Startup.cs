@@ -13,6 +13,7 @@ using SportsHubBL.Interfaces;
 using SportsHubBL.Services;
 using SportsHubDAL.Data;
 using SportsHubDAL.Entities;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubWEB
 {
@@ -44,7 +45,8 @@ namespace SportsHubWEB
                 .AddIdentityServerJwt();
 
             services.AddScoped<ApplicationDbContext>();
-            services.AddScoped(typeof(SportsHubDAL.Interfaces.IRepository<>),typeof(SportsHubBL.Common.Repository<>));
+            services.AddScoped(typeof(INoIdRepository<>),typeof(SportsHubBL.Common.NoIdRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(SportsHubBL.Common.Repository<>));
 
             services.AddScoped<IArticleModelService, ArticleModelService>();
             services.AddScoped<IArticleService, ArticleService>();

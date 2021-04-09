@@ -8,7 +8,7 @@ using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class Location: DBEntity
+    public class Location: NoIdDBEntity
     {
         public int Id { get; set; }
 

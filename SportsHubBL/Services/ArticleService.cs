@@ -13,18 +13,18 @@ namespace SportsHubBL.Services
 {
     public class ArticleService : IArticleService
     {
-        private readonly IRepository<Article> articleRepository;
-        private readonly IRepository<Language> languageRepository;
-        private readonly IRepository<ArticleLocalization> articleLocalizationRepository;
-        private readonly IRepository<Content> _contentRepository;
+        private readonly INoIdRepository<Article> articleRepository;
+        private readonly INoIdRepository<Language> languageRepository;
+        private readonly INoIdRepository<ArticleLocalization> articleLocalizationRepository;
+        private readonly INoIdRepository<Content> _contentRepository;
         private readonly IArticleModelService _articleModelService;
 
         public ArticleService(
-            IRepository<Article> articleRepository,
-            IRepository<Language> languageRepository,
-            IRepository<ArticleLocalization> articleLocalizationRepository,
+            INoIdRepository<Article> articleRepository,
+            INoIdRepository<Language> languageRepository,
+            INoIdRepository<ArticleLocalization> articleLocalizationRepository,
             IArticleModelService articleModelService,
-            IRepository<Content> contentRepository
+            INoIdRepository<Content> contentRepository
             )
         {
             _articleModelService = articleModelService;
@@ -88,7 +88,6 @@ namespace SportsHubBL.Services
 
             return _contentRepository.Set().FirstOrDefault(c => c.Article == article);
         }
-
         public IEnumerable<Article> GetMainPageArticles(int count)
         {
             throw new NotImplementedException();

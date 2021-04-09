@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Interfaces
 {
-    public interface IRepository<T>:INoIdRepository<T> where T : class, IDBEntity
+    public interface NoIdDBEntity
     {
-        T GetById(int id);
     }
 }

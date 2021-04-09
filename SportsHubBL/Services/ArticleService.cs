@@ -79,15 +79,6 @@ namespace SportsHubBL.Services
             return article;
         }
 
-        public Content GetArticleContent(Article article)
-        {
-            if (article == null)
-            {
-                throw new ArgumentNullException(nameof(article));
-            }
-
-            return _contentRepository.Set().FirstOrDefault(c => c.Article == article);
-        }
         public IEnumerable<Article> GetMainPageArticles(int count)
         {
             throw new NotImplementedException();

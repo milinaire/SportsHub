@@ -14,8 +14,6 @@ namespace SportsHubBL.Interfaces
 
         public ArticleLocalization GetArticleLocalization(int articleId, int languageId);
 
-        public Content GetArticleContent(Article article);
-
         public Article GetArticleById(int id);
 
         public void AddArticleFromModel(ArticleModel model);

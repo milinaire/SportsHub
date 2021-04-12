@@ -1,14 +1,11 @@
 using SportsHubBL.Interfaces;
 using SportsHubBL.Models;
-using SportsHubBL.Interfaces;
-using SportsHubBL.Models;
 using SportsHubDAL.Entities;
 using SportsHubDAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace SportsHubBL.Services
@@ -122,7 +119,8 @@ namespace SportsHubBL.Services
 
         public void AddTeamFromModel(TeamModel model)
         {
-            throw new NotImplementedException();
+            var team = GetTeamFromModel(model);
+            _teamRepository.Insert(team);
         }
 
         public TeamModel GetTeamModel(Team team, Conference conference)
@@ -208,14 +206,15 @@ namespace SportsHubBL.Services
                     Uri = model.LocationUri
                 };
             }
+
             
             return new Team
             {
                 Image = image,
                 Conference = conference,
                 Location = location,
-                DateCreated = (DateTime)model.DateCreated,
-                Show = (bool) model.Show
+                DateCreated = (DateTime)model.DateCreated != null ? (DateTime)model.DateCreated : default,
+                Show = (bool) model.Show ? (bool) model.Show : default
             };
             
         }
@@ -234,17 +233,39 @@ namespace SportsHubBL.Services
 
         public void DeleteTeamById(int id)
         {
-            throw new NotImplementedException();
+            var team =_teamRepository.Set().FirstOrDefault(a => a.Id == id);
+
+            if (team == null)
+            {
+                throw new ArgumentException($"Team {id} not found", nameof(id));
+            }
+
+            _teamRepository.Delete(team);
         }
 
         public void DeleteTeamConferenceById(int teamId, int conferenceId)
         {
-            throw new NotImplementedException();
+            var team =_teamRepository.Set().FirstOrDefault(a => a.Id == teamId);
+            if (team == null)
+            {
+                throw new ArgumentException($"Conference of Team {teamId} not found", nameof(conferenceId));
+            }
+            
+            _conferenceRepository.Delete(team.Conference);
         }
 
         public void UpdateTeamConferenceFromModel(TeamModel model)
         {
-            throw new NotImplementedException();
+            var team = GetTeamFromModel(model);
+
+            var originalTeamConference = _conferenceRepository.Set()
+                .FirstOrDefault(conf => conf.Id == team.Conference.Id);
+
+            if (originalTeamConference == null)
+            {
+                throw new ArgumentException($"no previous conference  {model.ConferenceId} in team {model.TeamId}", nameof(model));
+            }
+            _conferenceRepository.Update(originalTeamConference);
         }
     }
 }

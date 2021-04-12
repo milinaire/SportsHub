@@ -1,0 +1,7 @@
+
+.MainArticlesBlock{
+    display: flex;
+}
+.MainArticleCard{
+    z-index: -1;
+}

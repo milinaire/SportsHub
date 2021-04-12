@@ -7,10 +7,10 @@ import { Footer } from "./Footer/Footer";
 
 export class Layout extends Component {
   static displayName = Layout.name;
-
   render() {
     return (
       <Fragment>
+        {console.log(this.props.match)}
         <div>
           <Header />
           <div className={"page-wrapper"}>
@@ -18,7 +18,7 @@ export class Layout extends Component {
             <div className="content-wrapper">
               <div className={"content"}>{this.props.children}</div>
             </div>
-            <Sidebar />
+            <Sidebar category={this.props.category}/>
           </div>
           <Footer />
         </div>

@@ -6,6 +6,7 @@
   left: 300px;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
+  z-index: 1000;
 }
 .hide-footer {
   position: fixed;

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 export class Footer extends Component {
-
   state = {
     ContactUs: { HeadLine: "Contact Us", show: true, url: "contact" },
     AboutSportHub: { HeadLine: "About SportHub", show: true, url: "about" },
@@ -39,23 +39,22 @@ export class Footer extends Component {
               <h4>
                 <b>{this.state.CompanyInfo.title}</b>
               </h4>
-
               {this.state.AboutSportHub.show ? (
-                <a href={`/${this.state.AboutSportHub.url}`}>
+                <Link to={`/${this.state.AboutSportHub.url}`}>
                   <p>{this.state.AboutSportHub.HeadLine}</p>
-                </a>
+                </Link>
               ) : null}
               {this.state.CompanyInfo.sections.map((section) =>
                 section.show ? (
-                  <a href={`/companyinfo/${section.url}`}>
+                  <Link to={`/companyinfo/${section.url}`}>
                     <p>{section.HeadLine}</p>
-                  </a>
+                  </Link>
                 ) : null
               )}
               {this.state.ContactUs.show ? (
-                <a href={`/${this.state.ContactUs.url}`}>
+                <Link to={`/${this.state.ContactUs.url}`}>
                   <p>{this.state.ContactUs.HeadLine}</p>
-                </a>
+                </Link>
               ) : null}
             </div>
           ) : null}
@@ -66,9 +65,9 @@ export class Footer extends Component {
               </h4>
               {this.state.Contributors.contributors.map((contributor) =>
                 contributor.show ? (
-                  <a href={`/contributors/${contributor.url}`}>
+                  <Link to={`/contributors/${contributor.url}`}>
                     <p>{contributor.HeadLine}</p>
-                  </a>
+                  </Link>
                 ) : null
               )}
             </div>
@@ -90,7 +89,7 @@ export class Footer extends Component {
                 />
                 <input
                   className="submit-email"
-                  type="submit"
+                  type="button"
                   value="Subscribe"
                 />
               </form>
@@ -111,10 +110,9 @@ export class Footer extends Component {
           </div>
           <div className="copirating">
             <p>Copirating c 2019 SportHub</p>
-            <a href="/privacy">Privacy</a>/<a href="/terms">Terms</a>
+            <Link to="/privacy">Privacy</Link>/<a href="/terms">Terms</a>
           </div>
         </div>
-
       </footer>
     );
   }

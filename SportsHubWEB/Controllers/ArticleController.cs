@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SportsHubBL.Interfaces;
 using SportsHubBL.Models;
+using SportsHubDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +21,8 @@ namespace SportsHubWEB.Controllers
 
         public ArticleController(
             IArticleService articleService,
-            IArticleModelService articleModelService,
-            ISportArticleService sportArticleService)
+            ISportArticleService sportArticleService,
+            IArticleModelService articleModelService)
         {
             _articleService = articleService;
             _sportArticleService = sportArticleService;
@@ -28,12 +30,85 @@ namespace SportsHubWEB.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<SportArticleModel> GetSportsArticles([FromQuery]int? categoryId, [FromQuery]int? conferenceId, [FromQuery]int? teamId, [FromQuery]int? locationId, int count = 10)
+        public IEnumerable<ArticleModel> GetMainArticles()
         {
             // TODO: cange this call to use language
-            return _sportArticleService.GetSportArticles(categoryId, conferenceId, teamId, locationId, count)
-                .Select(sa => _sportArticleService.GenerateSportArticleModel(sa, 1));
+            int? languageId = 1;
+
+            var mainArticles = _articleService.GetMainPageArticles();
+
+            var articleModels = mainArticles.Select(mam =>
+            {
+                var sportArticle = _sportArticleService.GetConnectedSportArticle(_articleService.GetArticleById(mam.ArticleId));
+                if (sportArticle == null)
+                {
+                    return _articleModelService.GenerateArticleModel(sportArticle.Article, languageId?? 1);
+                }
+                else
+                {
+                    return _sportArticleService.GenerateSportArticleModel(sportArticle, languageId?? 1);
+                }
+            }
+            );
+
+            return articleModels;
         }
+
+        [HttpPost]
+        public ActionResult AddArticle([FromBody] ArticleModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("model was null");
+            }
+
+            try
+            {
+                _articleService.AddArticleFromModel(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+            return StatusCode(201);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateArticle([FromRoute] int id, [FromBody] ArticleModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("model was null");
+            }
+
+            try
+            {
+                _articleService.UpdateArticleById(id, model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteArticle([FromRoute] int id)
+        {
+            try
+            {
+                _articleService.DeleteArticleById(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+            return Ok();
+        }
+
 
     }
 }

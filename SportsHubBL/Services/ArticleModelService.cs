@@ -11,20 +11,22 @@ using System.Threading.Tasks;
 
 namespace SportsHubBL.Services
 {
-    public class ArticleModelService: IArticleModelService
+    public class ArticleModelService : IArticleModelService
     {
         private readonly INoIdRepository<Article> _articleRepository;
         private readonly INoIdRepository<Language> _languageRepository;
         private readonly INoIdRepository<Content> _contentRepository;
         private readonly INoIdRepository<Category> _categoryRepository;
         private readonly INoIdRepository<Image> _imageRepository;
+        private readonly IRepository<MainArticles> _mainArticleRepository;
 
         public ArticleModelService(
             INoIdRepository<Language> languageRepository,
             INoIdRepository<Content> contentRepository,
             INoIdRepository<Category> categoryRepository,
             INoIdRepository<Image> imageRepository,
-            INoIdRepository<Article> articleRepository
+            INoIdRepository<Article> articleRepository, 
+            IRepository<MainArticles> mainArticleRepository
             )
         {
             _languageRepository = languageRepository;
@@ -32,6 +34,7 @@ namespace SportsHubBL.Services
             _categoryRepository = categoryRepository;
             _imageRepository = imageRepository;
             _articleRepository = articleRepository;
+            _mainArticleRepository = mainArticleRepository;
         }
 
         public Article GetArticleFromModel(ArticleModel model)
@@ -164,6 +167,29 @@ namespace SportsHubBL.Services
 
             return this.GetArticleModel(article, language);
         }
-        
+
+        public MainArticleModel GenerateMainArticleModel(MainArticles mainArticle)
+        {
+            if (mainArticle == null)
+            {
+                throw new ArgumentNullException(nameof(mainArticle));
+            }
+
+            if (mainArticle.Article == null)
+            {
+                mainArticle = _mainArticleRepository.Set().Include(ma => ma.Article).FirstOrDefault(ma => ma == mainArticle);
+                if (mainArticle.Article == null)
+                {
+                    throw new ArgumentException($"main article {mainArticle.Id} does not contain an article");
+                }
+            }
+
+            return new MainArticleModel
+            {
+                Id = mainArticle.Id,
+                ArticleId = mainArticle.Article.Id,
+                Show = mainArticle.Show
+            };
+        }
     }
 }

@@ -36,6 +36,16 @@ namespace SportsHubBL.Services
             _conferenceRepository = conferenceRepository;
         }
 
+        public SportArticle GetConnectedSportArticle(Article article)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
+            }
+
+            return _sportArticleRepository.Set().Include(sa => sa.Article).FirstOrDefault(sa => sa.Article == article);
+        }
+
         public void AddSportArticleFromModel(SportArticleModel model)
         {
             var sportArticle = GetSportArticleFromModel(model);
@@ -61,7 +71,6 @@ namespace SportsHubBL.Services
             return query.Take(count).ToList();
         }
 
-        //TODO: Move to localization service
         private SportArticleModel LocalizeSportArticleModel(SportArticleModel model, SportArticle sportArticle, int languageId)
         {
             if (sportArticle?.Article == null

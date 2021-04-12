@@ -13,5 +13,7 @@ namespace SportsHubBL.Interfaces
         public IEnumerable<SportArticle> GetSportArticles(int? categoryId, int? conferenceId, int? teamId, int? locationId, int count);
 
         public SportArticleModel GenerateSportArticleModel(SportArticle sportArticle, int languageId);
+
+        public SportArticle GetConnectedSportArticle(Article article);
     }
 }

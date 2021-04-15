@@ -23,15 +23,20 @@ namespace SportsHubBL.Interfaces
         public Team GetTeamById(int id);
         
         public void AddTeamFromModel(TeamModel team);
+        
+        public void AddNewTeamLocalizationFromModel(TeamModel model);
          
-        public TeamModel GetTeamModel(Team team, Conference conference);
+        public TeamModel GetTeamModel(Team team, Language language);
 
-        public TeamModel GenerateTeamModel(Team team, int conferenceId);
+        public TeamModel GenerateTeamModel(Team team, int languageId);
 
         public void DeleteTeamById(int id);
         
-        public void DeleteTeamConferenceById(int teamId, int conferenceId); 
+        public void DeleteTeamLocalizationById(int teamId, int languageId);
         
+        public void DeleteTeamConferenceById(int teamId, int conferenceId);
+
+        public void UpdateTeamLocalizationFromModel(TeamModel model);
         
         public void UpdateTeamConferenceFromModel(TeamModel model);
         

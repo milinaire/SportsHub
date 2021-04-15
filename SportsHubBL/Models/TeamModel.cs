@@ -12,6 +12,8 @@ namespace SportsHubBL.Models
         
         public int ConferenceId { get; set; }
         
+        public int LanguageId { get; set; }
+        
         public int? CategoryId { get; set; }
 
         public int? LocationId { get; set; }
@@ -25,6 +27,11 @@ namespace SportsHubBL.Models
         public string ImageUri { get; set; }
         
         public DateTime? DateCreated { get; set; }
+        
+        public string Name { get; set; }
+        
+        public string Description { get; set; }
+
         
     }
 }

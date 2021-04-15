@@ -97,9 +97,7 @@ namespace SportsHubDAL.Data
                .HasKey(e => new { e.TeamId, e.UserId });
             modelBuilder.Entity<SportArticle>()
               .HasKey(e => new { e.ArticleId, e.ConferenceId, e.TeamId, e.LocationId });
-            
-            
-           
+
         }
     }
 

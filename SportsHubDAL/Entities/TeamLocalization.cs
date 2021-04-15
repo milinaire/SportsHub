@@ -10,7 +10,7 @@ namespace SportsHubDAL.Entities
     public class TeamLocalization : DBEntity
     {
         public string Name { get; set; }
-        public string Desctiption { get; set; }
+        public string Description { get; set; }
         public int TeamId { get; set; }
         public int LanguageId { get; set; }
         public Team Team { get; set; }

@@ -114,7 +114,14 @@ export class MainArticles extends Component {
 
     }, 5500);
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(!this.state.index && this.state.index !==0){this.setState({index:0})}
 
+  }
+  constructor(props) {
+    super(props);
+    this.state = {index:0}
+  }
 
   setIndex = index => {
     this.setState({index: index})

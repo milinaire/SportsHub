@@ -6,6 +6,12 @@ export class CompanyInfo extends Component {
     Headline: "some headline from db",
     Text: "text from db",
   };
+  componentDidMount(){
+    this.props.setLayout('base')
+  }
+  componentWillUnmount(){
+    this.props.setLayout('home')
+  }
   render() {
     return (
       <div>

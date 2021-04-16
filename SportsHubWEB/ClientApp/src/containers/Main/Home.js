@@ -5,20 +5,7 @@ import {Carousel} from "react-responsive-carousel";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const MainArticle = ({isSelected, alt, caption, headLine, img, published}) => (
-  <div  title={alt} style={{backgroundImage:`url(${img})`, height:'548px', backgroundRepeat: 'no-repeat'}}>
-    <div style={{background:'#333', position:'fixed', padding:'15px 50px', color:'white'}}>NBA</div>
-    <div style={{background:'#eee', position:'relative', color:'white', height:'400px', width:'550px', top:'74px', left:'-600px', paddingTop:'0px'}}>
-      <div style={{background:'#f22', position:'relative', padding:'15px 50px', color:'white', top:'345px', width:'200px', height:'55px'}}><b>More</b></div>
-      <p style={{color:'#666', textAlign:'left', marginLeft:'50px', marginRight:'30px'}}><b>Published/ {published}</b></p>
-      <h5 style={{color:'red', fontSize:20, textAlign:'left', marginLeft:'50px', marginTop:'10px'}}><b>{headLine}</b></h5>
-      <h2 style={{color:'#222', textAlign:'left', marginLeft:'50px', marginRight:'30px', fontWeight:500}}>{caption}</h2>
 
-    </div>
-
-  </div>
-  // <img src={img} alt={alt}/>
-);
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -33,6 +20,7 @@ export class Home extends Component {
         Published: "20.09.2019",
         Image:
           "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+        Category: "NBA",
       },
       {
         Id: 2,
@@ -41,7 +29,8 @@ export class Home extends Component {
         Caption: "Caption2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
         Published: "20.09.2019",
         Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+          "https://markateur.com/wp-content/uploads/2017/04/articles.jpg",
+        Category: "UFC",
       },
       {
         Id: 3,
@@ -50,7 +39,8 @@ export class Home extends Component {
         Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
         Published: "20.09.2019",
         Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7pfEljy7X0eBed-8PpZwT3X4tqY_LCZbDLnNGAk3qldHhF3YOnfY_1NYyWzumMYwpuws&usqp=CAU",
+        Category: "QTV",
       },
       {
         Id: 4,
@@ -60,6 +50,7 @@ export class Home extends Component {
         Published: "20.09.2019",
         Image:
           "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+        Category: "NBA",
       },
       {
         Id: 5,
@@ -69,6 +60,7 @@ export class Home extends Component {
         Published: "20.09.2019",
         Image:
           "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+        Category: "ATB",
       },
     ],
     BreakDown: [
@@ -140,74 +132,74 @@ export class Home extends Component {
             "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
         },
       ],
-      [
-        {
-          Id: 1,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 2,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 3,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 4,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-      ],
-      [
-        {
-          Id: 1,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 2,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 3,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 4,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-      ],
+      // [
+      //   {
+      //     Id: 1,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      //   {
+      //     Id: 2,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      //   {
+      //     Id: 3,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      //   {
+      //     Id: 4,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      // ],
+      // [
+      //   {
+      //     Id: 1,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      //   {
+      //     Id: 2,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      //   {
+      //     Id: 3,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      //   {
+      //     Id: 4,
+      //     Alt: "Alt",
+      //     HeadLine: "HeadLine",
+      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
+      //     Image:
+      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
+      //   },
+      // ],
     ],
     PhotoOfTheDay: [{ 
       Image:
@@ -272,6 +264,12 @@ export class Home extends Component {
     ],
   };
 
+  componentDidMount(){
+    this.props.setArticles(this.state.MainArticles)
+  }
+  componentWillUnmount(){
+    this.props.setArticles([])
+  }
   arrowNext = () => {
     let b = []
     this.state.MainArticles.map((Article) => (
@@ -313,22 +311,8 @@ export class Home extends Component {
 
 
     return (
-      <main>
-        <Carousel showArrows={true} dynamicHeight={true} infiniteLoop={true} interval={6000} autoPlay={true}
-                  transitionTime={1000} showThumbs={true} thumbWidth={900/this.state.MainArticles.length}
-                  onClickThumb={index => this.setState({index:index})}
-                  selectedItem={this.state.index}
-                  //renderArrowNext={this.arrowNext}
-                  //renderArrowPrev={this.arrowPrev}
-                  //renderIndicator={this.indicator}
+      <main >
 
-                  renderItem={this.item}
-                  renderThumbs={this.thumbs}
-        >
-          {this.state.MainArticles.map((Article) => (
-            <MainArticle key={Article.id} alt={Article.Alt} caption={Article.Caption} headLine={Article.HeadLine} img={Article.Image} published={Article.Published}/>
-          ))}
-        </Carousel>
         
         <div className="breakwrap3">
             <div className="break-line-wrap">  

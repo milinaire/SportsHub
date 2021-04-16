@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import {Route} from "react-router";
-import {Layout} from "./components/Main/Layout";
+import {HomeLayout} from "./components/Main/Layout/HomeLayout";
+import {BaseLayout} from "./components/Main/Layout/BaseLayout";
 import {Home} from "./containers/Main/Home";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
@@ -21,7 +22,17 @@ import {Slideshow} from "./containers/Article/sliderTest";
 export default class App extends Component {
   static displayName = App.name;
   state = {
-    category: "test"
+    category: "",
+    layout: "home",
+    MainArticles: [],
+  }
+
+  setArticles = MainArticles => {
+    this.setState({MainArticles: MainArticles})
+  }
+
+  setLayout = layout => {
+    this.setState({layout: layout})
   }
 
   setCategory(category) {
@@ -31,17 +42,23 @@ export default class App extends Component {
   render() {
     return (
       <Fragment>
-        <Layout category={this.state.category}>
+        <HomeLayout layout={this.state.layout} category={this.state.category} articles={this.state.MainArticles}>
           <Route exact path="/nav/:category"
                  render={(props) => <CategoryArticles setCategory={this.setCategory.bind(this)} {...props} />}/>
-          <Route exact path="/" component={Home}/>
+          <Route exact path="/" render={(props) => <Home setArticles={this.setArticles.bind(this)} {...props} />}/>
           <Route exact path="/slideshow" component={Slideshow}/>
-          <Route exact path="/companyinfo/:name" component={CompanyInfo}/>
-          <Route exact path="/contact" component={ContactUs}/>
-          <Route exact path="/about" component={AboutSportHub}/>
-          <Route exact path="/contributors/:name" component={Contributors}/>
-          <Route exact path="/privacy" component={Privacy}/>
-          <Route exact path="/terms" component={Terms}/>
+          <Route exact path="/companyinfo/:name"
+                 render={(props) => <CompanyInfo setLayout={this.setLayout.bind(this)} {...props} />}/>
+          <Route exact path="/contact"
+                 render={(props) => <ContactUs setLayout={this.setLayout.bind(this)} {...props} />}/>
+          <Route exact path="/about"
+                 render={(props) => <AboutSportHub setLayout={this.setLayout.bind(this)} {...props} />}/>
+          <Route exact path="/contributors/:name"
+                 render={(props) => <Contributors setLayout={this.setLayout.bind(this)} {...props} />}/>
+          <Route exact path="/privacy"
+                 render={(props) => <Privacy setLayout={this.setLayout.bind(this)} {...props} />}/>
+          <Route exact path="/terms"
+                 render={(props) => <Terms setLayout={this.setLayout.bind(this)} {...props} />}/>
           <Route
             exact
             path="/nav/:category/:subcategory"
@@ -63,7 +80,7 @@ export default class App extends Component {
             path={ApplicationPaths.ApiAuthorizationPrefix}
             component={ApiAuthorizationRoutes}
           />
-        </Layout>
+        </HomeLayout>
       </Fragment>
     );
   }

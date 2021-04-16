@@ -1,11 +1,10 @@
 .footer-categiries {
   clear: both;
   margin-bottom: 0;
-  margin-left: 300px;
   border-top: 3px solid #ccc;
   display: flex;
   justify-content: space-between;
-  padding: 40px 20px;
+  padding: 40px 200px 40px 20px;
 }
 .footer-categiry {
   width: 33%;

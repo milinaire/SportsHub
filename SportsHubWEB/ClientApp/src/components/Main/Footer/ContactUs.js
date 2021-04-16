@@ -8,6 +8,12 @@ export class ContactUs extends Component {
     Tel: "Tel from db",
     Email: "Email from db",
   };
+  componentDidMount(){
+    this.props.setLayout('base')
+  }
+  componentWillUnmount(){
+    this.props.setLayout('home')
+  }
   render() {
     return (
       <div>

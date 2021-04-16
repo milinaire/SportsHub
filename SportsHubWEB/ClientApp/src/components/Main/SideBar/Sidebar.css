@@ -60,3 +60,9 @@ flex-wrap: wrap;}
 .description>p{ 
   width:250px;
 }
+
+@media only screen and (max-width: 1650px) {
+  .sidebar {
+   display: none;
+  }
+}

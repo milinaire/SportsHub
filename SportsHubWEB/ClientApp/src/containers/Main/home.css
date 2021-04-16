@@ -26,13 +26,17 @@
     flex-wrap: wrap;
    
 }
+
+
+
 .breakdown{ 
     margin-top: 45px;
     width:978px;
     height: 400px;
     z-index: -1;
-    position: static;
+   
     display: flex;
+    flex-wrap: wrap;
   
 }
 
@@ -44,12 +48,9 @@
 .breakwrap1{ 
     width:978px;
     height: 500px;
-  
     display: flex;
     flex-grow: 1;
-   
     margin-bottom: 90px;
-    
     flex-wrap: wrap;
 }
 
@@ -199,6 +200,9 @@
     border-right:0.5px solid lightgrey ;
     border-bottom: 0.5px solid lightgrey ;
 }
+.pop-card:hover{
+    color:red;
+}
 .pop-text1{
     z-index: 1;
     font-size:20px;
@@ -216,4 +220,17 @@
    border-bottom: 0.5px solid lightgrey ;
    border-left: 0.5px solid lightgrey ;
    
+}
+
+@media only screen and (max-width: 1200px) {
+    .breakwrap3 {
+        width:800px;
+    }
+    
+     .breakdown {
+        width:800px;
+    }
+   .com{
+        display: none;
+    }
 }

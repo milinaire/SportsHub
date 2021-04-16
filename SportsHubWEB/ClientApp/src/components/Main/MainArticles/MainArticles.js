@@ -4,6 +4,7 @@ import "./MainArticles.css";
 
 const MainArticle = ({isSelected, alt, caption, headLine, img, published, category, setIndex, length, index, changeIndex, articles}) => {
   let buttons = []
+
   buttons.push(<button
     style={{borderRadius: "50%", width: "2vw", border: "3px solid #eee", background: 'white', height: "2vw",}}
     onClick={() => changeIndex(-1, length)}>
@@ -50,6 +51,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
           fontSize: "1vw",
           zIndex:-1
         }}>
+
           {category}
         </div>
         <div style={{
@@ -93,72 +95,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
 
 
       </div>
-      {/*<div style={{position: "relative", display: "inline-block", marginTop: "70px", width: "100%", zIndex: '-1'}}>*/}
-      {/*  <img src={img} alt={alt} style={{width: "calc(64vw)", height: '36vw',}}/>*/}
-      {/*  <div style={{*/}
-      {/*    background: '#333', position: 'absolute', color: 'white', top: 0, width: '10%', display: "flex",*/}
-      {/*    height: '10%',*/}
-      {/*    textAlign: "center",*/}
-      {/*    justifyContent: "center",*/}
-      {/*    alignItems: "center",*/}
-      {/*    fontSize: "1vw",*/}
-      {/*  }}>{category}</div>*/}
-      {/*  <div style={{display:'flex'}}>*/}
 
-      {/*    <div style={{*/}
-      {/*      background: '#eee',*/}
-      {/*      position: 'absolute',*/}
-      {/*      color: 'white',*/}
-      {/*      height: '60%',*/}
-      {/*      width: '35%',*/}
-      {/*      top: '20%',*/}
-      {/*      left: '55%',*/}
-      {/*      paddingTop: '0px',*/}
-      {/*      overflow: "hidden"*/}
-      {/*    }}>*/}
-      {/*      <button style={{zIndex:20000000}}>rrr</button>*/}
-      {/*      <div style={{*/}
-      {/*        background: '#f22',*/}
-      {/*        position: 'absolute',*/}
-      {/*        display: "flex",*/}
-      {/*        color: 'white',*/}
-      {/*        bottom: '0',*/}
-      {/*        width: '40%',*/}
-      {/*        height: '20%',*/}
-      {/*        textAlign: "center",*/}
-      {/*        justifyContent: "center",*/}
-      {/*        alignItems: "center"*/}
-      {/*      }}><b style={{fontSize: "1vw", padding: 0, display: "block"}}>More</b></div>*/}
-      {/*      <p style={{color: '#666', textAlign: 'left', marginLeft: '50px', marginRight: '30px', fontSize: "1vw"}}>*/}
-      {/*        <b>Published/ {published}</b></p>*/}
-      {/*      <h5 style={{color: 'red', textAlign: 'left', marginLeft: '50px', marginTop: '10px', fontSize: "1vw"}}>*/}
-      {/*        <b>{headLine}</b></h5>*/}
-      {/*      <h2 style={{*/}
-      {/*        color: '#222',*/}
-      {/*        textAlign: 'left',*/}
-      {/*        marginLeft: '50px',*/}
-      {/*        marginRight: '30px',*/}
-      {/*        fontWeight: 500,*/}
-      {/*        fontSize: "1vw"*/}
-      {/*      }}>{caption}</h2>*/}
-
-      {/*    </div>*/}
-      {/*    {buttons}</div>*/}
-
-
-      {/*</div>*/}
-
-      {/*<div style={{*/}
-      {/*  position: 'absolute', color: 'white', top: '80%', width: '10%', left: "70%", display: "flex",*/}
-      {/*  height: '10%',*/}
-      {/*  textAlign: "center",*/}
-      {/*  justifyContent: "center",*/}
-      {/*  alignItems: "center",*/}
-      {/*  fontSize: "1vw",*/}
-      {/*  zIndex: 0*/}
-      {/*}}>*/}
-
-      {/*</div>*/}
 
     </Fragment>)
 
@@ -166,7 +103,11 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
 };
 
 export class MainArticles extends Component {
+  state = {
+    index: 0,
+  }
   componentDidMount() {
+    this.setState({index:0})
     setInterval(() => {
 
       this.setState({index: (this.state.index+1)%this.props.articles.length});
@@ -174,9 +115,7 @@ export class MainArticles extends Component {
     }, 5500);
   }
 
-  state = {
-    index: 0,
-  }
+
   setIndex = index => {
     this.setState({index: index})
   }
@@ -196,6 +135,7 @@ export class MainArticles extends Component {
       <Fragment>
         {this.props.articles.length ?
           <div className="main-articles">
+            {console.log("ee", this.props.articles, this.state.index)}
             <MainArticle key={this.props.articles[this.state.index].id}
                          alt={this.props.articles[this.state.index].Alt}
                          caption={this.props.articles[this.state.index].Caption}

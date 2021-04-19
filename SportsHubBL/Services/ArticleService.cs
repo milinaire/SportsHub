@@ -17,16 +17,14 @@ namespace SportsHubBL.Services
         private readonly INoIdRepository<Language> _languageRepository;
         private readonly INoIdRepository<ArticleLocalization> _articleLocalizationRepository;
         private readonly IArticleModelService _articleModelService;
-        private readonly IRepository<MainArticles> _mainArticlesRepository;
-        private readonly ISportArticleService _sportArticleService;
+        private readonly IRepository<MainArticle> _mainArticlesRepository;
 
         public ArticleService(
             INoIdRepository<Article> articleRepository,
             INoIdRepository<Language> languageRepository,
             INoIdRepository<ArticleLocalization> articleLocalizationRepository,
             IArticleModelService articleModelService,
-            IRepository<MainArticles> mainArticlesRepository,
-            ISportArticleService sportArticleService
+            IRepository<MainArticle> mainArticlesRepository
             )
         {
             _articleModelService = articleModelService;
@@ -34,7 +32,6 @@ namespace SportsHubBL.Services
             _languageRepository = languageRepository;
             _articleLocalizationRepository = articleLocalizationRepository;
             _mainArticlesRepository = mainArticlesRepository;
-            _sportArticleService = sportArticleService;
         }
 
         public void AddArticleFromModel(ArticleModel model)

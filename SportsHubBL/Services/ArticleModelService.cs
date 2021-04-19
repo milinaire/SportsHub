@@ -18,7 +18,7 @@ namespace SportsHubBL.Services
         private readonly INoIdRepository<Content> _contentRepository;
         private readonly INoIdRepository<Category> _categoryRepository;
         private readonly INoIdRepository<Image> _imageRepository;
-        private readonly IRepository<MainArticles> _mainArticleRepository;
+        private readonly IRepository<MainArticle> _mainArticleRepository;
 
         public ArticleModelService(
             INoIdRepository<Language> languageRepository,
@@ -26,7 +26,7 @@ namespace SportsHubBL.Services
             INoIdRepository<Category> categoryRepository,
             INoIdRepository<Image> imageRepository,
             INoIdRepository<Article> articleRepository, 
-            IRepository<MainArticles> mainArticleRepository
+            IRepository<MainArticle> mainArticleRepository
             )
         {
             _languageRepository = languageRepository;
@@ -168,7 +168,7 @@ namespace SportsHubBL.Services
             return this.GetArticleModel(article, language);
         }
 
-        public MainArticleModel GenerateMainArticleModel(MainArticles mainArticle)
+        public MainArticleModel GenerateMainArticleModel(MainArticle mainArticle)
         {
             if (mainArticle == null)
             {

@@ -39,7 +39,7 @@ namespace SportsHubWEB.Controllers
 
             var articleModels = mainArticles.Select(mam =>
             {
-                var sportArticle = _sportArticleService.GetConnectedSportArticle(_articleService.GetArticleById(mam.ArticleId));
+                var sportArticle = _sportArticleService.GetConnectedSportArticle(mam.ArticleId);
                 if (sportArticle == null)
                 {
                     return _articleModelService.GenerateArticleModel(sportArticle.Article, languageId?? 1);
@@ -68,7 +68,7 @@ namespace SportsHubWEB.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
 
             return StatusCode(201);
@@ -88,7 +88,7 @@ namespace SportsHubWEB.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
 
             return NoContent();
@@ -103,7 +103,7 @@ namespace SportsHubWEB.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
 
             return Ok();

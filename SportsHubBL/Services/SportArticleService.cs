@@ -13,27 +13,18 @@ namespace SportsHubBL.Services
 {
     public class SportArticleService: ISportArticleService
     {
-        private readonly IArticleService _articleService;
         private readonly IArticleModelService _articleModelService;
-        private readonly INoIdRepository<Location> _locationRepository;
-        private readonly INoIdRepository<Team> _teamRepository;
-        private readonly INoIdRepository<Conference> _conferenceRepository;
+        private readonly IRepository<Team> _teamRepository;
         private readonly INoIdRepository<SportArticle> _sportArticleRepository;
 
         public SportArticleService(
-            IArticleService articleService,
             IArticleModelService articleModelService,
             INoIdRepository<SportArticle> sportArticleRepository,
-            INoIdRepository<Location> locationRepository,
-            INoIdRepository<Team> teamRepository,
-            INoIdRepository<Conference> conferenceRepository)
+            IRepository<Team> teamRepository)
         {
-            _articleService = articleService;
             _articleModelService = articleModelService;
             _sportArticleRepository = sportArticleRepository;
-            _locationRepository = locationRepository;
             _teamRepository = teamRepository;
-            _conferenceRepository = conferenceRepository;
         }
 
         public SportArticle GetConnectedSportArticle(Article article)
@@ -46,11 +37,47 @@ namespace SportsHubBL.Services
             return _sportArticleRepository.Set().Include(sa => sa.Article).FirstOrDefault(sa => sa.Article == article);
         }
 
+        public SportArticle GetConnectedSportArticle(int articleId)
+        {
+            return _sportArticleRepository.Set().FirstOrDefault(sa => sa.ArticleId == articleId);
+        }
+
         public void AddSportArticleFromModel(SportArticleModel model)
         {
             var sportArticle = GetSportArticleFromModel(model);
 
             _sportArticleRepository.Insert(sportArticle);
+        }
+
+        public void UpdateSportArticleFromModel(int sportArticleId, SportArticleModel model)
+        {
+            var sportArticle = _sportArticleRepository.Set()
+                .FirstOrDefault(sa => sa.ArticleId == model.ArticleId);
+
+            if (sportArticle == null)
+            {
+                throw new ArgumentException($"SportArticle {sportArticleId} not found", nameof(sportArticleId));
+            }
+
+            var newSportArticle = GetSportArticleFromModel(model);
+
+            sportArticle.ArticleId = newSportArticle.ArticleId;
+            sportArticle.TeamId = newSportArticle.TeamId;
+
+            _sportArticleRepository.Update(sportArticle);
+        }
+
+        public void DeleteSportArticle(int sportArticleId)
+        {
+            var sportArticle = _sportArticleRepository.Set()
+                .FirstOrDefault(sa => sa.ArticleId == sportArticleId);
+
+            if (sportArticle == null)
+            {
+                throw new ArgumentException($"SportArticle {sportArticleId} not found", nameof(sportArticleId));
+            }
+
+            _sportArticleRepository.Delete(sportArticle);
         }
 
         public IEnumerable<SportArticle> GetSportArticles(int? categoryId, int? conferenceId, int? teamId, int? locationId, int count = 10)
@@ -62,10 +89,12 @@ namespace SportsHubBL.Services
 
             var query = from a in _sportArticleRepository.Set()
                         .Include(sa => sa.Article).ThenInclude(saa => saa.Category)
+                        .Include(sa => sa.Team).ThenInclude(t => t.Conference)
+                        .Include(sa => sa.Team).ThenInclude(sa => sa.Location)
                         where categoryId == null || a.Article.Category != null && a.Article.Category.Id == categoryId
-                        where conferenceId == null || a.ConferenceId == conferenceId
+                        where conferenceId == null || a.Team.Conference.Id == conferenceId
                         where teamId == null || a.TeamId == teamId
-                        where locationId == null || a.LocationId == locationId
+                        where locationId == null || a.Team.Location.Id == locationId
                         select a;
 
             return query.Take(count).ToList();
@@ -74,28 +103,26 @@ namespace SportsHubBL.Services
         private SportArticleModel LocalizeSportArticleModel(SportArticleModel model, SportArticle sportArticle, int languageId)
         {
             if (sportArticle?.Article == null
-                || sportArticle?.Team == null
-                || sportArticle?.Conference == null
-                || sportArticle?.Location == null)
+                || sportArticle?.Team == null)
             {
                 sportArticle = _sportArticleRepository.Set()
                     .Include(sa => sa.Article)
                     .Include(sa => sa.Team).ThenInclude(t => t.TeamLocalizations)
-                    .Include(sa => sa.Conference).ThenInclude(c => c.ConferenceLocalizations)
-                    .Include(sa => sa.Location)
+                    .Include(sa => sa.Team).ThenInclude(t => t.Conference).ThenInclude(c => c.ConferenceLocalizations)
+                    .Include(sa => sa.Team).ThenInclude(t => t.Location)
                     .FirstOrDefault(sa => sa == sportArticle);
             }
 
-            model.LocationId = sportArticle.Location.Id;
-            model.LocationUri = sportArticle.Location.Uri;
+            model.LocationId = sportArticle.Team.Location.Id;
+            model.LocationUri = sportArticle.Team.Location.Uri;
             //TODO: English language default id in call
             model.TeamId = sportArticle.Team.Id;
             model.TeamName = sportArticle.Team.TeamLocalizations
                 .FirstOrDefault(tl => tl.LanguageId == languageId)?.Name ??
                 sportArticle.Team.TeamLocalizations.FirstOrDefault(tl => tl.LanguageId == 1/*english*/)?.Name;
             //TODO: English language default id in call
-            model.ConferenceId = sportArticle.Conference.Id;
-            model.ConferenceName = sportArticle.Conference.ConferenceLocalizations
+            model.ConferenceId = sportArticle.Team.Conference.Id;
+            model.ConferenceName = sportArticle.Team.Conference.ConferenceLocalizations
                 .FirstOrDefault(cl => cl.LanguageId == languageId)?.Name ??
                 sportArticle.Team.Conference.ConferenceLocalizations.FirstOrDefault(cl => cl.LanguageId == 1/*english*/)?.Name;
 
@@ -105,15 +132,13 @@ namespace SportsHubBL.Services
         public SportArticleModel GenerateSportArticleModel(SportArticle sportArticle, int languageId)
         {
             if (sportArticle?.Article == null
-                || sportArticle?.Team == null
-                || sportArticle?.Conference == null
-                || sportArticle?.Location == null)
+                || sportArticle?.Team == null)
             {
                 sportArticle = _sportArticleRepository.Set()
                     .Include(sa => sa.Article)
                     .Include(sa => sa.Team).ThenInclude(t => t.TeamLocalizations)
-                    .Include(sa => sa.Conference).ThenInclude(c => c.ConferenceLocalizations)
-                    .Include(sa => sa.Location)
+                    .Include(sa=> sa.Team).ThenInclude(t => t.Conference).ThenInclude(c => c.ConferenceLocalizations)
+                    .Include(sa => sa.Team).ThenInclude(t => t.Location)
                     .FirstOrDefault(sa => sa == sportArticle);
             }
 
@@ -138,24 +163,14 @@ namespace SportsHubBL.Services
 
             var article = _articleModelService.GetArticleFromModel(model);
 
-            var location = _locationRepository.Set()
-                .FirstOrDefault(l => l.Id == model.LocationId) ??
-                throw new ArgumentException($"location {model.LocationId} doesn\'t exist", nameof(model));
-
             var team = _teamRepository.Set()
                 .FirstOrDefault(t => t.Id == model.TeamId) ??
                 throw new ArgumentException($"team {model.TeamId} doesn\'t exist", nameof(model));
 
-            var conference = _conferenceRepository.Set()
-                .FirstOrDefault(c => c.Id == model.ConferenceId) ??
-                throw new ArgumentException($"conference {model.ConferenceId} doesn\'t exist", nameof(model));
-
             return new SportArticle
             {
                 Article = article,
-                Location = location,
-                Team = team,
-                Conference = conference
+                Team = team
             };
         }
     }

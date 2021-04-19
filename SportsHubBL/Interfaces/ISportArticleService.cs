@@ -15,5 +15,13 @@ namespace SportsHubBL.Interfaces
         public SportArticleModel GenerateSportArticleModel(SportArticle sportArticle, int languageId);
 
         public SportArticle GetConnectedSportArticle(Article article);
+
+        public SportArticle GetConnectedSportArticle(int articleId);
+
+        public void AddSportArticleFromModel(SportArticleModel model);
+
+        public void UpdateSportArticleFromModel(int sportArticleId, SportArticleModel model);
+
+        public void DeleteSportArticle(int sportArticleId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsHubDAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class ContactUsLocalizationn
+    public class ContactUsLocalization : NoIdDBEntity
     {
-        public string Adress { get; set; }
-        public string Tel { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
         public string Email { get; set; }
         public string Headline { get; set; }
         public int SectionId { get; set; }
         public int LanguageId { get; set; }
-        public CompanyInfoSection CompanyInfoSections { get; set; }
-        public Language Language { get; set; }
+        public virtual CompanyInfoSection CompanyInfoSection { get; set; }
+        public virtual Language Language { get; set; }
     }
 }

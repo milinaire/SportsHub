@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class Team: NoIdDBEntity
+    public class Team: IDBEntity
     {
         public int Id { get; set; }
-        public Conference Conference { get; set; }
-        public Location Location { get; set; }
-        public Image Image { get; set; }
-        public DateTime DateCreated { get; set; }
+        public virtual Conference Conference { get; set; }
+        public virtual Location Location { get; set; }
+        public virtual Image Image { get; set; }
+        public virtual DateTime DateCreated { get; set; }
         public bool Show { get; set; }
-        public IEnumerable<FollowedTeams> FolovedTeams { get; set; }
-        public IEnumerable<BreakDown> BreakDowns { get; set; }
-        public IEnumerable<TeamLocalization> TeamLocalizations { get; set; }
-        public IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
-        public IEnumerable<SportArticle> SportArticle { get; set; }
+        public virtual IEnumerable<FollowedTeam> FollowedTeams { get; set; }
+        public virtual IEnumerable<BreakDown> BreakDowns { get; set; }
+        public virtual IEnumerable<TeamLocalization> TeamLocalizations { get; set; }
+        public virtual IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
+        public virtual IEnumerable<SportArticle> SportArticles { get; set; }
     }
 }

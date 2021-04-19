@@ -13,12 +13,12 @@ namespace SportsHubDAL.Entities
         public bool Show { get; set; }
         public bool IsEditable { get; set; }
 
-        public IEnumerable<Conference> Conferences { get; set; }
-        public IEnumerable<BreakDown> BreakDowns { get; set; }
-        public IEnumerable<CategoryAd> CategoryAds { get; set; }
-        public IEnumerable<CategoryPartner> CategoryPartners { get; set; }
-        public IEnumerable<CategoryLocalization> CategoryLocalizations { get; set; }
-        public IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
-        public IEnumerable<Banner> Banners { get; set; }
+        public virtual IEnumerable<Conference> Conferences { get; set; }
+        public virtual IEnumerable<BreakDown> BreakDowns { get; set; }
+        public virtual IEnumerable<CategoryAd> CategoryAds { get; set; }
+        public virtual IEnumerable<CategoryPartner> CategoryPartners { get; set; }
+        public virtual IEnumerable<CategoryLocalization> CategoryLocalizations { get; set; }
+        public virtual IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
+        public virtual IEnumerable<Banner> Banners { get; set; }
     }
 }

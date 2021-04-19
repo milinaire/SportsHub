@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class AdminPermissions
+    public class AdminPermissions : NoIdDBEntity
     {
         [Key]
         public int UserId { get; set; }
@@ -21,7 +21,7 @@ namespace SportsHubDAL.Entities
         public bool CreateOrDeleteBanners { get; set; }
         public bool AddOrDeleteLanguage { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         
     }
 }

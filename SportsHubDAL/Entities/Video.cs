@@ -11,7 +11,7 @@ namespace SportsHubDAL.Entities
     {
         public int Id { get; set; }
         public string Url { get; set; }
-        public Content Content { get; set; }
-        public IEnumerable<VideoLocalization> VideoTrasnlations { get; set; }
+        public virtual Content Content { get; set; }
+        public virtual IEnumerable<VideoLocalization> VideoLocalizations { get; set; }
     }
 }

@@ -11,8 +11,8 @@ namespace SportsHubDAL.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public Content Content { get; set; }
-        public ApplicationUser User{ get; set; }
+        public virtual Content Content { get; set; }
+        public virtual ApplicationUser User { get; set; }
       
     }
 }

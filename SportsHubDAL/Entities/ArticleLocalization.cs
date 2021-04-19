@@ -12,8 +12,8 @@ namespace SportsHubDAL.Entities
     {
         public int ArticleId { get; set; }
         public int LanguageId { get; set; }
-        public Article Article { get; set; }
-        public Language Language { get; set; }
+        public virtual Article Article { get; set; }
+        public virtual Language Language { get; set; }
         public string Headline { get; set; }
         [Column(TypeName = "text")]
         public string Text { get; set; }

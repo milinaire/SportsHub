@@ -1,3 +1,4 @@
+using SportsHubDAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class BreakDown
+    public class BreakDown : IDBEntity
     {
         public int Id { get; set; }
         public bool Show { get; set; }
-        public Conference Conference { get; set; }
-        public Category Category { get; set; }
-        public Team Team{ get; set; }
+        public virtual Conference Conference { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual Team Team{ get; set; }
      
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class Like : IDBEntity
+    public class FollowedTeam : NoIdDBEntity
     {
-        public int Id { get; set; }
-        public bool Dislike { get; set; }
-        public virtual Comment Comment { get; set; }
+        public int TeamId { get; set; }
+        public string UserId { get; set; }
+        public virtual Team Team { get; set; }
         public virtual ApplicationUser User { get; set; }
-      
+        
     }
 }

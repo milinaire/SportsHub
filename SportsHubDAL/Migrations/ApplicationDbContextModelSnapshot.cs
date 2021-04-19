@@ -331,7 +331,7 @@ namespace SportsHubDAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateOfCreation")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ImageId")
@@ -368,7 +368,7 @@ namespace SportsHubDAL.Migrations
                     b.ToTable("AdvertisingLocalizations");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.AllovedPartner", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.AllowedPartner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -380,7 +380,7 @@ namespace SportsHubDAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AllovedPartners");
+                    b.ToTable("AllowedPartners");
                 });
 
             modelBuilder.Entity("SportsHubDAL.Entities.ApplicationUser", b =>
@@ -666,7 +666,7 @@ namespace SportsHubDAL.Migrations
                     b.Property<int?>("ContentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Datetime")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEdited")
@@ -763,7 +763,7 @@ namespace SportsHubDAL.Migrations
                     b.ToTable("ConferenceLocalizations");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.ContactUsLocalizationn", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.ContactUsLocalization", b =>
                 {
                     b.Property<int>("SectionId")
                         .HasColumnType("int");
@@ -771,10 +771,10 @@ namespace SportsHubDAL.Migrations
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyInfoSectionsId")
+                    b.Property<int?>("CompanyInfoSectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -783,12 +783,12 @@ namespace SportsHubDAL.Migrations
                     b.Property<string>("Headline")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Tel")
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SectionId", "LanguageId");
 
-                    b.HasIndex("CompanyInfoSectionsId");
+                    b.HasIndex("CompanyInfoSectionId");
 
                     b.HasIndex("LanguageId");
 
@@ -906,22 +906,19 @@ namespace SportsHubDAL.Migrations
                     b.ToTable("DeletableInfoSectionsLocalizations");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.FollowedTeams", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.FollowedTeam", b =>
                 {
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("TeamId", "UserId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("FollowedTeams");
+                    b.ToTable("FollowedTeam");
                 });
 
             modelBuilder.Entity("SportsHubDAL.Entities.Footer", b =>
@@ -995,7 +992,7 @@ namespace SportsHubDAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("language")
+                    b.Property<string>("LanguageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1044,7 +1041,7 @@ namespace SportsHubDAL.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.MainArticles", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.MainArticle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1132,13 +1129,13 @@ namespace SportsHubDAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AllovedPartnersId")
+                    b.Property<int?>("AllowedPartnersId")
                         .HasColumnType("int");
 
                     b.Property<string>("ApiKey")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DefoultSourses")
+                    b.Property<string>("DefaultSources")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -1146,7 +1143,7 @@ namespace SportsHubDAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AllovedPartnersId");
+                    b.HasIndex("AllowedPartnersId");
 
                     b.ToTable("NewsPartners");
                 });
@@ -1314,16 +1311,16 @@ namespace SportsHubDAL.Migrations
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ConferenceId")
+                    b.Property<int?>("ConferenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArticleId", "ConferenceId", "TeamId", "LocationId");
+                    b.HasKey("ArticleId");
 
                     b.HasIndex("ConferenceId");
 
@@ -1331,7 +1328,7 @@ namespace SportsHubDAL.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("SportArticle");
+                    b.ToTable("SportArticles");
                 });
 
             modelBuilder.Entity("SportsHubDAL.Entities.Survey", b =>
@@ -1350,7 +1347,7 @@ namespace SportsHubDAL.Migrations
                     b.Property<bool>("IsClosed")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("Ispublished")
+                    b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -1479,7 +1476,7 @@ namespace SportsHubDAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("LanguageId");
 
@@ -1556,20 +1553,17 @@ namespace SportsHubDAL.Migrations
                     b.Property<int>("OptionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("SurveyOptionsId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("OptionId", "UserId");
 
                     b.HasIndex("SurveyOptionsId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Votes");
                 });
@@ -1663,7 +1657,7 @@ namespace SportsHubDAL.Migrations
             modelBuilder.Entity("SportsHubDAL.Entities.AdvertisingLocalization", b =>
                 {
                     b.HasOne("SportsHubDAL.Entities.Advertising", "Advertising")
-                        .WithMany("AdvertisingLocalization")
+                        .WithMany("AdvertisingLocalizations")
                         .HasForeignKey("AdvertisingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1777,7 +1771,7 @@ namespace SportsHubDAL.Migrations
             modelBuilder.Entity("SportsHubDAL.Entities.CategoryAd", b =>
                 {
                     b.HasOne("SportsHubDAL.Entities.Advertising", "Advertising")
-                        .WithMany("CategoryAd")
+                        .WithMany("CategoryAds")
                         .HasForeignKey("AdvertisingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1883,11 +1877,11 @@ namespace SportsHubDAL.Migrations
                     b.Navigation("Language");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.ContactUsLocalizationn", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.ContactUsLocalization", b =>
                 {
-                    b.HasOne("SportsHubDAL.Entities.CompanyInfoSection", "CompanyInfoSections")
+                    b.HasOne("SportsHubDAL.Entities.CompanyInfoSection", "CompanyInfoSection")
                         .WithMany("ContactUsLocalizations")
-                        .HasForeignKey("CompanyInfoSectionsId");
+                        .HasForeignKey("CompanyInfoSectionId");
 
                     b.HasOne("SportsHubDAL.Entities.Language", "Language")
                         .WithMany("ContactUsLocalizations")
@@ -1895,7 +1889,7 @@ namespace SportsHubDAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CompanyInfoSections");
+                    b.Navigation("CompanyInfoSection");
 
                     b.Navigation("Language");
                 });
@@ -1943,17 +1937,19 @@ namespace SportsHubDAL.Migrations
                     b.Navigation("Language");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.FollowedTeams", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.FollowedTeam", b =>
                 {
                     b.HasOne("SportsHubDAL.Entities.Team", "Team")
-                        .WithMany("FolovedTeams")
+                        .WithMany("FollowedTeams")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SportsHubDAL.Entities.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Team");
 
@@ -1990,7 +1986,7 @@ namespace SportsHubDAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.MainArticles", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.MainArticle", b =>
                 {
                     b.HasOne("SportsHubDAL.Entities.Article", "Article")
                         .WithMany("MainArticles")
@@ -2039,11 +2035,11 @@ namespace SportsHubDAL.Migrations
 
             modelBuilder.Entity("SportsHubDAL.Entities.NewsPartner", b =>
                 {
-                    b.HasOne("SportsHubDAL.Entities.AllovedPartner", "AllovedPartners")
+                    b.HasOne("SportsHubDAL.Entities.AllowedPartner", "AllowedPartners")
                         .WithMany("NewsPartners")
-                        .HasForeignKey("AllovedPartnersId");
+                        .HasForeignKey("AllowedPartnersId");
 
-                    b.Navigation("AllovedPartners");
+                    b.Navigation("AllowedPartners");
                 });
 
             modelBuilder.Entity("SportsHubDAL.Entities.PhotoOfTheDayLocalization", b =>
@@ -2110,29 +2106,21 @@ namespace SportsHubDAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SportsHubDAL.Entities.Conference", "Conference")
-                        .WithMany("SportArticle")
-                        .HasForeignKey("ConferenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("SportsHubDAL.Entities.Conference", null)
+                        .WithMany("SportArticles")
+                        .HasForeignKey("ConferenceId");
 
-                    b.HasOne("SportsHubDAL.Entities.Location", "Location")
+                    b.HasOne("SportsHubDAL.Entities.Location", null)
                         .WithMany("SportArticle")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("SportsHubDAL.Entities.Team", "Team")
-                        .WithMany("SportArticle")
+                        .WithMany("SportArticles")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Article");
-
-                    b.Navigation("Conference");
-
-                    b.Navigation("Location");
 
                     b.Navigation("Team");
                 });
@@ -2253,7 +2241,7 @@ namespace SportsHubDAL.Migrations
                         .IsRequired();
 
                     b.HasOne("SportsHubDAL.Entities.Video", "Video")
-                        .WithMany("VideoTrasnlations")
+                        .WithMany("VideoLocalizations")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2286,7 +2274,9 @@ namespace SportsHubDAL.Migrations
 
                     b.HasOne("SportsHubDAL.Entities.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("SurveyOptions");
 
@@ -2295,12 +2285,12 @@ namespace SportsHubDAL.Migrations
 
             modelBuilder.Entity("SportsHubDAL.Entities.Advertising", b =>
                 {
-                    b.Navigation("AdvertisingLocalization");
+                    b.Navigation("AdvertisingLocalizations");
 
-                    b.Navigation("CategoryAd");
+                    b.Navigation("CategoryAds");
                 });
 
-            modelBuilder.Entity("SportsHubDAL.Entities.AllovedPartner", b =>
+            modelBuilder.Entity("SportsHubDAL.Entities.AllowedPartner", b =>
                 {
                     b.Navigation("NewsPartners");
                 });
@@ -2358,7 +2348,7 @@ namespace SportsHubDAL.Migrations
 
                     b.Navigation("NewsLetterSubscriptions");
 
-                    b.Navigation("SportArticle");
+                    b.Navigation("SportArticles");
 
                     b.Navigation("Teams");
                 });
@@ -2467,18 +2457,18 @@ namespace SportsHubDAL.Migrations
                 {
                     b.Navigation("BreakDowns");
 
-                    b.Navigation("FolovedTeams");
+                    b.Navigation("FollowedTeams");
 
                     b.Navigation("NewsLetterSubscriptions");
 
-                    b.Navigation("SportArticle");
+                    b.Navigation("SportArticles");
 
                     b.Navigation("TeamLocalizations");
                 });
 
             modelBuilder.Entity("SportsHubDAL.Entities.Video", b =>
                 {
-                    b.Navigation("VideoTrasnlations");
+                    b.Navigation("VideoLocalizations");
                 });
 #pragma warning restore 612, 618
         }

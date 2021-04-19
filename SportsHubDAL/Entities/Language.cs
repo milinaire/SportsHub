@@ -7,30 +7,30 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class Language: DBEntity
+    public class Language: IDBEntity
     {
         public int Id { get; set; }
-        public string language { get; set; }
-        public IEnumerable<SurveyLocalization> SurveyLocalizations { get; set; }
-        public IEnumerable<SurveyOptionLocalization> SurveyOptionLocalizations { get; set; }
-        public IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
-        public IEnumerable<BannerLocalization> BannerLocalizations { get; set; }
-        public IEnumerable<PredefinedBannerLocalization> PredefinedBannerLocalizations { get; set; }
-        public IEnumerable<Term> Terms { get; set; }
-        public IEnumerable<Privacy> Privacies { get; set; }
-        public IEnumerable<NewsLetterLocalization> NewsLetterLocalizations { get; set; }
-        public IEnumerable<CompanyInfoLocalization> CompanyInfoLocalizations { get; set; }
-        public IEnumerable<ContributorsLocalization> ContributorsLocalizations { get; set; }
-        public IEnumerable<ContributorsSectionsLocalization> ContributorsSectionsLocalizations { get; set; }
-        public IEnumerable<DeletableInfoSectionsLocalization> DeletableInfoSectionsLocalizations { get; set; }
-        public IEnumerable<ContactUsLocalizationn> ContactUsLocalizations { get; set; }
-        public IEnumerable<AboutSportHubLocalization> AboutSportHubLocalizations { get; set; }
-        public IEnumerable<AdvertisingLocalization> AdvertisingLocalizations { get; set; }
-        public IEnumerable<TeamLocalization> TeamLocalizations { get; set; }
-        public IEnumerable<ConferenceLocalization> ConferenceLocalizations { get; set; }
-        public IEnumerable<CategoryLocalization> CategoryLocalizations { get; set; }
-        public IEnumerable<PhotoOfTheDayLocalization> PhotoOfTheDayLocalizations { get; set; }
-        public IEnumerable<VideoLocalization> VideoLocalizations { get; set; }
-        public IEnumerable<ArticleLocalization> ArticleLocalizations { get; set; }
+        public string LanguageName { get; set; }
+        public virtual IEnumerable<SurveyLocalization> SurveyLocalizations { get; set; }
+        public virtual IEnumerable<SurveyOptionLocalization> SurveyOptionLocalizations { get; set; }
+        public virtual IEnumerable<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
+        public virtual IEnumerable<BannerLocalization> BannerLocalizations { get; set; }
+        public virtual IEnumerable<PredefinedBannerLocalization> PredefinedBannerLocalizations { get; set; }
+        public virtual IEnumerable<Term> Terms { get; set; }
+        public virtual IEnumerable<Privacy> Privacies { get; set; }
+        public virtual IEnumerable<NewsLetterLocalization> NewsLetterLocalizations { get; set; }
+        public virtual IEnumerable<CompanyInfoLocalization> CompanyInfoLocalizations { get; set; }
+        public virtual IEnumerable<ContributorsLocalization> ContributorsLocalizations { get; set; }
+        public virtual IEnumerable<ContributorsSectionsLocalization> ContributorsSectionsLocalizations { get; set; }
+        public virtual IEnumerable<DeletableInfoSectionsLocalization> DeletableInfoSectionsLocalizations { get; set; }
+        public virtual IEnumerable<ContactUsLocalization> ContactUsLocalizations { get; set; }
+        public virtual IEnumerable<AboutSportHubLocalization> AboutSportHubLocalizations { get; set; }
+        public virtual IEnumerable<AdvertisingLocalization> AdvertisingLocalizations { get; set; }
+        public virtual IEnumerable<TeamLocalization> TeamLocalizations { get; set; }
+        public virtual IEnumerable<ConferenceLocalization> ConferenceLocalizations { get; set; }
+        public virtual IEnumerable<CategoryLocalization> CategoryLocalizations { get; set; }
+        public virtual IEnumerable<PhotoOfTheDayLocalization> PhotoOfTheDayLocalizations { get; set; }
+        public virtual IEnumerable<VideoLocalization> VideoLocalizations { get; set; }
+        public virtual IEnumerable<ArticleLocalization> ArticleLocalizations { get; set; }
     }
 }

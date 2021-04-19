@@ -8,12 +8,12 @@ using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
-    public class Location : DBEntity
+    public class Location: IDBEntity
     {
         public int Id { get; set; }
 
         [Required]
         public string Uri { get; set; }
-        public IEnumerable<SportArticle> SportArticle { get; set; }
+        public virtual IEnumerable<SportArticle> SportArticle { get; set; }
     }
 }

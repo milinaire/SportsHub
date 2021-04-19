@@ -395,6 +395,10 @@ namespace SportsHubDAL.Migrations
                 table: "SportArticle",
                 newName: "IX_SportArticle_ConferenceId");
 
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_Votes",
+                table: "Votes");
+
             migrationBuilder.AlterColumn<int>(
                 name: "UserId",
                 table: "Votes",
@@ -402,6 +406,11 @@ namespace SportsHubDAL.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_Votes",
+                table: "Votes",
+                column: "UserId");
 
             migrationBuilder.AddColumn<string>(
                 name: "UserId1",

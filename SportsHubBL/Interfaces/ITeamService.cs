@@ -34,11 +34,11 @@ namespace SportsHubBL.Interfaces
         
         public void DeleteTeamLocalizationById(int teamId, int languageId);
         
-        public void DeleteTeamConferenceById(int teamId, int conferenceId);
-
         public void UpdateTeamLocalizationFromModel(TeamModel model);
         
-        public void UpdateTeamConferenceFromModel(TeamModel model);
+        //public void DeleteTeamConferenceById(int teamId, int conferenceId);
+
+        //public void UpdateTeamConferenceFromModel(TeamModel model);
         
     }
 }

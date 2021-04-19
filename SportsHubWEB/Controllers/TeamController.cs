@@ -106,8 +106,94 @@ namespace SportsHubWEB.Controllers
             
         }
         
-        
-        
+        [HttpPut]
+        public IActionResult AddTeamFromModel([FromQuery] TeamModel model)
+        {
+            try
+            {
+                _teamService.AddTeamFromModel(model);
+                return Ok($"Team {model.TeamId} successfully added");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest($"Team {model.TeamId} was null");
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest($"Team id {model.TeamId} is already taken");
+            }
 
+        }
+        
+        
+        [HttpPut]
+        public IActionResult AddNewTeamLocalizationFromModel([FromQuery] TeamModel model)
+        {
+            try
+            {
+                _teamService.AddNewTeamLocalizationFromModel(model);
+                return Ok($"Team {model.TeamId} successfully added");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest($"Team {model.TeamId} was null");
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
+            }
+        }
+        
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteTeamById(int id)
+        {
+            try
+            {
+                _teamService.DeleteTeamById(id);
+                return Ok($"Team {id} successfully deleted");
+            }
+            catch (ArgumentException)
+            {
+                return NotFound($"Team with id {id} is not found");
+            }
+            
+        }
+        
+        [HttpPost]
+        public IActionResult UpdateTeamLocalizationFromModel([FromQuery] TeamModel model)
+        {
+            try
+            {
+                _teamService.UpdateTeamLocalizationFromModel(model);
+                return Ok($"Team  {model.TeamId} successfully updated");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest($"Team {model.TeamId} was null");
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
+            }
+        }
+        
+        [HttpDelete]
+        public IActionResult DeleteTeamLocalizationById([FromQuery] int teamId, int languageId)
+        {
+            try
+            {
+                _teamService.DeleteTeamLocalizationById(teamId,  languageId);
+                return Ok($"Team  {teamId} successfully deleted");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest($"Team {teamId} was null");
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest($"Localization in language {languageId} for team {teamId} already exists");
+            }
+        }
+        
     }
 }

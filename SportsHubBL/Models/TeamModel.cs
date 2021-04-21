@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace SportsHubBL.Models
     {
         public int TeamId { get; set; }
         
-        public int ConferenceId { get; set; }
+        public int? ConferenceId { get; set; }
         
-        public int LanguageId { get; set; }
+        public int? LanguageId { get; set; }
         
         public int? CategoryId { get; set; }
 
@@ -31,7 +32,6 @@ namespace SportsHubBL.Models
         public string Name { get; set; }
         
         public string Description { get; set; }
-
         
     }
 }

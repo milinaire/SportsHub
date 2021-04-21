@@ -22,92 +22,31 @@ namespace SportsHubWEB.Controllers
             _teamService = teamService;
         }
         
+        
+        
         [HttpGet]
-        public IActionResult GetAllTeams()
-        {
-            var result = _teamService.GetAllTeams();
-            if(result.IsNullOrEmpty())
-                return NotFound("Teams are not found");
-            return Ok(result);
-        }
-        
-        [HttpGet("{id:int}")]
-        public IActionResult GetTeamById([FromQuery]int id)
+        public IActionResult GetTeams
+            (
+            [FromQuery] int? conferenceId,
+            [FromQuery] int? categoryId,
+            [FromQuery] int? teamId,
+            [FromQuery] int? locationId
+            )
         {
             try
             {
-                var result = _teamService.GetTeamById(id);
+                var result = _teamService.GetTeams(conferenceId,categoryId,teamId,locationId).Select(sa => _teamService.GenerateTeamModel(sa, locationId ?? 1));
+                if(result.IsNullOrEmpty())
+                    return NotFound("Teams are not found");
                 return Ok(result);
             }
             catch (ArgumentException)
             {
-                return NotFound($"Team with id {id} is not found");
+                return BadRequest("Teams are not found");
             }
-            
         }
-        
-        
-        [HttpGet("category/{categoryId:int}")]
-        public IActionResult GetTeamsByCategory([FromQuery]int categoryId)
-        {
-            try
-            {
-                var result = _teamService.GetTeamsByCategory(categoryId).Select(a => _teamService.GenerateTeamModel(a, 1));
-                return Ok(result);
-            }
-            catch (ArgumentException)
-            {
-                return NotFound($"Teams in category with id {categoryId} are not found");
-            }
-            
-        }
-        
-        [HttpGet("conference/{conferenceId:int}")]
-        public IActionResult GetTeamsByConference([FromQuery]int conferenceId)
-        {
-            try
-            {
-                var result = _teamService.GetTeamsByConference(conferenceId).Select(a => _teamService.GenerateTeamModel(a, 1));
-                return Ok(result);
-            }
-            catch (ArgumentException)
-            {
-                return NotFound($"Teams in category with id {conferenceId} are not found");
-            }
-            
-        }
-        
-        [HttpGet("location/{locationId:int}")]
-        public IActionResult GetTeamsByLocation([FromQuery]int locationId)
-        {
-            try
-            {
-                var result = _teamService.GetTeamsByLocation(locationId).Select(a => _teamService.GenerateTeamModel(a, 1));
-                return Ok(result);
-            }
-            catch (ArgumentException)
-            {
-                return NotFound($"Teams in location with id {locationId} are not found");
-            }
-            
-        }
-        [HttpGet("{teamId:int}/{languageId:int}")]
-        public IActionResult GetTeamLocalization([FromQuery]int teamId, int languageId)
-        {
-            try
-            {
-                var result = _teamService.GetTeamLocalization(teamId,languageId);
-                return Ok(result);
-            }
-            catch (ArgumentException)
-            {
-                return NotFound($"Teams localization with id {languageId} is not found");
-            }
-            
-        }
-        
-        [HttpPut]
-        public IActionResult AddTeamFromModel([FromQuery] TeamModel model)
+        [HttpPost]
+        public IActionResult AddTeamFromModel([FromBody] TeamModel model)
         {
             try
             {
@@ -126,8 +65,8 @@ namespace SportsHubWEB.Controllers
         }
         
         
-        [HttpPut]
-        public IActionResult AddNewTeamLocalizationFromModel([FromQuery] TeamModel model)
+        [HttpPost("localization")]
+        public IActionResult AddNewTeamLocalizationFromModel([FromBody] TeamModel model)
         {
             try
             {
@@ -143,24 +82,9 @@ namespace SportsHubWEB.Controllers
                 return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
             }
         }
-        
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteTeamById(int id)
-        {
-            try
-            {
-                _teamService.DeleteTeamById(id);
-                return Ok($"Team {id} successfully deleted");
-            }
-            catch (ArgumentException)
-            {
-                return NotFound($"Team with id {id} is not found");
-            }
-            
-        }
-        
-        [HttpPost]
-        public IActionResult UpdateTeamLocalizationFromModel([FromQuery] TeamModel model)
+
+        [HttpPut]
+        public IActionResult UpdateTeamLocalizationFromModel([FromBody] TeamModel model)
         {
             try
             {
@@ -175,6 +99,39 @@ namespace SportsHubWEB.Controllers
             {
                 return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
             }
+        }
+        
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateTeamFromModel([FromRoute] int id, [FromBody] TeamModel teamModel)
+        {
+            try
+            {
+                if (teamModel == null)
+                {
+                    return BadRequest("Model was null");
+                }
+                _teamService.UpdateTeamFromModel(id, teamModel);
+                return Ok($"Team {id} successfully Updated");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteTeamById([FromRoute]int id)
+        {
+            try
+            {
+                _teamService.DeleteTeamById(id);
+                return Ok($"Team {id} successfully deleted");
+            }
+            catch (ArgumentException)
+            {
+                return NotFound($"Team with id {id} is not found");
+            }
+            
         }
         
         [HttpDelete]

@@ -10,6 +10,7 @@ namespace SportsHubBL.Interfaces
 {
     public interface ITeamService
     {
+        public IEnumerable<Team> GetTeams(int? conferenceId, int? categoryId, int? teamId, int? locationId);
         public IEnumerable<Team> GetAllTeams();
         
         public IEnumerable<Team> GetTeamsByConference(int conferenceId);
@@ -33,7 +34,7 @@ namespace SportsHubBL.Interfaces
         public void DeleteTeamById(int id);
         
         public void DeleteTeamLocalizationById(int teamId, int languageId);
-        
+        public void UpdateTeamFromModel(int teamId, TeamModel model);
         public void UpdateTeamLocalizationFromModel(TeamModel model);
         
         //public void DeleteTeamConferenceById(int teamId, int conferenceId);

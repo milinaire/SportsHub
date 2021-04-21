@@ -15,20 +15,20 @@ namespace SportsHubBL.Services
         private readonly IRepository<Team> _teamRepository;
         private readonly IRepository<Language> _languageRepository;
         private readonly IRepository<Conference> _conferenceRepository;
-        private readonly IRepository<Category> _categoryRepository;
+        private readonly INoIdRepository<Category> _categoryRepository;
         private readonly IRepository<Location> _locationRepository;
         private readonly IRepository<Image> _imageRepository;
-        private readonly IRepository<TeamLocalization> _teamLocalizationRepository;
+        private readonly INoIdRepository<TeamLocalization> _teamLocalizationRepository;
 
 
         public TeamService(
             IRepository<Team> teamRepository,
             IRepository<Language> languageRepository,
             IRepository<Conference> conferenceRepository,
-            IRepository<Category> categoryRepository,
+            INoIdRepository<Category> categoryRepository,
             IRepository<Location> locationRepository,
             IRepository<Image> imageRepository,
-            IRepository<TeamLocalization> teamLocalizationRepository
+            INoIdRepository<TeamLocalization> teamLocalizationRepository
             )
         {
             _teamRepository = teamRepository;
@@ -52,7 +52,24 @@ namespace SportsHubBL.Services
             }
             
         }
+        
+        public IEnumerable<Team> GetTeams(int? conferenceId, int? categoryId, int? teamId, int? locationId)
+        {
+            
+            var query = from a in _teamRepository.Set()
+                    .Include(sa => sa.Conference).ThenInclude(saa => saa.Category)
+                    .Include(sa => sa.Location)
+                    .Include(sa => sa.Image)
+                where categoryId == null || a.Conference != null && a.Conference.Category.Id == categoryId
+                where conferenceId == null || a.Conference.Id == conferenceId
+                where teamId == null || a.Id == teamId
+                where locationId == null || a.Location.Id == locationId
+                select a;
 
+            return query.ToList();
+        }
+
+        
         public IEnumerable<Team> GetTeamsByConference(int conferenceId)
         {
             var conference = _conferenceRepository.Set().FirstOrDefault(c => c.Id == conferenceId);
@@ -190,6 +207,7 @@ namespace SportsHubBL.Services
             
             return new TeamModel
             {
+                TeamId = team.Id,
                 ImageId = team.Image.Id,
                 ImageUri = team.Image.Uri,
                 LocationId = team.Location.Id,
@@ -296,8 +314,8 @@ namespace SportsHubBL.Services
 
             _teamLocalizationRepository.Delete(teamLocalization);
         }
-
-        public void DeleteTeamConferenceById(int teamId, int conferenceId)
+        
+        /*public void DeleteTeamConferenceById(int teamId, int conferenceId)
         {
             var team =_teamRepository.Set().FirstOrDefault(a => a.Id == teamId);
             if (team == null)
@@ -306,7 +324,7 @@ namespace SportsHubBL.Services
             }
             
             _conferenceRepository.Delete(team.Conference);
-        }
+        }*/
 
         public void UpdateTeamLocalizationFromModel(TeamModel model)
         {
@@ -329,18 +347,20 @@ namespace SportsHubBL.Services
             _teamLocalizationRepository.Update(originalTeamLocalization);
         }
 
-        public void UpdateTeamConferenceFromModel(TeamModel model)
+        public void UpdateTeamFromModel(int teamId, TeamModel model)
         {
-            var team = GetTeamFromModel(model);
+            var team = _teamRepository.Set()
+                .FirstOrDefault(sa => sa.Id == teamId);
 
-            var originalTeamConference = _conferenceRepository.Set()
-                .FirstOrDefault(conf => conf.Id == team.Conference.Id);
-
-            if (originalTeamConference == null)
+            if (team == null)
             {
-                throw new ArgumentException($"no previous conference  {model.ConferenceId} in team {model.TeamId}", nameof(model));
+                throw new ArgumentException($"team {teamId} not found", nameof(teamId));
             }
-            _conferenceRepository.Update(originalTeamConference);
+
+            var newTeam = GetTeamFromModel(model);
+            team.Show = newTeam.Show;
+            team.Id = newTeam.Id;
+            _teamRepository.Update(newTeam);
         }
     }
 }

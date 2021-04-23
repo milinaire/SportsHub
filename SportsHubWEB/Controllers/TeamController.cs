@@ -41,6 +41,10 @@ namespace SportsHubWEB.Controllers
             {
                 return BadRequest("Teams are not found");
             }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         [HttpPost]
         public IActionResult AddTeamFromModel([FromBody] TeamModel model)
@@ -91,7 +95,10 @@ namespace SportsHubWEB.Controllers
             {
                 return NotFound($"Team with id {id} is not found");
             }
-            
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         
         [HttpGet("{id:int}/localization/{languageId:int}")]
@@ -138,7 +145,7 @@ namespace SportsHubWEB.Controllers
             {
                 return BadRequest(e.Message);
             }
-
+            
             return Ok();
         }
         

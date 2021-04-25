@@ -38,8 +38,8 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
     {">"}
   </button>)
   return (
-    <Fragment>
-      <div style={{display: "flex", width: "100%"}}>
+    <Fragment >
+      <div  style={{display: "flex", width: "100%"}}>
         <img src={img} alt={alt} style={{width: "64%", height:'calc((100vw - 300px) * 0.36)',zIndex: -2}}/>
         <div style={{marginTop: '33%', marginLeft:"2%"}}>{buttons}</div>
         <div style={{
@@ -112,7 +112,7 @@ export class MainArticles extends Component {
 
       this.setState({index: (this.state.index+1)%this.props.articles.length});
 
-    }, 5500);
+    }, 6000);
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(!this.state.index && this.state.index !==0){this.setState({index:0})}

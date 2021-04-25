@@ -18,8 +18,12 @@ html {
   }
 }
 
-.container {
+.containers {
   max-width: 960px;
+  color: gold;
+  background:red;
+  display: flex;
+  flex-direction: row;
 }
 
 .pricing-header {

@@ -1,0 +1,79 @@
+.footer-categiries {
+  clear: both;
+  margin-bottom: 0;
+  border-top: 3px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 200px 40px 20px;
+}
+.footer-categiry {
+  width: 33%;
+}
+.footer-categiry h4 {
+  padding-bottom: 25px;
+}
+
+.footer-info {
+  clear: both;
+  margin-bottom: 0;
+  height: 6em;
+  background-color: #d72130 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 22px;
+  width: 16rem;
+  display: inline-block;
+  height: 100%;
+}
+.logo a {
+  text-decoration: none;
+}
+.logo-text {
+  text-align: center;
+  color: white;
+}
+.logo-text p {
+  padding: 0;
+  margin: 0;
+  color: white !important;
+}
+.footer-link {
+  height: 100%;
+  width: 265px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.copirating {
+  display: inline-block;
+  padding: auto;
+  color: white;
+  margin-right: 50px;
+  text-align: right;
+}
+.copirating p {
+  margin: 0;
+}
+.copirating a {
+  text-decoration: none;
+  color: white;
+}
+.input-email {
+  border-radius: 0;
+  border: 3px solid #ccc;
+  padding: 5px;
+}
+.submit-email {
+  border-radius: 0;
+  border: 3px solid #d72130;
+  color: white;
+  background: #d72130;
+  padding: 5px;
+}
+.footer-categiry p {
+  color: #aaa;
+}

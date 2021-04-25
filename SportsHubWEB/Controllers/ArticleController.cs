@@ -43,7 +43,7 @@ namespace SportsHubWEB.Controllers
                 var sportArticle = _sportArticleService.GetConnectedSportArticle(mam.ArticleId);
                 if (sportArticle == null)
                 {
-                    return _articleModelService.GenerateArticleModel(sportArticle.Article, languageId?? 1);
+                    return _articleModelService.GenerateArticleModel(_articleService.GetArticleById(mam.ArticleId), languageId?? 1);
                 }
                 else
                 {

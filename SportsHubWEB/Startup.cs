@@ -9,8 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SportsHubBL.Interfaces;
+using SportsHubBL.Services;
 using SportsHubDAL.Data;
 using SportsHubDAL.Entities;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubWEB
 {
@@ -27,7 +30,8 @@ namespace SportsHubWEB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseLazyLoadingProxies()
+                .UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("SportsHubDAL")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -42,8 +46,16 @@ namespace SportsHubWEB
                 .AddIdentityServerJwt();
 
             services.AddScoped<ApplicationDbContext>();
-            services.AddScoped(typeof(SportsHubDAL.Interfaces.IRepository<>),typeof(SportsHubBL.Common.Repository<>));
+            services.AddScoped(typeof(INoIdRepository<>),typeof(SportsHubBL.Common.NoIdRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(SportsHubBL.Common.Repository<>));
 
+            services.AddScoped<IArticleModelService, ArticleModelService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<ITeamService, TeamService>();
+
+            services.AddScoped<ISportArticleService, SportArticleService>();
+            services.AddScoped<IContentService, ContentService>();
+            services.AddScoped<IAdvertisingService, AdvertisingService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

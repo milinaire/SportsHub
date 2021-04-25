@@ -18,7 +18,6 @@ namespace SportsHubDAL.Data
         public DbSet<Team> Teams { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Conference> Conferences { get; set; }
-
         public DbSet<Image> Images { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Language> Languages { get; set; }
@@ -30,7 +29,7 @@ namespace SportsHubDAL.Data
         public DbSet<BannerLocalization> BannerLocalizations { get; set; }
         public DbSet<CompanyInfoSection> CompanyInfoSections { get; set; }
         public DbSet<CompanyInfoLocalization> CompanyInfoLocalizations { get; set; }
-        public DbSet<ContactUsLocalizationn> ContactUsLocalizations { get; set; }
+        public DbSet<ContactUsLocalization> ContactUsLocalizations { get; set; }
         public DbSet<ContributorsSection> ContributorsSections { get; set; }
         public DbSet<ContributorsSectionsLocalization> ContributorsSectionsLocalizations { get; set; }
         public DbSet<ContributorsLocalization> ContributorsLocalizations { get; set; }
@@ -45,7 +44,7 @@ namespace SportsHubDAL.Data
         public DbSet<Advertising> Advertisings { get; set; }
         public DbSet<AdvertisingLocalization> AdvertisingLocalizations { get; set; }
         public DbSet<CategoryAd> CategoryAds { get; set; }
-        public DbSet<AllovedPartner> AllovedPartners { get; set; }
+        public DbSet<AllowedPartner> AllowedPartners { get; set; }
         public DbSet<NewsPartner> NewsPartners { get; set; }
         public DbSet<CategoryPartner> CategoryPartners { get; set; }
         public DbSet<TeamLocalization> TeamLocalizations { get; set; }
@@ -53,7 +52,7 @@ namespace SportsHubDAL.Data
         public DbSet<CategoryLocalization> CategoryLocalizations { get; set; }
         public DbSet<Period> Periods { get; set; }
         public DbSet<Home> Homes { get; set; }
-        public DbSet<MainArticles> MainArticles { get; set; }
+        public DbSet<MainArticle> MainArticles { get; set; }
         public DbSet<SocialNetwork> SocialNetvorks { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<Video> Videos { get; set; }
@@ -64,6 +63,8 @@ namespace SportsHubDAL.Data
         public DbSet<BreakDown> BreakDowns { get; set; }
         public DbSet<NewsLetterSubscription> NewsLetterSubscriptions { get; set; }
         public DbSet<AdminPermissions> AdminPermissions { get; set; }
+        public DbSet<SportArticle> SportArticles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -74,7 +75,7 @@ namespace SportsHubDAL.Data
             modelBuilder.Entity<PredefinedBannerLocalization>().HasKey(e => new { e.PredefinedBannerId, e.LanguageId });
             modelBuilder.Entity<ContributorsSectionsLocalization>().HasKey(e => new { e.SectionId, e.LanguageId });
             modelBuilder.Entity<DeletableInfoSectionsLocalization>().HasKey(e => new { e.SectionId, e.LanguageId });
-            modelBuilder.Entity<ContactUsLocalizationn>().HasKey(e => new { e.SectionId, e.LanguageId });
+            modelBuilder.Entity<ContactUsLocalization>().HasKey(e => new { e.SectionId, e.LanguageId });
             modelBuilder.Entity<AboutSportHubLocalization>().HasKey(e => new { e.SectionId, e.LanguageId });
             modelBuilder.Entity<AdvertisingLocalization>().HasKey(e => new { e.AdvertisingId, e.LanguageId });
             modelBuilder.Entity<CategoryAd>().HasKey(e => new { e.AdvertisingId, e.CategoryId });
@@ -93,13 +94,8 @@ namespace SportsHubDAL.Data
                 .HasKey(e => new { e.ArticleId, e.LanguageId });
             modelBuilder.Entity<Votes>()
                 .HasKey(e => new { e.OptionId, e.UserId });
-            modelBuilder.Entity<FollowedTeams>()
+            modelBuilder.Entity<FollowedTeam>()
                .HasKey(e => new { e.TeamId, e.UserId });
-            modelBuilder.Entity<SportArticle>()
-              .HasKey(e => new { e.ArticleId, e.ConferenceId, e.TeamId, e.LocationId });
-            
-            
-           
         }
     }
 

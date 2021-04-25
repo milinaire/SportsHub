@@ -1,47 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SportsHubDAL.Data;
-using SportsHubDAL.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SportsHubDAL.Data;
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubBL.Common
 {
-    public class Repository<T> : IRepository<T> where T : class, DBEntity
+    public class Repository<T>:NoIdRepository<T>, IRepository<T> where T: class, IDBEntity
     {
-        protected readonly ApplicationDbContext context;
-        private readonly DbSet<T> entities;
+        public Repository(ApplicationDbContext context):base(context)
+        {
 
-        public Repository(ApplicationDbContext context)
-        {
-            this.context = context;
-            entities = context.Set<T>();
-        }
-        public IQueryable<T> Set()
-        {
-            return entities;
         }
 
-        public void Insert(T entity)
+        public T GetById(int id)
         {
-            if (entity == null) throw new ArgumentNullException("entity");
-
-            entities.Add(entity);
-            context.SaveChanges();
-        }
-        public void Update(T entity)
-        {
-            if (entity == null) throw new ArgumentNullException("entity");
-            context.SaveChanges();
-        }
-
-        public void Delete(T entity)
-        {
-            if (entity == null) throw new ArgumentNullException("entity");
-            entities.Remove(entity);
-            context.SaveChanges();
+            return entities.FirstOrDefault(e => e.Id == id);
         }
     }
 }

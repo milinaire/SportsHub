@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-
+using SportsHubDAL.Interfaces;
 
 namespace SportsHubDAL.Entities
 {
     
-    public class CompanyInfoLocalization
+    public class CompanyInfoLocalization : NoIdDBEntity
     {
         [Key]
         public int LanguageId { get; set; }
-        public Language Language { get; set; }
+        public virtual Language Language { get; set; }
         public string Title { get; set; }
     }
 }

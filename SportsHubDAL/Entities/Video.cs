@@ -1,3 +1,4 @@
+using SportsHubDAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SportsHubDAL.Entities
 {
-    public class Video
+    public class Video: IDBEntityWithContent
     {
         public int Id { get; set; }
         public string Url { get; set; }
-        public Content Content { get; set; }
-        public IEnumerable<VideoLocalization> VideoTrasnlations { get; set; }
+        public virtual Content Content { get; set; }
+        public virtual IEnumerable<VideoLocalization> VideoLocalizations { get; set; }
     }
 }

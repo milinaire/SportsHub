@@ -111,7 +111,7 @@ export class Header extends Component {
                       id="dropdownMenu1"
                     >
                       {this.state.User.user_actions.map((action, key) => (
-                        <NavDropdown.Item href={"#" + action + key}>
+                        <NavDropdown.Item key={key} href={"#" + action + key}>
                           {action}
                         </NavDropdown.Item>
                       ))}
@@ -133,13 +133,14 @@ export class Header extends Component {
                   {this.state.Languages.available_lang.map((language, key) =>
                     key === this.state.Languages.current_lang[1] ? (
                       <NavDropdown.Item
+                        key={key}
                         className="dropdown-item disabled"
                         href={"#" + language + key}
                       >
                         {language}
                       </NavDropdown.Item>
                     ) : (
-                      <NavDropdown.Item href={"#" + language + key}>
+                      <NavDropdown.Item key={key} href={"#" + language + key}>
                         {language}
                       </NavDropdown.Item>
                     )

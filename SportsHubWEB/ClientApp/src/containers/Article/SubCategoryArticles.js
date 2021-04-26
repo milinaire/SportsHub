@@ -1,6 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import Card from "react-bootstrap/Card";
-import {Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 
@@ -46,23 +44,19 @@ export class SubCategoryArticles extends Component {
         )
     }
   }
-
   componentWillUnmount() {
     this.props.setCategory('')
 
   }
-
   state = {
     Articles: [],
   }
-
-
   render() {
     let list = []
     for (let i = 0; i < this.state.Articles.length; i++) {
-
       list.push(
-        <Link to={`${this.props.match.params.subcategory}/${this.state.Articles[i].conferenceId}/${this.state.Articles[i].articleId}`}>
+        <Link
+          to={`${this.props.match.params.subcategory}/${this.state.Articles[i].conferenceId}/${this.state.Articles[i].articleId}`}>
           <div className={"article"} style={{display: "flex", margin: "15px"}}>
             <img src={this.state.Articles[i].imageUri} style={{width: "40%", height: "240px", padding: "10px"}}
                  alt={this.state.Articles[i].alt}/>
@@ -75,7 +69,6 @@ export class SubCategoryArticles extends Component {
       )
       list.push(<hr style={{border: "1px solid #eee", margin: 0}}/>)
     }
-    ;
     list.pop()
     return (
       <Fragment>
@@ -85,7 +78,6 @@ export class SubCategoryArticles extends Component {
           {list}
         </div>
       </Fragment>
-
     )
   }
 }

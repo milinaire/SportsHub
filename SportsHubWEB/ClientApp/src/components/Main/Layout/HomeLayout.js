@@ -19,8 +19,6 @@ export class HomeLayout extends Component {
           <div className="main-part">
             <MainArticles articles={this.props.articles}/>
             <div className="main-content">
-
-
               <div className={"content"}>{this.props.children}</div>
               {this.props.layout === 'home' ? <Sidebar category={this.props.category}/> : null}
             </div>

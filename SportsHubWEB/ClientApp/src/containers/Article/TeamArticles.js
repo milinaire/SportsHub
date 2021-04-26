@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from "react";
-import Card from "react-bootstrap/Card";
-import {Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 export class TeamArticles extends Component {

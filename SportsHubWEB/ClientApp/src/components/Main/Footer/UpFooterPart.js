@@ -7,21 +7,22 @@ export class UpFooterPart extends Component {
     ContactUs: { HeadLine: "Contact Us", show: true, url: "contact" },
     AboutSportHub: { HeadLine: "About SportHub", show: true, url: "about" },
     CompanyInfo: {
+
       title: "COMPANY INFO",
       show: true,
       sections: [
-        { HeadLine: "headline", show: true, url: "1" },
-        { HeadLine: "headline", show: true, url: "2" },
-        { HeadLine: "headline", show: true, url: "3" },
+        { HeadLine: "headline", show: true, url: "1", id:1 },
+        { HeadLine: "headline", show: true, url: "2", id:2 },
+        { HeadLine: "headline", show: true, url: "3", id:3 },
       ],
     },
     Contributors: {
       title: "CONTRIBUTORS",
       show: true,
       contributors: [
-        { HeadLine: "headline", show: true, url: "1" },
-        { HeadLine: "headline", show: true, url: "2" },
-        { HeadLine: "headline", show: true, url: "3" },
+        { HeadLine: "headline", show: true, url: "1", id:1 },
+        { HeadLine: "headline", show: true, url: "2", id:2 },
+        { HeadLine: "headline", show: true, url: "3", id:3 },
       ],
     },
     NewsLetter: {
@@ -46,7 +47,7 @@ export class UpFooterPart extends Component {
               ) : null}
               {this.state.CompanyInfo.sections.map((section) =>
                 section.show ? (
-                  <Link to={`/companyinfo/${section.url}`}>
+                  <Link key={section.id} to={`/companyinfo/${section.url}`}>
                     <p>{section.HeadLine}</p>
                   </Link>
                 ) : null
@@ -65,7 +66,7 @@ export class UpFooterPart extends Component {
               </h4>
               {this.state.Contributors.contributors.map((contributor) =>
                 contributor.show ? (
-                  <Link to={`/contributors/${contributor.url}`}>
+                  <Link key={contributor.id} to={`/contributors/${contributor.url}`}>
                     <p>{contributor.HeadLine}</p>
                   </Link>
                 ) : null

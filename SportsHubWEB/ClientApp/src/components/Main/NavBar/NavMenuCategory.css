@@ -1,90 +1,101 @@
 .modal-full {
-  position: fixed;
-  top: 100px;
-  right: 0;
-  bottom: 0;
-  left: 300px;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  z-index: 1;
+    position: fixed;
+    top: 100px;
+    right: 0;
+    bottom: 0;
+    left: 300px;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    z-index: 1;
 }
+
 .hide-footer {
-  position: fixed;
-  bottom: 0px;
-  left: 0;
-  height: 6rem;
-  background: white;
-  width: 265px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 6rem;
+    background: white;
+    width: 265px;
 }
 
 .active {
-  color: #d72130 !important;
-  background-color: cornflowerblue;
-  list-style-type: disc;
-  direction: ltr;
+    color: #d72130 !important;
+    background-color: cornflowerblue;
+    list-style-type: disc;
+    direction: ltr;
 }
+
 .active-subcategory {
-  color: #d72130 !important;
+    color: #d72130 !important;
 }
+
 .active-team {
-  color: #d72130 !important;
+    color: #d72130 !important;
 }
 
 .not-active:hover {
-  color: lightslategray;
+    color: lightslategray;
 }
 
 .dropdown-content {
-  padding-top: 64px;
-  display: none;
-  position: fixed;
-  height: 100%;
-  top: 100px;
-  left: 265px;
-  width: 300px;
-  z-index: 999999;
-  background-color: #fff;
+    padding-top: 64px;
+    display: none;
+    position: fixed;
+    height: 100%;
+    top: 100px;
+    left: 265px;
+    width: 300px;
+    z-index: 999999;
+    background-color: #fff;
 
-  box-shadow: #919191;
+    box-shadow: #919191;
 }
+
 .dropdown-content-team {
-  display: none;
-  position: fixed;
-  padding-top: 62px;
-  top: 100px;
-  left: 495px;
-  width: 300px;
-  z-index: 999999;
-  background-color: #fff;
-  height: 100%;
+    display: none;
+    position: fixed;
+    padding-top: 62px;
+    top: 100px;
+    left: 495px;
+    width: 300px;
+    z-index: 999999;
+    background-color: #fff;
+    height: 100%;
 }
 
 .category {
-  padding: 10px 0px;
-  margin-left: 20px;
+    padding: 10px 0;
+    margin-left: 20px;
 }
+
 .subcategory {
-  padding: 10px 50px;
+    padding: 10px 50px;
 }
+
 .team {
-  padding: 10px 50px;
+    padding: 10px 50px;
 }
+
 .subcategory:hover {
-  background: rgba(255, 0, 0, 0.1);
+    background: rgba(255, 0, 0, 0.1);
 }
+
 .category:hover {
-  border-right: 5px solid #d72130;
+    border-right: 5px solid #d72130;
 }
+
 .category:hover .dropdown-content {
-  display: block;
+    display: block;
 }
+
 .subcategory:hover .dropdown-content-team {
-  display: block;
+    display: block;
 }
 
 .dropdown-content:hover {
-  display: block;
+    display: block;
 }
+
 .dropdown-content-team:hover {
-  display: block;
+    display: block;
 }

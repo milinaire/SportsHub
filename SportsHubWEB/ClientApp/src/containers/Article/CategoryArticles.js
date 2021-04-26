@@ -1,6 +1,4 @@
 import React, {Component, Fragment} from "react";
-import Card from "react-bootstrap/Card";
-import {Button, Col, ListGroup, ListGroupItem, Row} from "react-bootstrap";
 import "./style.css"
 import {Link} from "react-router-dom";
 
@@ -59,7 +57,6 @@ export class CategoryArticles extends Component {
   render() {
     let list = []
     for (let i = 0; i < this.state.Articles.length; i++) {
-
       list.push(
         <Link to={`${this.props.match.params.category}/${this.state.Articles[i].categoryId}/${this.state.Articles[i].conferenceId}/${this.state.Articles[i].articleId}`}>
           <div className={"article"} style={{display: "flex", margin: "15px"}}>
@@ -73,17 +70,14 @@ export class CategoryArticles extends Component {
         </Link>
       )
       list.push(<hr style={{border: "1px solid #eee", margin: 0}}/>)
-    }
-    ;
+    };
     list.pop()
-
     return (
       <Fragment>
         <div style={{minHeight: "1000px", zIndex: -2}}>
           {this.props.match.params.category}
           {list}
         </div>
-
       </Fragment>
     );
   }

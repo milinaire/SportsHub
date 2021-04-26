@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "./NavMenuCategory.css";
 import { Team } from "./NavMenuTeam";
@@ -14,6 +14,7 @@ export class SubCategory extends Component {
         <ul className="subcategories">
           {this.props.subcategories.map((category) => (
             <NavLink
+              key={category.id}
               className="not-active"
               activeClassName={"active-subcategory"}
               to={`/nav/${this.props.url}/${category.id}`}

@@ -6,18 +6,21 @@ export class Sidebar extends Component {
   state = {
     Banner: [
       {
+        id:1,
         title: "",
         show: true,
         url: "https://image.freepik.com/free-vector/sport-banner-template-with-photo_52683-15808.jpg",
         Category: "UFC",
       },
       {
+        id:2,
         title: "",
         show: true,
         url: "https://www.imgacademy.com/sites/default/files/styles/scale_1700w/public/2020-04/OG-soccer-school.jpg?itok=4IMSHCVp",
         Category: "UFC",
       },
       {
+        id:3,
         title: "",
         show: true,
         url:
@@ -26,6 +29,7 @@ export class Sidebar extends Component {
         text: "Люблю Карманського всім серцем своїм",
       },
       {
+        id:4,
         title: "Facebook Video",
         HeadLine: "FacebookVideo",
         show: true,
@@ -35,6 +39,7 @@ export class Sidebar extends Component {
         Category: "predefined",
       },
       {
+        id:5,
         title: "Dealbook",
         show: true,
         url:
@@ -43,6 +48,7 @@ export class Sidebar extends Component {
         Category: "predefined",
       },
       {
+        id:6,
         title: "Facebook Post",
         show: true,
         url: "https://fs01.vseosvita.ua/01009h47-5324/004.jpg",
@@ -63,25 +69,19 @@ export class Sidebar extends Component {
   };
 
   componentDidMount() {
-
     let temp = 0
     for (let i = 0; i < this.state.Banner.length; i++) {
-
       if (this.state.Banner[i].Category === this.props.category || this.state.Banner[i].Category === 'predefined') {
         temp += 1
-
       }
     }
     this.setState({num: temp});
-
-
-    setInterval(() => {
+    this.interval = setInterval(() => {
       let temp = 0
       for (let i = 0; i < this.state.Banner.length; i++) {
 
         if (this.state.Banner[i].Category === this.props.category || this.state.Banner[i].Category === 'predefined') {
           temp += 1
-
         }
       }
       this.setState({num: temp});
@@ -104,7 +104,9 @@ export class Sidebar extends Component {
       }
     }, 2500);
   }
-
+componentWillUnmount() {
+  clearInterval(this.interval);
+}
 
   render() {
     return (
@@ -122,7 +124,7 @@ export class Sidebar extends Component {
           >
             {this.state.Banner.map((banner) =>
               banner.Category === this.props.category || banner.Category === 'predefined' ?
-                <div className="facebook-video slide">
+                <div key={banner.id} className="facebook-video slide">
                   {banner.title ? (
                     <div className="tittle-wrapper">
                       <b>{banner.title}</b>

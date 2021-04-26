@@ -1,25 +1,24 @@
 import React, {Component, Fragment} from "react";
-import {Carousel} from "react-responsive-carousel";
 import "./MainArticles.css";
 import {Link} from "react-router-dom";
 
 const MainArticle = ({isSelected, alt, caption, headLine, img, published, category, setIndex, length, index, changeIndex, articles}) => {
   let buttons = []
 
-  buttons.push(<button
+  buttons.push(<button key={0}
     style={{borderRadius: "50%", width: "2vw", border: "3px solid #eee", background: 'white', height: "2vw",}}
     onClick={() => changeIndex(-1, length)}>
     {"<"}
   </button>)
   for (let i = 0; i < length; i++) {
     if (i === index) {
-      buttons.push(<button
+      buttons.push(<button key={i+2}
         style={{borderRadius: "50%", width: "2vw", border: "0px solid #e00",color:"#f00", background: 'white', height: "2vw",}}
         onClick={() => setIndex(i)}>
         {"0"+ (i + 1)}
       </button>)
     } else {
-      buttons.push(<button style={{
+      buttons.push(<button key={i+2} style={{
         borderRadius: "50%",
         width: "2vw",
         height: "2vw",
@@ -33,7 +32,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
     }
 
   }
-  buttons.push(<button
+  buttons.push(<button key={1}
     style={{borderRadius: "50%", width: "2vw", border: "3px solid #eee", background: 'white', height: "2vw",}}
     onClick={() => changeIndex(1, length)}>
     {">"}

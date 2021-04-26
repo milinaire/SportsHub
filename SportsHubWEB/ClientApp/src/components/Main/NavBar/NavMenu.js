@@ -129,6 +129,7 @@ export class NavMenu extends Component {
             </NavLink>
             {this.state.Categories.map((category) => (
               <Category
+                key={category.id}
                 title={category.title}
                 show={category.show}
                 url={category.id}

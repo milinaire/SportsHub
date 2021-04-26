@@ -53,8 +53,6 @@ namespace SportsHubBL.Services
         }
         public void UpdateAdvertisingLocalizationFromModel(AdvertisingModel model)
         {
-            
-
             var originalAdvertisingLocalization = advertisingLocalizationRepository.Set()
                 .FirstOrDefault(al => al.AdvertisingId == model.AdvertisingId && al.LanguageId == model.LanguageId);
 
@@ -306,21 +304,22 @@ namespace SportsHubBL.Services
                 throw new ArgumentException("can\'t find localization for advertising");
             }
             var categoryAd = advertising.CategoryAds.FirstOrDefault(at => at.AdvertisingId == advertising.Id);
-
-            return new AdvertisingModel
-            {
-                AdvertisingId = advertising.Id,
-                ImageId = advertising.Image.Id,
-                ImageUri = advertising.Image.Uri,
-                Url = advertising.Url,
-                DateCreated = advertising.DateCreated,
-                IsActive = advertising.IsActive,
-                LanguageId = advertisingLocalization?.LanguageId ?? default,
-                CategoryId = categoryAd.CategoryId,
-                Opened = categoryAd.Opened,
-                Displayed = categoryAd.Displayed,
-                Headline = advertisingLocalization?.Headline
-            };
+            
+                return new AdvertisingModel
+                {
+                    AdvertisingId = advertising.Id,
+                    ImageId = advertising.Image.Id,
+                    ImageUri = advertising.Image.Uri,
+                    Url = advertising.Url,
+                    DateCreated = advertising.DateCreated,
+                    IsActive = advertising.IsActive,
+                    LanguageId = advertisingLocalization?.LanguageId ?? default,
+                    CategoryId = categoryAd?.CategoryId ?? 0,
+                    Opened = categoryAd?.Opened ?? 0,
+                    Displayed = categoryAd?.Displayed ?? 0,
+                    Headline = advertisingLocalization?.Headline
+                };
+            
         }
       
         public AdvertisingModel GenerateAdvertisingModel(Advertising advertising, int languageId)

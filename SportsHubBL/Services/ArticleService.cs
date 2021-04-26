@@ -79,9 +79,9 @@ namespace SportsHubBL.Services
             return article;
         }
 
-        public IEnumerable<MainArticleModel> GetMainPageArticles()
+        public IEnumerable<MainArticleModel> GetMainPageArticles(bool showHidden = false)
         {
-            return _mainArticlesRepository.Set().Select(ma => _articleModelService.GenerateMainArticleModel(ma));
+            return _mainArticlesRepository.Set().Where(ma => showHidden || ma.Show == true).Select(ma => _articleModelService.GenerateMainArticleModel(ma));
         }
 
         public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan)
@@ -161,6 +161,11 @@ namespace SportsHubBL.Services
             }
 
             _articleLocalizationRepository.Delete(articleLocalization);
+        }
+
+        public IEnumerable<ArticleLocalization> GetArticleLocalizations(int articleId)
+        {
+            return _articleLocalizationRepository.Set().Where(al => al.ArticleId == articleId);
         }
     }
 }

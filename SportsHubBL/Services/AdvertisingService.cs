@@ -87,7 +87,6 @@ namespace SportsHubBL.Services
 
             return advertisingLocalizationRepository.Set().FirstOrDefault(al => al.Advertising == advertising && al.Language == language) ;
 
-
         }
         private AdvertisingLocalization GetAdvertisingLocalizationFromModel(AdvertisingModel model)
         {
@@ -287,7 +286,7 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(language));
             }
 
-            if (advertising.Image == null || advertising.AdvertisingLocalizations==null)
+            if (advertising.Image == null || advertising.AdvertisingLocalizations==null )
             {
                 advertising = advertisingRepository.Set()
                     .Include(a => a.Image)
@@ -311,8 +310,9 @@ namespace SportsHubBL.Services
             return new AdvertisingModel
             {
                 AdvertisingId = advertising.Id,
-                ImageId = advertising?.Image.Id,
-                ImageUri = advertising?.Image.Uri,
+                ImageId = advertising.Image.Id,
+                ImageUri = advertising.Image.Uri,
+                Url = advertising.Url,
                 DateCreated = advertising.DateCreated,
                 IsActive = advertising.IsActive,
                 LanguageId = advertisingLocalization?.LanguageId ?? default,
@@ -323,7 +323,7 @@ namespace SportsHubBL.Services
             };
         }
       
-            public AdvertisingModel GenerateAdvertisingModel(Advertising advertising, int languageId)
+        public AdvertisingModel GenerateAdvertisingModel(Advertising advertising, int languageId)
         {
             var language = languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
@@ -331,7 +331,6 @@ namespace SportsHubBL.Services
             {
                 throw new ArgumentException($"language {languageId} not found", nameof(language));
             }
-
             return this.GetAdvertisingModel(advertising, language);
         }
 
@@ -343,16 +342,9 @@ namespace SportsHubBL.Services
             {
                 throw new ArgumentException("category was null", nameof(categoryId));
             }
-            var query = from a in advertisingRepository.Set()
-                    .Include(sa => sa.CategoryAds.Where(a=>a.CategoryId== categoryId))
-                       
-                        select a;
-            
-            
-
-            return query.ToList(); ;
-
-            
+            var query = advertisingRepository.Set()
+                    .Include(sa => sa.CategoryAds).Where(a => a.CategoryAds.Any(a => a.CategoryId == categoryId));
+            return query.Where(a=>a.IsActive==true);
         }   
 
     }

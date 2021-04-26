@@ -80,6 +80,7 @@ export class Home extends Component {
             "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
         },
       ],
+
     ],
     PhotoOfTheDay: [{ 
       Image:
@@ -139,7 +140,7 @@ export class Home extends Component {
         HeadLine: "HeadLine",
         Caption: "Caption5 Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
         Image:
-          "https://athlometrix.com/wp-content/uploads/2018/09/1.jpg",
+        "https://www.denverpost.com/wp-content/uploads/2017/08/aedf4990d9ac4ac9a4f0ff4fee2b51bf.jpg",
       },
     ],
   };
@@ -271,10 +272,9 @@ export class Home extends Component {
          ))}
   
         <div className="breakwrap1">
+          <div className="flex-most">
             <div className="break-line-wrap1">  
               <b>MOST POPULAR</b><hr class="hr2"/>
-              <b>MOST COMENTED</b><hr class="hr2"/>
-              
             </div>
             <div className="pop">
             {this.state.MostPopular.map((pop) => (
@@ -287,7 +287,13 @@ export class Home extends Component {
               </div>
             ))}
             </div>
-
+            </div>
+          <div className="flex-most">
+            <div className="break-line-wrap1">  
+             
+              <b>MOST COMENTED</b><hr class="hr2"/>
+              
+            </div>
             <div className="com">
             {this.state.MostCommented.map((com) => (
               <div className="pop-card">
@@ -298,6 +304,7 @@ export class Home extends Component {
                 </div>
               </div>
             ))}
+            </div>
             </div>
         </div>
       

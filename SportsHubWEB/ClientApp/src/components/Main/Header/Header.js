@@ -147,7 +147,8 @@ export class Header extends Component {
                 </NavDropdown>
               </Row>
             </div>
-            <div className="item5"></div>
+            {//<div className="item5"></div>
+            }
           </div>
         </header>
       </>

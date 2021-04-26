@@ -7,7 +7,7 @@
 }
 
 .breakwrap3{ 
-    width:978px;
+    width:100%;
     min-height: 800px;
     display: flex;
     flex-grow: 1;
@@ -18,13 +18,13 @@
 }
 
 .breakwrap{ 
-    width:978px;
+    width: 50.9vw;
     height: 800px;
     display: flex;
     flex-grow: 1;
     margin-bottom: 90px;
     flex-wrap: wrap;
-   
+
 }
 
 
@@ -43,17 +43,24 @@
 .big-a{
     width:470px;
     height: 360px;
+    margin-right: 38px
 }
 
 .breakwrap1{ 
-    width:978px;
+    width: 50.9vw;
     height: 500px;
     display: flex;
-    flex-grow: 1;
-    margin-bottom: 90px;
     flex-wrap: wrap;
-}
+    margin-bottom: 90px;
+    justify-content: space-around;
 
+ 
+}
+.flex-most{
+ 
+    display: flex;
+    flex-direction: column;
+}
 
 .hr1{
     width:389px;
@@ -68,9 +75,9 @@
 .break-line{
     border:1px solid grey;
     border-radius: 80px;
-    width:200px;
+    width:12vw;
     height:50px;
-   
+  
     display: flex;
     align-content: center;
     justify-content: center;
@@ -87,26 +94,28 @@
 }
 
 .break-line-wrap{
-    width:inherit;
+    width:100%;
     height:50px;
     display: flex;
-    align-items: center;
+    align-items: center;  
+ 
 }
 .break-line-wrap1{
     width:inherit;
     height:50px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+   
     margin:0;
 }   
 .break-line-wrap1>b{
     width:147px;
+    
 }
 
 .photo-of-the-day{
-    width:978px; 
-    height:700px;
+    width:100%; 
+    height:auto;
     z-index: -2;
     background-size: contain;
     margin-top:-80px;
@@ -120,24 +129,29 @@
     bottom:130px; 
     z-index: -1;
     color: #fff;
-    width:inherit;
+    width:100%; 
     background-color:rgba(51, 51, 51, 0.5); 
     left:0;
     display:flex; 
-    flex-direction: column;
+    margin:0;
+    
     flex-wrap: wrap;
 }
 
 .description-of-the-day>h3{
     font-weight: bold;
     letter-spacing: .2rem;
+    width: 80%;
+    padding: 0;
 }
   
 .description-of-the-day>p{
-    width: 600px;
+    width: 80%;
     margin-bottom: 0;
 }  
+
 .text-of-the-day{
+    margin:0;
     font-style:italic;
     font-weight: bold;
     font-size:15px;
@@ -171,10 +185,12 @@
     height: 360px;
 }
 
+
+
 .com{
     width:470px;
     height: 400px;
-    margin-left:33px;
+   
     
 }
 
@@ -222,15 +238,56 @@
    
 }
 
+@media only screen and (max-width: 1850px) {
+    .breakwrap1{  width:55vw}
+}
+@media only screen and (max-width: 1750px) {
+    .breakwrap1{   width:60vw;}
+  
+}
+
+@media only screen and (max-width: 1700px) {
+    .breakwrap>.break-line-wrap>.break-line{width: 120%;
+   }
+   .description-of-the-day{height: 150px; bottom: 150px;}
+   .breakwrap>.break-line-wrap{
+       margin-bottom: -300px;
+   }
+   .breakwrap{margin-bottom: 0;}
+   .breakwrap3>.breakdown>.big-a{margin-bottom: -40px;}
+   .breakwrap3>.breakdown>.com{margin-top: 50px;}
+   .breakdown{margin-bottom: 300px;}
+   .breakwrap1{margin-top:-100px;margin-bottom:400px;}
+}
+
+
+
+
 @media only screen and (max-width: 1200px) {
-    .breakwrap3 {
-        width:800px;
+.breakwrap3>.break-line-wrap{width:466px}
+}
+@media only screen and (max-width: 1100px) {
+   
+    .breakwrap>.break-line-wrap>.break-line{width: 200%;
     }
-    
-     .breakdown {
-        width:800px;
+    .description-of-the-day{height: 170px; bottom: 170px;}
+    .description-of-the-day>p{width:90%;}
+    .breakwrap>.break-line-wrap{
+        padding-top: 100px;
     }
-   .com{
-        display: none;
+    .breakwrap{margin-bottom: 0;}
+    .arrow-right{
+        top:100px;
+        left:-20;
+        border-left: 160px solid red;
+        border-top: 50px solid transparent;
+        border-bottom: 50px solid transparent;   
     }
+    .arrow-right>p{
+        left:-140px;
+        top:-28px;
+        font-size: 13px
+    }
+    .breakwrap1{   width:50.9vw;}
+  
 }

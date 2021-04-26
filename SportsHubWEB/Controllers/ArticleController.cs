@@ -38,7 +38,7 @@ namespace SportsHubWEB.Controllers
 
             var mainArticles = _articleService.GetMainPageArticles();
 
-            var articleModels = mainArticles.Select(mam =>
+            var articleModels = mainArticles.Where(mam => mam.Show).Select(mam =>
             {
                 var sportArticle = _sportArticleService.GetConnectedSportArticle(mam.ArticleId);
                 if (sportArticle == null)

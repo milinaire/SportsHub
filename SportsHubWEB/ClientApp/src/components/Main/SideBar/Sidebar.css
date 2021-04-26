@@ -58,7 +58,7 @@ flex-wrap: wrap;}
   width:250px;
 }
 
-@media only screen and (max-width: 1650px) {
+@media only screen and (max-width: 1200px) {
   .sidebar {
    display: none;
   }

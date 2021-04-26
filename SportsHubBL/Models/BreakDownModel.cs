@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SportsHubBL.Models
 {
-    class BreakDownModel
+    public class BreakDownModel
     {
         public int Id { get; set; }
         public bool Show { get; set; }

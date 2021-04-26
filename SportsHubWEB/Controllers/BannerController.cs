@@ -115,6 +115,45 @@ namespace SportsHubWEB.Controllers
                 return BadRequest("Banners are not found");
             }
         }
+        [HttpPut("localization")]
+        public IActionResult UpdateBannerLocalizationFromModel([FromBody] BannerModel model)
+        {
+            try
+            {
+                bannerService.UpdateBannerLocalizationFromModel(model);
+                return Ok($"Banner  {model.BannerId} successfully updated");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest($"Banner {model.BannerId} was null");
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest($"Localization not found");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpDelete("localization")]
+        public IActionResult DeleteBannerLocalizationById([FromQuery] int BannerId, int languageId)
+        {
+            try
+            {
+                bannerService.DeleteBannerLocalizationById(BannerId, languageId);
+                return Ok($"Banner  {BannerId} successfully deleted");
+            }
+
+            catch (ArgumentException)
+            {
+                return BadRequest($"Localization for Banner {BannerId} in  language {languageId} not found");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
     }
 }

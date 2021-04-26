@@ -8,6 +8,28 @@ namespace SportsHubBL.Models
 {
     public class SportArticleModel : ArticleModel
     {
+        public SportArticleModel(ArticleModel articleModel)
+        {
+            if (articleModel == null)
+            {
+                throw new ArgumentNullException(nameof(articleModel));
+            }
+
+            ArticleId = articleModel.ArticleId;
+            LanguageId = articleModel.LanguageId;
+            ImageId = articleModel.ImageId;
+            ImageUri = articleModel.ImageUri;
+            CategoryId = articleModel.CategoryId;
+            ContentId = articleModel.ContentId;
+            IsPublished = articleModel.IsPublished;
+            DatePublished = articleModel.DatePublished;
+            ShowComments = articleModel.ShowComments;
+            Headline = articleModel.Headline;
+            Text = articleModel.Text;
+            Caption = articleModel.Caption;
+            Alt = articleModel.Alt;
+        }
+
         public int LocationId { get; set; }
 
         public string LocationUri { get; set; }

@@ -149,7 +149,7 @@ namespace SportsHubBL.Services
 
             var articleModel = _articleModelService.GenerateArticleModel(sportArticle.Article, languageId);
 
-            var sportArticleModel = LocalizeSportArticleModel((SportArticleModel)articleModel, sportArticle, languageId);
+            var sportArticleModel = LocalizeSportArticleModel(new SportArticleModel(articleModel), sportArticle, languageId);
 
             return sportArticleModel;
         }

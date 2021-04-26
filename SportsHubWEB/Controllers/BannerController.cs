@@ -76,26 +76,6 @@ namespace SportsHubWEB.Controllers
             }
             return Ok();
         }
-        [HttpGet("{id}")]
-        public ActionResult<BannerModel> GetBannerById([FromRoute] int id)
-        {
-            int? languageId = 1;
-            try
-            {
-                return bannerService.GenerateBannerModel(bannerService.GetBannerById(id), languageId ?? 1);
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest($"Banner with id {id} not found");
-            }
-        }
-        [HttpGet]
-        public IEnumerable<BannerModel> GetAllBanner()
-        {
-            int? languageId = 1;
-
-            return bannerService.GetAllBanner().Select(sa => bannerService.GenerateBannerModel(sa, languageId ?? 1));
-        }
         [HttpPost("localization")]
         public IActionResult AddNewBannerLocalizationFromModel([FromBody] BannerModel model)
         {
@@ -111,6 +91,28 @@ namespace SportsHubWEB.Controllers
             catch (ArgumentException)
             {
                 return BadRequest($"Localization in language {model.LanguageId} for banner {model.BannerId} already exists");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetBanners
+            (
+            [FromQuery] int? categoryId,
+            [FromQuery] int? bannerId,
+            [FromQuery] bool? IsClosed
+            )
+        {
+            int? languageId = 1;
+            try
+            {
+                var result = bannerService.GetBanners( categoryId, bannerId, IsClosed).Select(sa => bannerService.GenerateBannerModel(sa, languageId ?? 1));
+                if (result.IsNullOrEmpty())
+                    return NotFound("Banners are not found");
+                return Ok(result);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest("Banners are not found");
             }
         }
 

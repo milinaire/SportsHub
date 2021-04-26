@@ -104,12 +104,6 @@ namespace SportsHubBL.Services
 
             bannerRepository.Update(originalBanner);
         }
-        public Banner GetBannerById(int id)
-        {
-            var banner = bannerRepository.Set().FirstOrDefault(a => a.Id == id);
-
-            return banner;
-        }
         public BannerModel GetBannerModel(Banner banner, Language language)
         {
             if (banner == null)
@@ -243,36 +237,19 @@ namespace SportsHubBL.Services
             }
             return bannerLocalizationRepository.Set().FirstOrDefault(al => al.Banner == banner && al.Language == language);
         }
-        public IEnumerable<Banner> GetOpenBanner()
+
+        public IEnumerable<Banner> GetBanners( int? categoryId, int? bannerId, bool? IsClosed)
         {
-            var banner = bannerRepository.Set().Where(a => a.IsClosed == false);
 
-            return banner;
+            var query = from a in bannerRepository.Set()
+                    .Include(sa => sa.Category)
+                    .Include(sa => sa.Image)
+                        where categoryId == null || a.Category.Id == categoryId && a.IsClosed==false
+                        where IsClosed == null || a.IsClosed == IsClosed
+                        where bannerId == null || a.Id == bannerId
+                        select a;
 
-        }
-        public IEnumerable<Banner> GetClosedBanner()
-        {
-            var banner = bannerRepository.Set().Where(a => a.IsClosed == true);
-
-            return banner;
-
-        }
-        public IEnumerable<Banner> GetBannersByCategory(int categoryId)
-        {
-            var category = categoryRepository.Set().FirstOrDefault(c => c.Id == categoryId);
-
-            if (category == null)
-            {
-                throw new ArgumentException("category was null", nameof(categoryId));
-            }
-
-            return bannerRepository.Set().Where(a => a.Category == category);
-        }
-        public IEnumerable<Banner> GetAllBanner()
-        {
-                return (bannerRepository.Set().Where(a => a != null));
-            
-
+            return query.ToList();
         }
     }
 }

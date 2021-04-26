@@ -63,13 +63,13 @@ export class Sidebar extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.category)
+
     let temp = 0
     for (let i = 0; i < this.state.Banner.length; i++) {
-      console.log(this.state.Banner[i].Category,this.props.category )
+
       if (this.state.Banner[i].Category === this.props.category || this.state.Banner[i].Category === 'predefined') {
         temp += 1
-        console.log(temp)
+
       }
     }
     this.setState({num: temp});
@@ -78,10 +78,10 @@ export class Sidebar extends Component {
     setInterval(() => {
       let temp = 0
       for (let i = 0; i < this.state.Banner.length; i++) {
-        console.log(this.state.Banner[i].Category,this.props.category )
+
         if (this.state.Banner[i].Category === this.props.category || this.state.Banner[i].Category === 'predefined') {
           temp += 1
-          console.log(temp)
+
         }
       }
       this.setState({num: temp});
@@ -99,7 +99,7 @@ export class Sidebar extends Component {
         this.setState({Banner: [...this.state.Banner, temp]});
       } else {
         this.setState({animated: "animated"});
-        console.log(this.props.category);
+
         this.setState({index: this.state.index + 1});
       }
     }, 2500);

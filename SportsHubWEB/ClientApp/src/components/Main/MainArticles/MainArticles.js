@@ -142,13 +142,13 @@ export class MainArticles extends Component {
       <Fragment>
         {this.props.articles.length ?
           <div className="main-articles">
-            {console.log("ee", this.props.articles, this.state.index)}
-            <MainArticle key={this.props.articles[this.state.index].id}
-                         alt={this.props.articles[this.state.index].Alt}
-                         caption={this.props.articles[this.state.index].Caption}
-                         headLine={this.props.articles[this.state.index].HeadLine}
-                         img={this.props.articles[this.state.index].Image}
-                         published={this.props.articles[this.state.index].Published}
+            {console.log(this.props.articles)}
+            <MainArticle key={this.props.articles[this.state.index].articleId}
+                         alt={this.props.articles[this.state.index].alt}
+                         caption={this.props.articles[this.state.index].caption}
+                         headLine={this.props.articles[this.state.index].headline}
+                         img={this.props.articles[this.state.index].imageUri}
+                         published={this.props.articles[this.state.index].datePublished}
                          category={this.props.articles[this.state.index].Category}
                          setIndex={this.setIndex.bind(this)}
                          changeIndex={this.changeIndex.bind(this)}

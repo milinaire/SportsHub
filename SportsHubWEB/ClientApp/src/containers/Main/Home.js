@@ -11,58 +11,6 @@ export class Home extends Component {
   static displayName = Home.name;
   state = {
     index:0,
-    MainArticles: [
-      {
-        Id: 1,
-        Alt: "Alt",
-        HeadLine: "HeadLine1",
-        Caption: "Caption1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        Category: "NBA",
-      },
-      {
-        Id: 2,
-        Alt: "Alt",
-        HeadLine: "HeadLine2",
-        Caption: "Caption2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://markateur.com/wp-content/uploads/2017/04/articles.jpg",
-        Category: "UFC",
-      },
-      {
-        Id: 3,
-        Alt: "Alt",
-        HeadLine: "HeadLine3",
-        Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7pfEljy7X0eBed-8PpZwT3X4tqY_LCZbDLnNGAk3qldHhF3YOnfY_1NYyWzumMYwpuws&usqp=CAU",
-        Category: "QTV",
-      },
-      {
-        Id: 4,
-        Alt: "Alt",
-        HeadLine: "HeadLine4",
-        Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        Category: "NBA",
-      },
-      {
-        Id: 5,
-        Alt: "Alt",
-        HeadLine: "HeadLine5",
-        Caption: "Caption5 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        Category: "ATB",
-      },
-    ],
     BreakDown: [
       [
         {
@@ -132,74 +80,6 @@ export class Home extends Component {
             "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
         },
       ],
-      // [
-      //   {
-      //     Id: 1,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      //   {
-      //     Id: 2,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      //   {
-      //     Id: 3,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      //   {
-      //     Id: 4,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      // ],
-      // [
-      //   {
-      //     Id: 1,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      //   {
-      //     Id: 2,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      //   {
-      //     Id: 3,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      //   {
-      //     Id: 4,
-      //     Alt: "Alt",
-      //     HeadLine: "HeadLine",
-      //     Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-      //     Image:
-      //       "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-      //   },
-      // ],
     ],
     PhotoOfTheDay: [{ 
       Image:
@@ -265,7 +145,18 @@ export class Home extends Component {
   };
 
   componentDidMount(){
-    this.props.setArticles(this.state.MainArticles)
+    fetch("https://localhost:5001/article")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.props.setArticles(result)
+        },
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
   }
   componentWillUnmount(){
     this.props.setArticles([])
@@ -313,13 +204,14 @@ export class Home extends Component {
     return (
       <main >
 
-        
+
+
         <div className="breakwrap3">
             <div className="break-line-wrap">  
               <hr className="hr1"/><div className="break-line"><b>BREAKDOWN</b></div><hr className="hr1"/>
             </div>
-            
-         
+
+
             {this.state.BreakDown.map((com) => (
               <div className="breakdown">
                   <div className="big-a"> 
@@ -352,9 +244,9 @@ export class Home extends Component {
                           <a>{com[3].Caption}</a>
                         </div>
                       </div>
-                      
-                      
-         
+
+
+
                   </div>
               </div>
               

@@ -6,14 +6,41 @@ import {Link} from "react-router-dom";
 export class TeamArticles extends Component {
   componentDidMount(){
     this.props.setCategory(this.props.match.params.category)
+    fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            Articles: result
+          });
+        },
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
   }
   getSnapshotBeforeUpdate(prevProps, prevState){
     return this.props.match.params.category
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps.match.params.category!==this.props.match.params.category){
+    if(prevProps.match.params.team!==this.props.match.params.team){
       this.props.setCategory(this.props.match.params.category)
-      console.log("hi",this.props.match.params.category)
+      fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              Articles: result
+            });
+          },
+          (error) => {
+            this.setState({
+              error
+            });
+          }
+        )
     }
   }
   componentWillUnmount(){
@@ -21,61 +48,7 @@ export class TeamArticles extends Component {
   }
   state={
     Articles: [
-      {
-        Id: 1,
-        Alt: "Alt",
-        HeadLine: "HeadLine1",
-        Caption: "Caption1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        Category: "NBA",
-        Url: "1",
-      },
-      {
-        Id: 2,
-        Alt: "Alt",
-        HeadLine: "HeadLine2",
-        Caption: "Caption2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://markateur.com/wp-content/uploads/2017/04/articles.jpg",
-        Category: "UFC",
-        Url: "2",
-      },
-      {
-        Id: 3,
-        Alt: "Alt",
-        HeadLine: "HeadLine3",
-        Caption: "Caption3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7pfEljy7X0eBed-8PpZwT3X4tqY_LCZbDLnNGAk3qldHhF3YOnfY_1NYyWzumMYwpuws&usqp=CAU",
-        Category: "QTV",
-        Url: "3",
-      },
-      {
-        Id: 4,
-        Alt: "Alt",
-        HeadLine: "HeadLine4",
-        Caption: "Caption4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        Category: "NBA",
-        Url: "4",
-      },
-      {
-        Id: 5,
-        Alt: "Alt",
-        HeadLine: "HeadLine5",
-        Caption: "Caption5 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur culpa cumque eligendi, id incidunt iste itaque nihil unde.",
-        Published: "20.09.2019",
-        Image:
-          "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        Category: "ATB",
-        Url: "5",
-      },
+
     ],
   }
   render() {
@@ -83,13 +56,13 @@ export class TeamArticles extends Component {
     for (let i = 0; i < this.state.Articles.length; i++) {
 
       list.push(
-        <Link to={`${this.props.match.params.team}/${this.state.Articles[i].Url}`}>
+        <Link to={`${this.props.match.params.team}/${this.state.Articles[i].articleId}`}>
           <div className={"article"} style={{display: "flex", margin: "15px"}}>
-            <img src={this.state.Articles[i].Image} style={{width: "40%", height: "240px", padding: "10px"}}
-                 alt={this.state.Articles[i].Alt}/>
+            <img src={this.state.Articles[i].imageUri} style={{width: "40%", height: "240px", padding: "10px"}}
+                 alt={this.state.Articles[i].alt}/>
             <div>
-              <h2>{this.state.Articles[i].HeadLine}</h2>
-              <p>{this.state.Articles[i].Caption}</p>
+              <h2>{this.state.Articles[i].headline}</h2>
+              <p>{this.state.Articles[i].caption}</p>
             </div>
           </div>
         </Link>

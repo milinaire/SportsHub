@@ -16,13 +16,13 @@ export class SubCategory extends Component {
             <NavLink
               className="not-active"
               activeClassName={"active-subcategory"}
-              to={`/nav/${this.props.url}/${category.url}`}
+              to={`/nav/${this.props.url}/${category.id}`}
             >
               <li className={"subcategory"}>
                 {category.teams.length ? (
                   <Team
                     curl={this.props.url}
-                    surl={category.url}
+                    surl={category.id}
                     teams={category.teams}
                   />
                 ) : null}

@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import {Carousel} from "react-responsive-carousel";
 import "./MainArticles.css";
+import {Link} from "react-router-dom";
 
 const MainArticle = ({isSelected, alt, caption, headLine, img, published, category, setIndex, length, index, changeIndex, articles}) => {
   let buttons = []
@@ -65,6 +66,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
           overflow: "hidden",
           zIndex: -1,
         }}>
+          <Link to="/">
           <div style={{
             background: '#f22',
             position: 'absolute',
@@ -77,7 +79,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
             justifyContent: "center",
             alignItems: "center"
           }}>
-            <b style={{fontSize: "1vw", padding: 0, display: "block"}}>More</b></div>
+            <b style={{fontSize: "1vw", padding: 0, display: "block"}}>More</b></div></Link>
           <p style={{color: '#666', textAlign: 'left', marginLeft: '50px', marginRight: '30px', fontSize: "1vw"}}>
             <b>Published/ {published}</b></p>
           <h5 style={{color: 'red', textAlign: 'left', marginLeft: '50px', marginTop: '10px', fontSize: "1vw"}}>
@@ -142,7 +144,7 @@ export class MainArticles extends Component {
       <Fragment>
         {this.props.articles.length ?
           <div className="main-articles">
-            {console.log(this.props.articles)}
+
             <MainArticle key={this.props.articles[this.state.index].articleId}
                          alt={this.props.articles[this.state.index].alt}
                          caption={this.props.articles[this.state.index].caption}

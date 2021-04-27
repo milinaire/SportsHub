@@ -166,8 +166,8 @@ namespace SportsHubBL.Services
 
         public IEnumerable<BreakDownModel> GetBreakDowns(int languageId, bool showHidden = false)
         {
-            return _breakDownRepository.Set().Where(bd => showHidden || bd.Show == true)
-                .Select(bd => GenerateBreakDownModel(bd, languageId));
+            var breakDowns = _breakDownRepository.Set().Where(bd => showHidden || bd.Show == true).ToList();
+            return breakDowns.Select(bd => GenerateBreakDownModel(bd, languageId));
         }
 
         public void UpdateBreakDown(int id, BreakDownModel model)

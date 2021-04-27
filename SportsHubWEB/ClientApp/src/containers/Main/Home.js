@@ -1,10 +1,6 @@
-import React, {Component} from "react";
-import Card from "react-bootstrap/Card";
+import React, { Component, Fragment } from "react";
 import "./home.css"
-import {Carousel} from "react-responsive-carousel";
-
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-
+import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 
 export class Home extends Component {
@@ -262,13 +258,29 @@ export class Home extends Component {
         "https://www.denverpost.com/wp-content/uploads/2017/08/aedf4990d9ac4ac9a4f0ff4fee2b51bf.jpg",
       },
     ],
+    MainArticles: []
+
   };
 
-  componentDidMount(){
-    this.props.setArticles(this.state.MainArticles)
+
+  componentDidMount() {
+    fetch("https://localhost:5001/article")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({MainArticles: result})
+        },
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
   }
-  componentWillUnmount(){
-    this.props.setArticles([])
+
+  componentWillUnmount() {
+    // this.props.setArticles([])
+
   }
   arrowNext = () => {
     let b = []
@@ -311,58 +323,52 @@ export class Home extends Component {
 
 
     return (
-      <main >
 
-        
-        <div className="breakwrap3">
-            <div className="break-line-wrap">  
-              <hr className="hr1"/><div className="break-line"><b>BREAKDOWN</b></div><hr className="hr1"/>
+      <Fragment>
+        <PageLayout MainArticles={this.state.MainArticles}>
+          <div className="breakwrap3">
+            <div className="break-line-wrap">
+              <hr className="hr1"/>
+              <div className="break-line"><b>BREAKDOWN</b></div>
+              <hr className="hr1"/>
             </div>
-            
-         
             {this.state.BreakDown.map((com) => (
-              <div className="breakdown">
-                <div className="big-wrap">
-                  <div className="big-a"> 
-                    <img className="big-a" src={com[0].Image}></img>
-                    <div className="pop-text1">
-                          <a>{com[0].Caption}</a>
+              <div key={com[0].Id} className="breakdown">
+                <div className="big-a">
+                  <img className="big-i" src={com[0].Image} alt={com[0].Alt}/>
+                  <div className="pop-text1">
+                    <p>{com[0].Caption}</p>
+                  </div>
+                </div>
+                <div className="com">
+                  <div className="pop-card">
+                    <img className="small-i" src={com[1].Image} alt={com[1].Alt}/>
+                    <div className="pop-text">
+                      <b><p>{com[1].HeadLine}</p></b>
+                      <p>{com[1].Caption}</p>
+                    </div>
+                  </div>
+                  <div className="pop-card">
+                    <img className="small-i" src={com[2].Image} alt={com[2].Alt}/>
+                    <div className="pop-text">
+                      <b><p>{com[2].HeadLine}</p></b>
+                      <p>{com[2].Caption}</p>
+                    </div>
+                  </div>
+                  <div className="pop-card">
+                    <img className="small-i" src={com[3].Image} alt={com[3].Alt}/>
+                    <div className="pop-text">
+                      <b><p>{com[3].HeadLine}</p></b>
+                      <p>{com[3].Caption}</p>
                     </div>
                   </div>
                 </div>
-                  
-              <div className="com1-wrap">
-                  <div className="com1">
-            
-                      <div className="pop-card">
-                        <img src={com[1].Image}></img>
-                        <div className="pop-text">
-                        <b><p>{com[1].HeadLine}</p></b>
-                          <a>{com[1].Caption}</a>
-                        </div>
-                      </div>
-                      <div className="pop-card">
-                        <img src={com[2].Image}></img>
-                        <div className="pop-text">
-                        <b><p>{com[2].HeadLine}</p></b>
-                          <a>{com[2].Caption}</a>
-                        </div>
-                      </div>
-                      <div className="pop-card">
-                        <img src={com[3].Image}></img>
-                        <div className="pop-text">
-                        <b><p>{com[3].HeadLine}</p></b>
-                          <a>{com[3].Caption}</a>
-                        </div>
-                      </div>
-                      
-                      
-         
-                  </div>
-                </div>
-              </div>
-              
-            ))}
+
+
+
+            </div>
+          ))}
+
         </div>
 
         {this.state.PhotoOfTheDay.map((photo) => (
@@ -386,44 +392,52 @@ export class Home extends Component {
          ))}
   
         <div className="breakwrap1">
-          <div className="flex-most">
-            <div className="break-line-wrap1">  
-              <b>MOST POPULAR</b><hr class="hr2"/>
-            </div>
-            <div className="pop">
-            {this.state.MostPopular.map((pop) => (
-              <div className="pop-card">
-                <img src={pop.Image}></img>
-                <div className="pop-text">
-                  <b><p>{pop.HeadLine}</p></b>
-                  <a>{pop.Caption}</a>
-                </div>
+
+
+            <div className="flex-most">
+              <div className="break-line-wrap1">
+                <b>MOST POPULAR</b>
+                <hr className="hr2"/>
               </div>
-            ))}
-            </div>
-            </div>
-          <div className="flex-most">
-            <div className="break-line-wrap1">  
-             
-              <b>MOST COMENTED</b><hr class="hr2"/>
-              
-            </div>
-            <div className="com">
-            {this.state.MostCommented.map((com) => (
-              <div className="pop-card">
-                <img src={com.Image}></img>
-                <div className="pop-text">
-                <b><p>{com.HeadLine}</p></b>
-                  <a>{com.Caption}</a>
-               
-                </div>
+              <div className="pop">
+                {this.state.MostPopular.map((pop) => (
+                  <div key={pop.Id} className="pop-card">
+                    <img src={pop.Image} alt={pop.Alt}/>
+                    <div className="pop-text">
+                      <b><p>{pop.HeadLine}</p></b>
+                      <p>{pop.Caption}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
             </div>
+            <div className="flex-most">
+              <div className="break-line-wrap1">
+                <b>MOST COMENTED</b>
+                <hr className="hr2"/>
+              </div>
+              <div className="pop">
+                {this.state.MostCommented.map((com) => (
+                  <div key={com.Id} className="pop-card">
+                    <img src={com.Image} alt={com.Alt}/>
+                    <div className="pop-text">
+                      <b><p>{com.HeadLine}</p></b>
+                      <p>{com.Caption}</p>
+                    </div>
+                  </div>
+
+
+
+              ))}
+                  </div>
             </div>
+
+
         </div>
-      
-      </main>
+        </PageLayout>
+
+      </Fragment>
+
     );
   }
 }

@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from "react";
 import "./style.css"
 import {Link} from "react-router-dom";
+import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 export class CategoryArticles extends Component {
   componentDidMount() {
-    this.props.setCategory(this.props.match.params.category)
     fetch(`https://localhost:5001/sportarticle?categoryId=${this.props.match.params.category}`)
       .then(res => res.json())
       .then(
@@ -27,8 +27,6 @@ export class CategoryArticles extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.match.params.category !== this.props.match.params.category) {
-
-      this.props.setCategory(this.props.match.params.category)
       fetch(`https://localhost:5001/sportarticle?categoryId=${this.props.match.params.category}`)
         .then(res => res.json())
         .then(
@@ -47,7 +45,6 @@ export class CategoryArticles extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setCategory('')
   }
 
   state = {
@@ -74,10 +71,12 @@ export class CategoryArticles extends Component {
     list.pop()
     return (
       <Fragment>
+        <PageLayout MainArticles={[]}>
         <div style={{minHeight: "1000px", zIndex: -2}}>
           {this.props.match.params.category}
           {list}
         </div>
+        </PageLayout>
       </Fragment>
     );
   }

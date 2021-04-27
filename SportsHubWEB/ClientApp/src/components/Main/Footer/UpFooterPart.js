@@ -47,7 +47,7 @@ export class UpFooterPart extends Component {
               ) : null}
               {this.state.CompanyInfo.sections.map((section) =>
                 section.show ? (
-                  <Link key={section.id} to={`/companyinfo/${section.url}`}>
+                  <Link key={section.id} to={`/company-info/${section.url}`}>
                     <p>{section.HeadLine}</p>
                   </Link>
                 ) : null

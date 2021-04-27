@@ -51,7 +51,7 @@ namespace SportsHubBL.Services
 
             if (breakDown == null)
             {
-                throw new ArgumentException($"breakDown {id} not found", nameof(breakDown));
+                throw new Exception($"breakDown {id} not found");
             }
 
             _breakDownRepository.Delete(breakDown);
@@ -63,7 +63,7 @@ namespace SportsHubBL.Services
 
             if (breakDown == null)
             {
-                throw new ArgumentException($"break down {breakDownId} not found", nameof(breakDownId));
+                throw new Exception($"break down {breakDownId} not found");
             }
 
             return GenerateBreakDownModel(breakDown, languageId);
@@ -80,7 +80,7 @@ namespace SportsHubBL.Services
 
             if (language == null)
             {
-                throw new ArgumentException($"language {languageId} not found");
+                throw new Exception($"language {languageId} not found");
             }
 
             var model = new BreakDownModel
@@ -137,21 +137,21 @@ namespace SportsHubBL.Services
 
             if (category == null)
             {
-                throw new ArgumentException($"category {model.CategoryId} not found", nameof(model));
+                throw new Exception($"category {model.CategoryId} not found");
             }
 
             var conference = _conferenceRepository.GetById(model.ConferenceId);
 
             if (conference == null)
             {
-                throw new ArgumentException($"conference {model.ConferenceId} not found", nameof(model));
+                throw new Exception($"conference {model.ConferenceId} not found");
             }
 
             var team = _teamRepository.GetById(model.TeamId);
 
             if (team == null)
             {
-                throw new ArgumentException($"team {model.TeamId} not found", nameof(model));
+                throw new Exception($"team {model.TeamId} not found");
             }
 
             return new BreakDown
@@ -181,7 +181,7 @@ namespace SportsHubBL.Services
 
             if (oldBreakDown == null)
             {
-                throw new ArgumentException($"breakDown {id} not found", nameof(id));
+                throw new Exception($"breakDown {id} not found");
             }
 
             var newBreakDown = GetBreakDownFromModel(model);

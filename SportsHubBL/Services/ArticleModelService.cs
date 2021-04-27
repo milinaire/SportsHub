@@ -44,11 +44,6 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (_articleRepository.Set().Any(a => a.Id == model.ArticleId))
-            {
-                throw new ArgumentException($"article id {model.ArticleId} is already taken", nameof(model));
-            }
-
             var category = _categoryRepository.Set().FirstOrDefault(c => c.Id == model.CategoryId);
 
             var image = _imageRepository.Set().FirstOrDefault(i => i.Id == model.ImageId);
@@ -87,7 +82,7 @@ namespace SportsHubBL.Services
 
             if (language == null)
             {
-                throw new ArgumentException($"can\'t find language {model.LanguageId}", nameof(model));
+                throw new Exception($"can\'t find language {model.LanguageId}");
             }
 
             return new ArticleLocalization
@@ -135,7 +130,7 @@ namespace SportsHubBL.Services
 
             if (articleLocalization == null)
             {
-                throw new ArgumentException("can\'t find localization for article");
+                throw new Exception("can\'t find localization for article");
             }
 
             return new ArticleModel
@@ -162,7 +157,7 @@ namespace SportsHubBL.Services
 
             if (language == null)
             {
-                throw new ArgumentException($"language {languageId} not found", nameof(language));
+                throw new Exception($"language {languageId} not found");
             }
 
             return this.GetArticleModel(article, language);
@@ -180,7 +175,7 @@ namespace SportsHubBL.Services
                 mainArticle = _mainArticleRepository.Set().Include(ma => ma.Article).FirstOrDefault(ma => ma == mainArticle);
                 if (mainArticle.Article == null)
                 {
-                    throw new ArgumentException($"main article {mainArticle.Id} does not contain an article");
+                    throw new Exception($"main article {mainArticle.Id} does not contain an article");
                 }
             }
 

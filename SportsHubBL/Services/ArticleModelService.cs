@@ -82,7 +82,7 @@ namespace SportsHubBL.Services
 
             if (language == null)
             {
-                throw new Exception($"can\'t find language {model.LanguageId}", nameof(model));
+                throw new Exception($"can\'t find language {model.LanguageId}");
             }
 
             return new ArticleLocalization

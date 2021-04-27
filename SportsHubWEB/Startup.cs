@@ -56,7 +56,7 @@ namespace SportsHubWEB
             services.AddScoped<ISportArticleService, SportArticleService>();
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IAdvertisingService, AdvertisingService>();
-
+            services.AddScoped<IBreakDownService, BreakDownService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 

@@ -6,75 +6,10 @@ export class Home extends Component {
   static displayName = Home.name;
   state = {
     index: 0,
+
     BreakDown: [
-      [
-        {
-          Id: 1,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption1 Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-          Image:
-            "https://img.bleacherreport.net/img/images/photos/002/062/823/hi-res-85160433_crop_exact.jpg?w=3072&h=2048&q=75",
-        },
-        {
-          Id: 2,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://3.bp.blogspot.com/-fRlqj8qr958/T-mKCxcDoUI/AAAAAAAAAvY/hbAq8vCEhuw/s1600/HvGame9.jpg",
-        },
-        {
-          Id: 3,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption1 Lorem ipsum dolor sit amet, consectetur adipisicing elit..",
-          Image:
-            "https://m0.joe.co.uk/wp-content/uploads/2017/07/03132858/5.jpg",
-        },
-        {
-          Id: 4,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Youth-soccer-indiana.jpg/1200px-Youth-soccer-indiana.jpg",
-        },
-      ],
-      [
-        {
-          Id: 11,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 12,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 13,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-        {
-          Id: 14,
-          Alt: "Alt",
-          HeadLine: "HeadLine",
-          Caption: "Caption2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ",
-          Image:
-            "https://ichef.bbci.co.uk/news/976/cpsprodpb/143D5/production/_117710928_tv066419238.jpg",
-        },
-      ],
+
+
     ],
     PhotoOfTheDay: {
       Image:
@@ -154,6 +89,48 @@ export class Home extends Component {
           });
         }
       )
+
+    let str=""
+    fetch("https://localhost:5001/breakdown")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          for (let i = 0; i < result.length; i++) {
+            if(result[i].categoryId){
+              str = `https://localhost:5001/sportarticle?categoryId=${result[i].categoryId}`
+            }else if(result[i].conferenceId) {
+              str = `https://localhost:5001/sportarticle?conferenceId=${result[i].conferenceId}`
+            }else if(result[i].teamId){
+              str = `https://localhost:5001/sportarticle?teamId=${result[i].teamId}`
+            }
+            if(str){
+              fetch(str)
+                .then(res => res.json())
+                .then(
+                  (result) => {
+                     this.setState({BreakDown: [...this.state.BreakDown, result]})
+                    console.log(result)
+                  },
+                  (error) => {
+                    this.setState({
+                      error
+                    });
+                  }
+                )
+            }
+          }
+
+
+        },
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
+    console.log(str)
+
+
   }
 
   componentWillUnmount() {
@@ -171,33 +148,33 @@ export class Home extends Component {
               <hr className="hr1"/>
             </div>
             {this.state.BreakDown.map((com) => (
-              <div key={com[0].Id} className="breakdown">
+              <div key={com[0].articleId} className="breakdown">
                 <div className="big-a">
-                  <img className="big-i" src={com[0].Image} alt={com[0].Alt}/>
+                  <img className="big-i" src={com[0].imageUri} alt={com[0].alt}/>
                   <div className="pop-text1">
-                    <p>{com[0].Caption}</p>
+                    <p>{com[0].headline}</p>
                   </div>
                 </div>
                 <div className="com">
                   <div className="pop-card">
-                    <img className="small-i" src={com[1].Image} alt={com[1].Alt}/>
+                    <img className="small-i" src={com[1].imageUri} alt={com[1].alt}/>
                     <div className="pop-text">
-                      <b><p>{com[1].HeadLine}</p></b>
-                      <p>{com[1].Caption}</p>
+                      <b><p>{com[1].headline}</p></b>
+                      <p>{com[1].caption}</p>
                     </div>
                   </div>
                   <div className="pop-card">
-                    <img className="small-i" src={com[2].Image} alt={com[2].Alt}/>
+                    <img className="small-i" src={com[2].imageUri} alt={com[2].alt}/>
                     <div className="pop-text">
-                      <b><p>{com[2].HeadLine}</p></b>
-                      <p>{com[2].Caption}</p>
+                      <b><p>{com[2].headline}</p></b>
+                      <p>{com[2].caption}</p>
                     </div>
                   </div>
                   <div className="pop-card">
-                    <img className="small-i" src={com[3].Image} alt={com[3].Alt}/>
+                    <img className="small-i" src={com[3].imageUri} alt={com[3].alt}/>
                     <div className="pop-text">
-                      <b><p>{com[3].HeadLine}</p></b>
-                      <p>{com[3].Caption}</p>
+                      <b><p>{com[3].headline}</p></b>
+                      <p>{com[3].caption}</p>
                     </div>
                   </div>
                 </div>

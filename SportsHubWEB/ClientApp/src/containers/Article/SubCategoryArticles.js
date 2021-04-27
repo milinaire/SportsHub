@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 
 export class SubCategoryArticles extends Component {
   componentDidMount() {
-    this.props.setCategory(this.props.match.params.category)
     fetch(`https://localhost:5001/sportarticle?conferenceId=${this.props.match.params.subcategory}`)
       .then(res => res.json())
       .then(
@@ -27,7 +26,6 @@ export class SubCategoryArticles extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.match.params.subcategory !== this.props.match.params.subcategory) {
-      this.props.setCategory(this.props.match.params.category)
       fetch(`https://localhost:5001/sportarticle?conferenceId=${this.props.match.params.subcategory}`)
         .then(res => res.json())
         .then(
@@ -45,7 +43,6 @@ export class SubCategoryArticles extends Component {
     }
   }
   componentWillUnmount() {
-    this.props.setCategory('')
 
   }
   state = {

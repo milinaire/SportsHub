@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 
 export class TeamArticles extends Component {
   componentDidMount(){
-    this.props.setCategory(this.props.match.params.category)
     fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
       .then(res => res.json())
       .then(
@@ -24,7 +23,6 @@ export class TeamArticles extends Component {
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.match.params.team!==this.props.match.params.team){
-      this.props.setCategory(this.props.match.params.category)
       fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
         .then(res => res.json())
         .then(
@@ -42,7 +40,7 @@ export class TeamArticles extends Component {
     }
   }
   componentWillUnmount(){
-    this.props.setCategory('')
+
   }
   state={
     Articles: [

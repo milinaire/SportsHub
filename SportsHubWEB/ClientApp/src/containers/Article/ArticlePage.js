@@ -32,13 +32,11 @@ export  class Article extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.match.params.category !== this.props.match.params.category) {
-      this.props.setCategory(this.props.match.params.category)
       console.log("hi", this.props.match.params.category)
     }
   }
 
   componentWillUnmount() {
-    this.props.setCategory('')
   }
 
   render() {

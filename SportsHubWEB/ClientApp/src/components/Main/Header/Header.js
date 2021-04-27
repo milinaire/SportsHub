@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { NavLink, Row } from "reactstrap";
-import { Link } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+// import { NavLink, Row } from "reactstrap";
+import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
-import { Form, FormControl, NavDropdown, Image, Button } from "react-bootstrap";
+import {Form, FormControl, NavDropdown, Image, Button} from "react-bootstrap";
 
 export class Header extends Component {
-  static displayName = Header.name;
+
 
   server = {
     User: {
@@ -29,7 +29,6 @@ export class Header extends Component {
   };
   constructor(props) {
     super(props);
-
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,
@@ -45,7 +44,7 @@ export class Header extends Component {
 
   render() {
     return (
-      <>
+      <Fragment>
         <header className="sticky-top">
           <link
             rel="stylesheet"
@@ -60,14 +59,14 @@ export class Header extends Component {
             <div className="item1">
               <Link to="/" className="brand-card">
                 {" "}
-                <Row className="brand-text">
+                <div className="brand-text">
                   <p>Sports Hub</p>
-                </Row>
+                </div>
               </Link>
             </div>
             <div className="item2">
               <Form className="search-card" inline>
-                <Row className="pl-lg-5">
+                <div className="pl-lg-5">
                   <button type="submit">
                     <i className="fa fa-search" />
                   </button>
@@ -76,12 +75,12 @@ export class Header extends Component {
                     placeholder="Search By"
                     className="search-card from-width-fix"
                   />
-                </Row>
+                </div>
               </Form>
             </div>
             <div className="item3">
-              <NavLink className="share-card">
-                <Row className="pl-lg-5">
+              <NavLink to="/" className="share-card">
+                <div className="pl-lg-5">
                   <h5>Share</h5>
                   <button type="submit">
                     <i className="fa fa-facebook-f " />
@@ -92,11 +91,11 @@ export class Header extends Component {
                   <button type="submit">
                     <i className="fa fa-google" />
                   </button>
-                </Row>
+                </div>
               </NavLink>
             </div>
             <div className="item4">
-              <Row className="profile-section-row">
+              <div className="profile-section-row">
                 {this.state.User.login === true ? (
                   <>
                     <Image
@@ -146,13 +145,13 @@ export class Header extends Component {
                     )
                   )}
                 </NavDropdown>
-              </Row>
+              </div>
             </div>
             {//<div className="item5"></div>
             }
           </div>
         </header>
-      </>
+      </Fragment>
     );
   }
 }

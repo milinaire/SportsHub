@@ -109,7 +109,7 @@ export class Home extends Component {
                 .then(
                   (result) => {
                      this.setState({BreakDown: [...this.state.BreakDown, result]})
-                    console.log(result)
+
                   },
                   (error) => {
                     this.setState({
@@ -128,7 +128,7 @@ export class Home extends Component {
           });
         }
       )
-    console.log(str)
+
 
 
   }
@@ -148,7 +148,7 @@ export class Home extends Component {
               <hr className="hr1"/>
             </div>
             {this.state.BreakDown.map((com) => (
-              <div key={com[0].articleId} className="breakdown">
+              <div key={com[0].articleId+com[1].articleId+com[2].articleId+com[3].articleId} className="breakdown">
                 <div className="big-a">
                   <img className="big-i" src={com[0].imageUri} alt={com[0].alt}/>
                   <div className="pop-text1">

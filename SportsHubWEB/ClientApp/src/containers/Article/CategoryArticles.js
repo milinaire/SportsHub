@@ -27,6 +27,8 @@ export class CategoryArticles extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.match.params.category !== this.props.match.params.category) {
+      console.log("hi")
+
       fetch(`https://localhost:5001/sportarticle?categoryId=${this.props.match.params.category}`)
         .then(res => res.json())
         .then(
@@ -43,19 +45,23 @@ export class CategoryArticles extends Component {
         )
     }
   }
+  constructor(props) {
+    super(props);
+  }
 
   componentWillUnmount() {
   }
 
   state = {
-    Articles: []
+    Articles: [],
+
   }
 
   render() {
 
     return (
       <Fragment>
-        <PageLayout MainArticles={[]}>
+        <PageLayout MainArticles={[]} Category={this.props.match.params.category}>
           <div style={{minHeight: "1000px", zIndex: -2}}>
             {this.props.match.params.category}
             <ListArticles Articles={this.state.Articles}/>

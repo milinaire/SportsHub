@@ -106,22 +106,30 @@ namespace SportsHubBL.Services
                     .Include(bd => bd.Team).ThenInclude(t => t.TeamLocalizations)
                     .FirstOrDefault(bd => bd.Id == breakDown.Id);
             }
-
+            if (breakDown.Category!=null)
+            {
+                model.CategoryId = breakDown.Category?.Id;
+                model.CategoryName = breakDown.Category?
+                    .CategoryLocalizations.FirstOrDefault(cl => cl.LanguageId == languageId)?.Name ??
+                    breakDown.Category.CategoryLocalizations.FirstOrDefault(cl => cl.LanguageId == 1/*english*/)?.Name;
+            }
             //TODO: English language default id in call
-            model.CategoryId = breakDown.Category.Id;
-            model.CategoryName = breakDown.Category
-                .CategoryLocalizations.FirstOrDefault(cl => cl.LanguageId == languageId)?.Name ??
-                breakDown.Category.CategoryLocalizations.FirstOrDefault(cl => cl.LanguageId == 1/*english*/)?.Name;
+            if (breakDown.Conference != null)
+            {
+                //TODO: English language default id in call
+                model.ConferenceId = breakDown.Conference?.Id;
+                model.ConferenceName = breakDown.Conference?
+                   .ConferenceLocalizations.FirstOrDefault(cl => cl.LanguageId == languageId)?.Name ??
+                   breakDown.Conference.ConferenceLocalizations.FirstOrDefault(cl => cl.LanguageId == 1/*english*/)?.Name;
+            }
             //TODO: English language default id in call
-            model.ConferenceId = breakDown.Conference.Id;
-            model.ConferenceName = breakDown.Conference
-               .ConferenceLocalizations.FirstOrDefault(cl => cl.LanguageId == languageId)?.Name ??
-               breakDown.Conference.ConferenceLocalizations.FirstOrDefault(cl => cl.LanguageId == 1/*english*/)?.Name;
-            //TODO: English language default id in call
-            model.TeamId = breakDown.Team.Id;
-            model.TeamName = breakDown.Team
-               .TeamLocalizations.FirstOrDefault(cl => cl.LanguageId == languageId)?.Name ??
-               breakDown.Team.TeamLocalizations.FirstOrDefault(cl => cl.LanguageId == 1/*english*/)?.Name;
+            if (breakDown.Team != null)
+            {
+                model.TeamId = breakDown.Team?.Id;
+                model.TeamName = breakDown.Team?
+                   .TeamLocalizations.FirstOrDefault(cl => cl.LanguageId == languageId)?.Name ??
+                   breakDown.Team.TeamLocalizations.FirstOrDefault(cl => cl.LanguageId == 1/*english*/)?.Name;
+            }
 
             return model;
         }
@@ -133,21 +141,21 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var category = _categoryRepository.GetById(model.CategoryId);
+            var category = _categoryRepository.GetById(model.CategoryId??0);
 
             if (category == null)
             {
                 throw new Exception($"category {model.CategoryId} not found");
             }
 
-            var conference = _conferenceRepository.GetById(model.ConferenceId);
+            var conference = _conferenceRepository.GetById(model.ConferenceId??0);
 
             if (conference == null)
             {
                 throw new Exception($"conference {model.ConferenceId} not found");
             }
 
-            var team = _teamRepository.GetById(model.TeamId);
+            var team = _teamRepository.GetById(model.TeamId??0);
 
             if (team == null)
             {

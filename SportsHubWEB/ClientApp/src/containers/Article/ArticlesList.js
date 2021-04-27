@@ -9,7 +9,7 @@ function ArticleItem(props) {
         <Link
           to={`/nav/${props.Article.categoryId}/${props.Article.conferenceId}/${props.Article.teamId}/${props.Article.articleId}`}>
           <div className={"article"} style={{display: "flex", margin: "15px"}}>
-            <img src={props.Article.imageUri} style={{width: "40%", height: "240px", padding: "10px"}}
+            <img src={props.Article.imageUri} style={{width: "340px", height: "240px", padding: "10px"}}
                  alt={props.Article.alt}/>
             <div>
               <h2>{props.Article.headline}</h2>

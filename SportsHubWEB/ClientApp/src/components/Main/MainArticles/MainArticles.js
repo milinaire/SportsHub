@@ -6,15 +6,18 @@ export class MainArticles extends Component {
   state = {
     index: 0,
   }
+
   stopSliding() {
     clearInterval(this.interval)
   }
+
   startSliding() {
     clearInterval(this.interval)
     this.interval = setInterval(() => {
       this.setState({index: (this.state.index + 1) % this.props.articles.length});
     }, 6000);
   }
+
   componentDidMount() {
     this.setState({index: 0})
     this.interval = setInterval(() => {
@@ -63,34 +66,35 @@ export class MainArticles extends Component {
   render() {
     let buttons = []
 
-    buttons.push(<button key={0}
+    buttons.push(<div key={0}
                          onClick={() => this.changeIndex(-1, this.props.articles.length)} className={"arrow-btn"}>
       {"<"}
-    </button>)
+    </div>)
     for (let i = 0; i < this.props.articles.length; i++) {
       if (i === this.state.index) {
-        buttons.push(<button key={i + 2}
-                             className={"active-btn"}
+        buttons.push(<div key={i + 2}
+                             className={"act-btn"}
                              onClick={() => this.setIndex(i)}>
           {"0" + (i + 1)}
-        </button>)
+        </div>)
       } else {
-        buttons.push(<button key={i + 2}
+        buttons.push(<div key={i + 2}
                              className={"btn"}
                              onClick={() => this.setIndex(i)}>
           {"0" + (i + 1)}
-        </button>)
+        </div>)
       }
 
     }
-    buttons.push(<button key={1}
+    buttons.push(<div key={1}
                          className={"arrow-btn"}
                          onClick={() => this.changeIndex(1, this.props.articles.length)}>
       {">"}
-    </button>)
+    </div>)
     return (
       <Fragment>
-        <div className="main-articles" style={{backgroundImage: `url(${this.props.articles[this.state.index].imageUri})`}}
+        <div className="main-articles"
+             style={{backgroundImage: `url(${this.props.articles[this.state.index].imageUri})`}}
              onMouseEnter={() => this.stopSliding()}
              onMouseLeave={() => this.startSliding()}>
           <div className="cat">

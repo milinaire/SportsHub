@@ -6,9 +6,10 @@
     background-size: 72% 100%;
     background-repeat: no-repeat;
     margin: calc((100vw - 300px) * 0.03);
-    transition: all 800ms;
+    transition: background 800ms;
 }
-.info{
+
+.info {
     width: 35%;
     height: calc((100vw - 300px) * 0.3);
 
@@ -17,15 +18,17 @@
     flex-direction: column;
 }
 
-.cat{
+.cat {
     background: #4e555b;
     width: 10%;
     height: calc((100vw - 300px) * 0.03);
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
 }
-.table{
+
+.table {
     width: 100%;
     height: 85%;
     background: #eee;
@@ -35,7 +38,8 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.buttons{
+
+.buttons {
     width: 100%;
     height: 15%;
     padding-left: 30%;
@@ -43,7 +47,11 @@
     justify-content: center;
     align-items: center;
 }
-.arrow-btn{
+
+.arrow-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
     width: 10%;
     height: 50%;
@@ -52,40 +60,50 @@
     margin: 0 5%;
     font-size: calc((100vw - 300px) * 0.01);
 }
-.btn{
-    border-radius: 50%;
-    width: 2vw;
-    height: 2vw;
-    background: white;
-    font-size: calc((100vw - 300px) * 0.01);
-}
 
-.active-btn{
+.btn {
     border-radius: 50%;
     border: none;
     width: 2vw;
     height: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: white;
-    color: #e00;
     font-size: calc((100vw - 300px) * 0.01);
 }
 
-.published{
+.act-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    width: 2vw;
+    height: 2vw;
+    color: red;
+    background: white;
+    font-size: calc((100vw - 300px) * 0.01);
+}
+
+.published {
     font-size: calc((100vw - 300px) * 0.01);
     color: #888;
     margin-left: 10%;
 }
-.head{
+
+.head {
     font-size: calc((100vw - 300px) * 0.012);
     color: #ff2f2d;
     margin-left: 10%;
 }
-.caption{
+
+.caption {
     margin-left: 10%;
     font-size: calc((100vw - 300px) * 0.014);
 }
 
-.more{
+.more {
     background: #b21f2d;
     width: 37.9%;
     height: calc((100vw - 300px) * 0.035);
@@ -93,7 +111,8 @@
     justify-content: center;
     align-items: center;
 }
-.link-more{
+
+.link-more {
     width: calc((100vw - 300px) * 0.115);
     height: calc((100vw - 300px) * 0.035);
     color: white;
@@ -101,10 +120,16 @@
     justify-content: center;
     align-items: center;
 }
-.more a{
+
+.more a {
     text-decoration: none;
 }
-.text-table{
+
+.text-table {
     display: flex;
     flex-direction: column;
+}
+
+button {
+
 }

@@ -1,24 +1,23 @@
-import React, { Component } from "react";
+import React, {Component, Fragment} from "react";
 import "./Footer.css";
+import {BaseLayout} from "../Layout/BaseLayout";
 
 export class Contributors extends Component {
   state = {
     Headline: "some headline from db",
     Text: "text from db",
   };
-  componentDidMount(){
-    this.props.setLayout('base')
-  }
-  componentWillUnmount(){
-    this.props.setLayout('home')
-  }
   render() {
     return (
-      <div>
-        {this.props.match.params.name}
-        <h1>{this.state.Headline}</h1>
-        <p>{this.state.Text}</p>
-      </div>
+      <Fragment>
+        <BaseLayout>
+          <div>
+            {this.props.match.params.name}
+            <h1>{this.state.Headline}</h1>
+            <p>{this.state.Text}</p>
+          </div>
+        </BaseLayout>
+      </Fragment>
     );
   }
 }

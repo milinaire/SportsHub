@@ -3,34 +3,20 @@
     display: flex;
 }
 
-/*.page-wrapper {*/
-/*  display: flex;*/
-/*  justify-content: space-between;*/
-/*  width: 100%;*/
-/*}*/
-
 .main-part {
     width: calc(100% - 300px);
     min-height: calc(100vh - 200px);
     margin-left: 300px;
 }
 
-/*.content-wrapper {*/
-/*  width: calc(100% - 750px);*/
-/*  padding: 0 30px;*/
-/*  margin-left: 300px;*/
-/*}*/
 .main-content {
     display: flex;
-   
     flex-direction: row;
 }
 
-/*.content {*/
-/*  width: 100%;*/
-/*  margin: 0 auto;*/
-/*  z-index: -1000;*/
-/*}*/
+.side{
+    display: block;
+}
 
 .content {
 
@@ -38,74 +24,8 @@
 
 }
 @media only screen and (max-width: 1200px) {
-    .content { width:100%;}
+    .content { width:90%;}
+    .side{
+        display: none;
+    }
 }
-/* ====================== */
-/*.header1 {*/
-/*  width: 100%;*/
-/*  height: 100px;*/
-/*  background: yellow;*/
-/*  position: sticky;*/
-/*  margin: 0;*/
-/*  top: 0;*/
-/*}*/
-/*.footer1 {*/
-/*  width: 100%;*/
-/*  height: 100px;*/
-/*  background: yellow;*/
-
-/*  margin: 0;*/
-/*  bottom: 0;*/
-/*}*/
-/*.content1 {*/
-/*  background: turquoise;*/
-
-/*  width: calc(100% - 250px);*/
-/*}*/
-/*.full-page1 {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: flex-end;*/
-/*}*/
-/*.left-navbar1 {*/
-/*  height: calc(100% - 200px);*/
-/*  width: 250px;*/
-/*    background: white;*/
-/*  position: fixed;*/
-/*  top: 100px;*/
-/*  left: 0;*/
-/*}*/
-/*.sidebar1 {*/
-/*  width: 250px;*/
-
-/*  background: rosybrown;*/
-/*}*/
-/*.page-content1 {*/
-/*    */
-/*  width: calc(100% - 250px);*/
-/*  min-height: 1000px;*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*}*/
-/*.footer-part1 {*/
-/*  background: salmon;*/
-/*  width: calc(100% - 250px);*/
-/*  height: 100px;*/
-/*}*/
-
-/*.test1{*/
-/*    display: none;*/
-/*    position: fixed;*/
-/*    height: calc(100% - 100px);*/
-/*    width: calc(100% - 250px);*/
-/*    background: rgba(0, 0, 0, .8);*/
-/*    top: 100px;*/
-/*    left: 250px;*/
-/*    filter: blur(1px);*/
-/*}*/
-/*.left-navbar1:hover {*/
-/*    height: calc(100% - 100px);*/
-/*}*/
-/*.left-navbar1:hover .test1{*/
-/*    display: block;*/
-/*}*/

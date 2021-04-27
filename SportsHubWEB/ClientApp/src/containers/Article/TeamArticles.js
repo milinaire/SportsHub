@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import {Link} from "react-router-dom";
+import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 export class TeamArticles extends Component {
   componentDidMount(){
-    this.props.setCategory(this.props.match.params.category)
     fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
       .then(res => res.json())
       .then(
@@ -24,7 +24,6 @@ export class TeamArticles extends Component {
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.match.params.team!==this.props.match.params.team){
-      this.props.setCategory(this.props.match.params.category)
       fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
         .then(res => res.json())
         .then(
@@ -42,7 +41,7 @@ export class TeamArticles extends Component {
     }
   }
   componentWillUnmount(){
-    this.props.setCategory('')
+
   }
   state={
     Articles: [
@@ -71,11 +70,13 @@ export class TeamArticles extends Component {
     list.pop()
     return (
       <Fragment>
+        <PageLayout MainArticles={[]}>
         <div style={{ minHeight: "1000px" }}>
           {this.props.match.params.category}~
           {this.props.match.params.subcategory}~{this.props.match.params.team}
           {list}
         </div>
+        </PageLayout>
       </Fragment>
     );
   }

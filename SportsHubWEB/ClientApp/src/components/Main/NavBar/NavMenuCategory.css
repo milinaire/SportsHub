@@ -37,19 +37,6 @@
     color: lightslategray;
 }
 
-.dropdown-content {
-    padding-top: 64px;
-    display: none;
-    position: fixed;
-    height: 100%;
-    top: 100px;
-    left: 265px;
-    width: 300px;
-    z-index: 999999;
-    background-color: #fff;
-
-    box-shadow: #919191;
-}
 
 .dropdown-content-team {
     display: none;
@@ -64,6 +51,7 @@
 }
 
 .category {
+
     padding: 10px 0;
     margin-left: 20px;
 }

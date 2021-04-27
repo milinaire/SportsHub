@@ -322,14 +322,17 @@ export class Home extends Component {
          
             {this.state.BreakDown.map((com) => (
               <div className="breakdown">
+                <div className="big-wrap">
                   <div className="big-a"> 
                     <img className="big-a" src={com[0].Image}></img>
                     <div className="pop-text1">
                           <a>{com[0].Caption}</a>
                     </div>
                   </div>
-                 
-                  <div className="com">
+                </div>
+                  
+              <div className="com1-wrap">
+                  <div className="com1">
             
                       <div className="pop-card">
                         <img src={com[1].Image}></img>
@@ -356,6 +359,7 @@ export class Home extends Component {
                       
          
                   </div>
+                </div>
               </div>
               
             ))}
@@ -363,9 +367,11 @@ export class Home extends Component {
 
         {this.state.PhotoOfTheDay.map((photo) => (
         <div className="breakwrap">
+
             <div className="break-line-wrap">  
               <hr class="hr1"/><div className="break-line"><b>PHOTO OF THE DAY</b></div><hr class="hr1"/>
             </div>
+            <div className="photo-arrow">
             <div className="arrow-right">
               <p><span className="bb">photo</span> of the <span className="bb">day</span></p>
             </div>
@@ -374,6 +380,7 @@ export class Home extends Component {
               <h3>{photo.Title}</h3>
               <p >{photo.Description}</p>
               <p className="text-of-the-day">{photo.Author}</p>
+            </div>
             </div>
         </div>
          ))}
@@ -408,6 +415,7 @@ export class Home extends Component {
                 <div className="pop-text">
                 <b><p>{com.HeadLine}</p></b>
                   <a>{com.Caption}</a>
+               
                 </div>
               </div>
             ))}

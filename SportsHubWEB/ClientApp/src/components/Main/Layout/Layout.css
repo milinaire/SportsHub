@@ -31,12 +31,15 @@
 /*  margin: 0 auto;*/
 /*  z-index: -1000;*/
 /*}*/
+
 .content {
 
     width: calc(100% - 450px);
 
 }
-
+@media only screen and (max-width: 1200px) {
+    .content { width:100%;}
+}
 /* ====================== */
 /*.header1 {*/
 /*  width: 100%;*/

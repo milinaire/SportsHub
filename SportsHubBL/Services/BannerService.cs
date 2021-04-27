@@ -14,11 +14,11 @@ namespace SportsHubBL.Services
 {
     public class BannerService : IBannerService
     {
-        private readonly IRepository<Banner> bannerRepository;
-        private readonly IRepository<Language> languageRepository;
-        private readonly IRepository<Category> categoryRepository;
-        private readonly IRepository<Image> imageRepository;
-        private readonly INoIdRepository<BannerLocalization> bannerLocalizationRepository;
+        private readonly IRepository<Banner> _bannerRepository;
+        private readonly IRepository<Language> _languageRepository;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Image> _imageRepository;
+        private readonly INoIdRepository<BannerLocalization> _bannerLocalizationRepository;
 
         public BannerService(
             IRepository<Banner> bannerRepository,
@@ -28,17 +28,17 @@ namespace SportsHubBL.Services
             IRepository<Image> imageRepository
             )
         {
-            this.bannerRepository = bannerRepository;
-            this.languageRepository = languageRepository;
-            this.categoryRepository = categoryRepository;
-            this.bannerLocalizationRepository = bannerLocalizationRepository;
-            this.imageRepository = imageRepository;
+            _bannerRepository = bannerRepository;
+            _languageRepository = languageRepository;
+            _categoryRepository = categoryRepository;
+            _bannerLocalizationRepository = bannerLocalizationRepository;
+            _imageRepository = imageRepository;
         }
         public void AddBannerFromModel(BannerModel model)
         {
             var banner = GetBannerFromModel(model);
 
-            bannerRepository.Insert(banner);
+            _bannerRepository.Insert(banner);
         }
         private Banner GetBannerFromModel(BannerModel model)
         {
@@ -47,14 +47,14 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (bannerRepository.Set().Any(a => a.Id == model.BannerId))
+            if (_bannerRepository.Set().Any(a => a.Id == model.BannerId))
             {
                 throw new ArgumentException($"banner with id {model.BannerId} is already exist", nameof(model));
             }
 
-            var category = categoryRepository.Set().FirstOrDefault(c => c.Id == model.CategoryId);
+            var category = _categoryRepository.Set().FirstOrDefault(c => c.Id == model.CategoryId);
 
-            var image = imageRepository.Set().FirstOrDefault(i => i.Id == model.ImageId);
+            var image = _imageRepository.Set().FirstOrDefault(i => i.Id == model.ImageId);
 
             if (image == null && model.ImageUri != default)
             {
@@ -75,18 +75,18 @@ namespace SportsHubBL.Services
         }
         public void DeleteBannerById(int id)
         {
-            var banner = bannerRepository.Set().FirstOrDefault(a => a.Id == id);
+            var banner = _bannerRepository.Set().FirstOrDefault(a => a.Id == id);
 
             if (banner == null)
             {
                 throw new ArgumentException($"Banner {id} not found", nameof(id));
             }
 
-            bannerRepository.Delete(banner);
+            _bannerRepository.Delete(banner);
         }
         public void UpdateBannerById(int id, BannerModel model)
         {
-            var originalBanner = bannerRepository.Set().FirstOrDefault(a => a.Id == id);
+            var originalBanner = _bannerRepository.Set().FirstOrDefault(a => a.Id == id);
 
             if (originalBanner == null)
             {
@@ -102,7 +102,7 @@ namespace SportsHubBL.Services
             originalBanner.IsClosed = banner.IsClosed;
             originalBanner.IsPublished = banner.IsPublished;
 
-            bannerRepository.Update(originalBanner);
+            _bannerRepository.Update(originalBanner);
         }
         public BannerModel GetBannerModel(Banner banner, Language language)
         {
@@ -118,7 +118,7 @@ namespace SportsHubBL.Services
 
             if (banner.Image == null || banner.BannerLocalizations == null || banner.Category == null)
             {
-                banner = bannerRepository.Set()
+                banner = _bannerRepository.Set()
                     .Include(a => a.Image)
                     .Include(a => a.BannerLocalizations)
                     .Include(a => a.Category)
@@ -154,7 +154,7 @@ namespace SportsHubBL.Services
 
         public BannerModel GenerateBannerModel(Banner banner, int languageId)
         {
-            var language = languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
+            var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
             if (language == null)
             {
@@ -164,32 +164,33 @@ namespace SportsHubBL.Services
         }
         public void AddNewBannerLocalizationFromModel(BannerModel model)
         {
-           
 
-            var bannerLocalization = GetBannerLocalizationFromModel( model);
+            var banner = GetBannerById(model.BannerId);
+            var bannerLocalization = GetBannerLocalizationFromModel( banner,model);
 
-            if (bannerLocalizationRepository.Set()
+            if (_bannerLocalizationRepository.Set()
                 .Any(al => al.BannerId == model.BannerId && al.LanguageId == model.LanguageId))
             {
                 throw new ArgumentException($"localization in language {model.LanguageId} for banner {model.BannerId} already exists", nameof(model));
             }
 
-            bannerLocalizationRepository.Insert(bannerLocalization);
+            _bannerLocalizationRepository.Insert(bannerLocalization);
         }
-        private BannerLocalization GetBannerLocalizationFromModel( BannerModel model)
+        public Banner GetBannerById(int id)
         {
-            var language = languageRepository.Set().FirstOrDefault(l => l.Id == model.LanguageId);
+            var banner = _bannerRepository.Set().FirstOrDefault(a => a.Id == id);
+
+            return banner;
+        }
+        private BannerLocalization GetBannerLocalizationFromModel( Banner banner,BannerModel model)
+        {
+            var language = _languageRepository.Set().FirstOrDefault(l => l.Id == model.LanguageId);
 
             if (language == null)
             {
                 throw new ArgumentException($"can\'t find language {model.LanguageId}", nameof(model));
             }
-            var banner = bannerRepository.Set().FirstOrDefault(l => l.Id == model.BannerId);
-
-            if (banner == null)
-            {
-                throw new ArgumentException($"can\'t find banner  {model.BannerId}", nameof(model));
-            }
+            
 
             return new BannerLocalization
             {
@@ -200,7 +201,7 @@ namespace SportsHubBL.Services
         }
         public void DeleteBannerLocalizationById(int bannerId, int languageId)
         {
-            var bannerLocalization = bannerLocalizationRepository.Set()
+            var bannerLocalization = _bannerLocalizationRepository.Set()
                 .FirstOrDefault(al => al.BannerId == bannerId && al.LanguageId == languageId);
 
             if (bannerLocalization == null)
@@ -208,12 +209,12 @@ namespace SportsHubBL.Services
                 throw new ArgumentException($"localization for banner {bannerId} in language {languageId} not found");
             }
 
-            bannerLocalizationRepository.Delete(bannerLocalization);
+            _bannerLocalizationRepository.Delete(bannerLocalization);
         }
         public void UpdateBannerLocalizationFromModel(BannerModel model)
         {
-            
-            var originalBannerLocalization = bannerLocalizationRepository.Set()
+            var banner = GetBannerById(model.BannerId);
+            var originalBannerLocalization = _bannerLocalizationRepository.Set()
                 .FirstOrDefault(al => al.BannerId == model.BannerId && al.LanguageId == model.LanguageId);
 
             if (originalBannerLocalization == null)
@@ -221,27 +222,27 @@ namespace SportsHubBL.Services
                 throw new ArgumentException($"no previous localization in language {model.LanguageId} of banner {model.BannerId}", nameof(model));
             }
 
-            var newBannerLocalization = GetBannerLocalizationFromModel( model);
+            var newBannerLocalization = GetBannerLocalizationFromModel( banner,model);
 
             originalBannerLocalization.Headline = newBannerLocalization.Headline;
-            bannerLocalizationRepository.Update(originalBannerLocalization);
+            _bannerLocalizationRepository.Update(originalBannerLocalization);
         }
         public BannerLocalization GetBannerLocalization(int bannerId, int languageId)
         {
-            var banner = bannerRepository.Set().FirstOrDefault(a => a.Id == bannerId);
-            var language = languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
+            var banner = _bannerRepository.Set().FirstOrDefault(a => a.Id == bannerId);
+            var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
             if (banner == null|| language == null)
             {
                 throw new ArgumentException("banner or language not found", nameof(bannerId));
             }
-            return bannerLocalizationRepository.Set().FirstOrDefault(al => al.Banner == banner && al.Language == language);
+            return _bannerLocalizationRepository.Set().FirstOrDefault(al => al.Banner == banner && al.Language == language);
         }
 
         public IEnumerable<Banner> GetBanners( int? categoryId, int? bannerId, bool? IsClosed)
         {
 
-            var query = from a in bannerRepository.Set()
+            var query = from a in _bannerRepository.Set()
                     .Include(sa => sa.Category)
                     .Include(sa => sa.Image)
                         where categoryId == null || a.Category.Id == categoryId && a.IsClosed==false

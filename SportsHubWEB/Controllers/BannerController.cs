@@ -14,14 +14,14 @@ namespace SportsHubWEB.Controllers
     [Route("[controller]")]
     public class BannerController : ControllerBase
     {
-        private readonly IBannerService bannerService;
+        private readonly IBannerService _bannerService;
 
         public BannerController(IBannerService bannerService)
         {
-            this.bannerService = bannerService;
+            _bannerService = bannerService;
         }
         [HttpPost]
-        public IActionResult AddBanner([FromBody] BannerModel model)
+        public ActionResult AddBanner([FromBody] BannerModel model)
         {
 
             if (model == null)
@@ -30,7 +30,8 @@ namespace SportsHubWEB.Controllers
             }
             try
             {
-                bannerService.AddBannerFromModel(model);
+                _bannerService.AddBannerFromModel(model);
+                _bannerService.AddNewBannerLocalizationFromModel(model);
             }
             catch (Exception e)
             {
@@ -42,7 +43,7 @@ namespace SportsHubWEB.Controllers
 
         [HttpPut("{id}")]
 
-        public IActionResult UpdateBanner([FromRoute] int id, BannerModel model)
+        public ActionResult UpdateBanner([FromRoute] int id, BannerModel model)
         {
             if (model == null)
             {
@@ -50,7 +51,7 @@ namespace SportsHubWEB.Controllers
             }
             try
             {
-                bannerService.UpdateBannerById(id, model);
+                _bannerService.UpdateBannerById(id, model);
             }
             catch (Exception e)
             {
@@ -60,15 +61,11 @@ namespace SportsHubWEB.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteBanner([FromRoute] int id)
+        public ActionResult DeleteBanner([FromRoute] int id)
         {
             try
             {
-                bannerService.DeleteBannerById(id);
-            }
-            catch (ArgumentException)
-            {
-                return NotFound($"Banner with id {id} is not found");
+                _bannerService.DeleteBannerById(id);
             }
             catch (Exception e)
             {
@@ -77,25 +74,28 @@ namespace SportsHubWEB.Controllers
             return Ok();
         }
         [HttpPost("localization")]
-        public IActionResult AddNewBannerLocalizationFromModel([FromBody] BannerModel model)
+        public ActionResult AddNewBannerLocalizationFromModel([FromBody] BannerModel model)
         {
+            if (model == null)
+            {
+                return BadRequest("model was null");
+            }
             try
             {
-                bannerService.AddNewBannerLocalizationFromModel(model);
-                return Ok($"Banner {model.BannerId} successfully added");
+                _bannerService.AddNewBannerLocalizationFromModel(model);
+                
             }
-            catch (ArgumentNullException)
+            catch (Exception e)
             {
-                return BadRequest($"Banner {model.BannerId} was null");
+                return BadRequest(e.Message);
             }
-            catch (ArgumentException)
-            {
-                return BadRequest($"Localization in language {model.LanguageId} for banner {model.BannerId} already exists");
-            }
+
+            return StatusCode(201);
         }
+    
 
         [HttpGet]
-        public IActionResult GetBanners
+        public ActionResult GetBanners
             (
             [FromQuery] int? categoryId,
             [FromQuery] int? bannerId,
@@ -105,7 +105,7 @@ namespace SportsHubWEB.Controllers
             int? languageId = 1;
             try
             {
-                var result = bannerService.GetBanners( categoryId, bannerId, IsClosed).Select(sa => bannerService.GenerateBannerModel(sa, languageId ?? 1));
+                var result = _bannerService.GetBanners( categoryId, bannerId, IsClosed).Select(sa => _bannerService.GenerateBannerModel(sa, languageId ?? 1));
                 if (result.IsNullOrEmpty())
                     return NotFound("Banners are not found");
                 return Ok(result);
@@ -116,43 +116,36 @@ namespace SportsHubWEB.Controllers
             }
         }
         [HttpPut("localization")]
-        public IActionResult UpdateBannerLocalizationFromModel([FromBody] BannerModel model)
+        public ActionResult UpdateBannerLocalizationFromModel([FromBody] BannerModel model)
         {
+            if (model == null)
+            {
+                return BadRequest("model was null");
+            }
             try
             {
-                bannerService.UpdateBannerLocalizationFromModel(model);
-                return Ok($"Banner  {model.BannerId} successfully updated");
-            }
-            catch (ArgumentNullException)
-            {
-                return BadRequest($"Banner {model.BannerId} was null");
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest($"Localization not found");
+                _bannerService.UpdateBannerLocalizationFromModel(model);
+               
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-            }
-        }
-        [HttpDelete("localization")]
-        public IActionResult DeleteBannerLocalizationById([FromQuery] int BannerId, int languageId)
-        {
-            try
-            {
-                bannerService.DeleteBannerLocalizationById(BannerId, languageId);
-                return Ok($"Banner  {BannerId} successfully deleted");
             }
 
-            catch (ArgumentException)
+            return NoContent();
+        }
+        [HttpDelete("localization")]
+        public ActionResult DeleteBannerLocalizationById([FromQuery] int BannerId, int languageId)
+        {
+            try
             {
-                return BadRequest($"Localization for Banner {BannerId} in  language {languageId} not found");
+                _bannerService.DeleteBannerLocalizationById(BannerId, languageId);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
+            return NoContent();
         }
 
     }

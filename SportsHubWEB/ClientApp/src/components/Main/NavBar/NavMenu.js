@@ -171,12 +171,10 @@ export class NavMenu extends Component {
     return (
       <Fragment>
         <div id="box" className="gray-box">
-
         </div>
         <div id="1" className={`custom-nav `}
              onMouseEnter={() => this.setHovered([1, 2], [600, 300])}
-             onMouseLeave={() => this.unsetHovered([1, 2], [0, 0], true)}
-        >
+             onMouseLeave={() => this.unsetHovered([1, 2], [0, 0], true)}>
           <div className="dropdown-content">
             <ul className="subcategories">
               {this.state.NavTeams.teams.map((category) => (
@@ -184,8 +182,7 @@ export class NavMenu extends Component {
                   key={category.id}
                   className="not-active"
                   activeClassName={"active-subcategory"}
-                  to={`/nav/${this.state.NavTeams.cat}/${this.state.NavTeams.sub}/${category.id}`}
-                >
+                  to={`/nav/${this.state.NavTeams.cat}/${this.state.NavTeams.sub}/${category.id}`}>
                   <li className={"subcategory"}>
                     {category.title}
                   </li>
@@ -196,8 +193,7 @@ export class NavMenu extends Component {
         </div>
         <div id="2" className={`custom-nav `}
              onMouseEnter={() => this.setHovered([1, 2], [300, 300])}
-             onMouseLeave={() => this.unsetHovered([1, 2], [0, 0], true)}
-        >
+             onMouseLeave={() => this.unsetHovered([1, 2], [0, 0], true)}>
           <div className="dropdown-content">
             <ul className="subcategories">
               {this.state.NavSubCategories.sub.map((category) => (
@@ -211,8 +207,7 @@ export class NavMenu extends Component {
                   key={category.id}
                   className="not-active"
                   activeClassName={"active-subcategory"}
-                  to={`/nav/${this.state.NavSubCategories.cat}/${category.id}`}
-                >
+                  to={`/nav/${this.state.NavSubCategories.cat}/${category.id}`}>
                   <li className={"subcategory"}>
                     {category.title}
                   </li>
@@ -228,8 +223,7 @@ export class NavMenu extends Component {
                 className="not-active"
                 exact
                 to={""}
-                activeClassName={"active"}
-              >
+                activeClassName={"active"}>
                 <li className="category">HOME</li>
               </NavLink>
               {this.state.Categories.map((category) => (
@@ -244,8 +238,7 @@ export class NavMenu extends Component {
                   className="not-active"
                   
                   to={`/nav/${category.id}`}
-                  activeClassName={"active"}
-                >
+                  activeClassName={"active"}>
                   <li className="category">{category.title}</li>
                 </NavLink>
               ))}

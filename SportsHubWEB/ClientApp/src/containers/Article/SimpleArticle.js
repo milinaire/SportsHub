@@ -1,22 +1,23 @@
-﻿import 'bootstrap/dist/css/bootstrap.css';
-import React, {Component, Fragment} from 'react';
+import React, {Component, Fragment} from "react";
 import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
-
-export class SportArticle extends Component {
-  state = {
-    Article: {}
-  }
+export class Article extends Component {
+ constructor(props) {
+   super(props);
+   this.state = {Article:{}}
+ }
 
   componentDidMount() {
 
-    fetch(`https://localhost:5001/sportarticle/${this.props.match.params.article}`)
+    fetch(`https://localhost:5001/article`)
       .then(res => res.json())
       .then(
         (result) => {
+
           this.setState({
-            Article: result
+            Article: result.find(a=>String(a.articleId) === String(this.props.match.params.article))
           });
+
         },
         (error) => {
           this.setState({
@@ -26,23 +27,15 @@ export class SportArticle extends Component {
       )
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    return this.props.match.params.category
-  }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.match.params.category !== this.props.match.params.category) {
-    }
-  }
-
-  componentWillUnmount() {
-  }
 
   render() {
     return (
       <Fragment>
+
         <PageLayout MainArticles={[]}>
           <div style={{padding: '50px'}}>
+
             <div className="title-a" style={{textAlign: "center"}}>
               <h1>{this.state.Article.headline}</h1>
             </div>
@@ -63,4 +56,3 @@ export class SportArticle extends Component {
     )
   }
 }
-

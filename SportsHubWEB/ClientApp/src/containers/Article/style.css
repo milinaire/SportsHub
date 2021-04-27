@@ -1,9 +1,10 @@
 .article:hover{
     box-shadow: 0 0 20px #ddd;
-    text-decoration: none;
 
 }
-
+.link a{
+    text-decoration: none!important;
+}
 /*hr{
     border: 10px solid green;
 }}*/

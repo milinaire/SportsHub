@@ -71,9 +71,12 @@
   display: inline-block;
   font-weight: bold;
   list-style-type: none;
-  text-decoration: none;
   color: lightslategray;
     padding:0px;
+}
+.subcategories a{
+  text-decoration: none!important;
+
 }
 .categories a:hover {
   text-decoration: none;

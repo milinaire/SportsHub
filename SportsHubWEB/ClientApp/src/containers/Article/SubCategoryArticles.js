@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import {Link} from "react-router-dom";
 import {PageLayout} from "../../components/Main/Layout/PageLayout";
+import {ListArticles} from "./ArticlesList";
 
 
 export class SubCategoryArticles extends Component {
@@ -50,31 +50,13 @@ export class SubCategoryArticles extends Component {
     Articles: [],
   }
   render() {
-    let list = []
-    for (let i = 0; i < this.state.Articles.length; i++) {
-      list.push(
-        <Link
-          to={`${this.props.match.params.subcategory}/${this.state.Articles[i].conferenceId}/${this.state.Articles[i].articleId}`}>
-          <div className={"article"} style={{display: "flex", margin: "15px"}}>
-            <img src={this.state.Articles[i].imageUri} style={{width: "40%", height: "240px", padding: "10px"}}
-                 alt={this.state.Articles[i].alt}/>
-            <div>
-              <h2>{this.state.Articles[i].headline}</h2>
-              <p>{this.state.Articles[i].caption}</p>
-            </div>
-          </div>
-        </Link>
-      )
-      list.push(<hr style={{border: "1px solid #eee", margin: 0}}/>)
-    }
-    list.pop()
     return (
       <Fragment>
         <PageLayout MainArticles={[]}>
         <div style={{minHeight: "1000px"}}>
           {this.props.match.params.category}~
           {this.props.match.params.subcategory}
-          {list}
+          <ListArticles Articles={this.state.Articles}/>
         </div>
         </PageLayout>
       </Fragment>

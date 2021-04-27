@@ -2,163 +2,125 @@ import React, {Component, Fragment} from "react";
 import "./MainArticles.css";
 import {Link} from "react-router-dom";
 
-const MainArticle = ({isSelected, alt, caption, headLine, img, published, category, setIndex, length, index, changeIndex, articles}) => {
-  let buttons = []
-
-  buttons.push(<button key={0}
-    style={{borderRadius: "50%", width: "2vw", border: "3px solid #eee", background: 'white', height: "2vw",}}
-    onClick={() => changeIndex(-1, length)}>
-    {"<"}
-  </button>)
-  for (let i = 0; i < length; i++) {
-    if (i === index) {
-      buttons.push(<button key={i+2}
-        style={{borderRadius: "50%", width: "2vw", border: "0px solid #e00",color:"#f00", background: 'white', height: "2vw",}}
-        onClick={() => setIndex(i)}>
-        {"0"+ (i + 1)}
-      </button>)
-    } else {
-      buttons.push(<button key={i+2} style={{
-        borderRadius: "50%",
-        width: "2vw",
-        height: "2vw",
-        border: "0px solid #ccc",
-        background: 'white',
-        color:"#aaa"
-
-      }} onClick={() => setIndex(i)}>
-        {'0'+(i + 1)}
-      </button>)
-    }
-
-  }
-  buttons.push(<button key={1}
-    style={{borderRadius: "50%", width: "2vw", border: "3px solid #eee", background: 'white', height: "2vw",}}
-    onClick={() => changeIndex(1, length)}>
-    {">"}
-  </button>)
-  return (
-    <Fragment >
-      <div  style={{display: "flex", width: "100%"}}>
-        <img src={img} alt={alt} style={{width: "64%", height:'calc((100vw - 300px) * 0.36)',zIndex: -2}}/>
-        <div style={{marginTop: '33%', marginLeft:"2%"}}>{buttons}</div>
-        <div style={{
-          background: '#333', position: 'absolute', color: 'white', width: '10%', display: "flex",
-          textAlign: "center",
-          height:"3vw",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "1vw",
-          zIndex:-1
-        }}>
-
-          {category}
-        </div>
-        <div style={{
-          background: '#eee',
-          position: 'absolute',
-          color: 'white',
-          height: 'calc((100vw - 300px) * 0.26)',
-          width: 'calc((100% - 300px) * 0.4)',
-          marginTop:'calc((100% - 300px) * 0.05)',
-          marginLeft:'calc((100% - 300px) * 0.50)',
-          overflow: "hidden",
-          zIndex: -1,
-        }}>
-          <Link to="/">
-          <div style={{
-            background: '#f22',
-            position: 'absolute',
-            display: "flex",
-            color: 'white',
-            bottom: '0',
-            width: '40%',
-            height: '20%',
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center"
-          }}>
-            <b style={{fontSize: "1vw", padding: 0, display: "block"}}>More</b></div></Link>
-          <p style={{color: '#666', textAlign: 'left', marginLeft: '50px', marginRight: '30px', fontSize: "1vw"}}>
-            <b>Published/ {published}</b></p>
-          <h5 style={{color: 'red', textAlign: 'left', marginLeft: '50px', marginTop: '10px', fontSize: "1vw"}}>
-            <b>{headLine}</b></h5>
-          <h2 style={{
-            color: '#222',
-            textAlign: 'left',
-            marginLeft: '50px',
-            marginRight: '30px',
-            fontWeight: 500,
-            fontSize: "1vw"
-          }}>{caption}</h2>
-
-        </div>
-
-
-      </div>
-
-
-    </Fragment>)
-
-  // <img src={img} alt={alt}/>
-};
-
 export class MainArticles extends Component {
   state = {
     index: 0,
   }
-  componentDidMount() {
-    this.setState({index:0})
-    setInterval(() => {
-
-      this.setState({index: (this.state.index+1)%this.props.articles.length});
-
+  stopSliding() {
+    clearInterval(this.interval)
+  }
+  startSliding() {
+    clearInterval(this.interval)
+    this.interval = setInterval(() => {
+      this.setState({index: (this.state.index + 1) % this.props.articles.length});
     }, 6000);
   }
+  componentDidMount() {
+    this.setState({index: 0})
+    this.interval = setInterval(() => {
+      this.setState({index: (this.state.index + 1) % this.props.articles.length});
+    }, 6000);
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(!this.state.index && this.state.index !==0){this.setState({index:0})}
-
-  }
-  constructor(props) {
-    super(props);
-    this.state = {index:0}
-  }
-
-  setIndex = index => {
-    this.setState({index: index})
-  }
-  changeIndex = (index, length)=> {
-    if (this.state.index + index > length -1){this.setState({index: 0})}
-    else if(
-    this.state.index + index<0)
-    {this.setState({index: length - 1})}
-    else{
-      this.setState({index: this.state.index + index})
+    if (!this.state.index && this.state.index !== 0) {
+      this.setState({index: 0})
     }
 
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {index: 0}
+  }
+
+  setIndex = index => {
+    this.setState({index: index})
+    clearInterval(this.interval)
+    this.interval = setInterval(() => {
+      this.setState({index: (this.state.index + 1) % this.props.articles.length});
+    }, 6000);
+  }
+  changeIndex = (index, length) => {
+    if (this.state.index + index > length - 1) {
+      this.setState({index: 0})
+    } else if (
+      this.state.index + index < 0) {
+      this.setState({index: length - 1})
+    } else {
+      this.setState({index: this.state.index + index})
+    }
+    clearInterval(this.interval)
+    this.interval = setInterval(() => {
+      this.setState({index: (this.state.index + 1) % this.props.articles.length});
+    }, 6000);
+  }
+
   render() {
+    let buttons = []
+
+    buttons.push(<button key={0}
+                         onClick={() => this.changeIndex(-1, this.props.articles.length)} className={"arrow-btn"}>
+      {"<"}
+    </button>)
+    for (let i = 0; i < this.props.articles.length; i++) {
+      if (i === this.state.index) {
+        buttons.push(<button key={i + 2}
+                             className={"active-btn"}
+                             onClick={() => this.setIndex(i)}>
+          {"0" + (i + 1)}
+        </button>)
+      } else {
+        buttons.push(<button key={i + 2}
+                             className={"btn"}
+                             onClick={() => this.setIndex(i)}>
+          {"0" + (i + 1)}
+        </button>)
+      }
+
+    }
+    buttons.push(<button key={1}
+                         className={"arrow-btn"}
+                         onClick={() => this.changeIndex(1, this.props.articles.length)}>
+      {">"}
+    </button>)
     return (
       <Fragment>
-        {this.props.articles.length ?
-          <div className="main-articles">
+        <div className="main-articles" style={{backgroundImage: `url(${this.props.articles[this.state.index].imageUri})`}}
+             onMouseEnter={() => this.stopSliding()}
+             onMouseLeave={() => this.startSliding()}>
+          <div className="cat">
 
-            <MainArticle key={this.props.articles[this.state.index].articleId}
-                         alt={this.props.articles[this.state.index].alt}
-                         caption={this.props.articles[this.state.index].caption}
-                         headLine={this.props.articles[this.state.index].headline}
-                         img={this.props.articles[this.state.index].imageUri}
-                         published={this.props.articles[this.state.index].datePublished}
-                         category={this.props.articles[this.state.index].Category}
-                         setIndex={this.setIndex.bind(this)}
-                         changeIndex={this.changeIndex.bind(this)}
-                         length={this.props.articles.length}
-                         index={this.state.index}
-                         articles={this.props.articles}
-            />
-          </div> : null}
+            {this.props.articles[this.state.index].categoryId}
+          </div>
+          <div className="info">
+            <div className="table">
+              <div className="text-table">
+                <p className="published">Published / {this.props.articles[this.state.index].datePublished}</p>
+                <b className="head">{this.props.articles[this.state.index].headline}</b>
+                <b className="caption">{this.props.articles[this.state.index].caption}</b>
+              </div>
+
+              <div className="more">
+                <Link to={`/art/${this.props.articles[this.state.index].articleId}`}>
+                  <div className="link-more">
+                    <b>More</b>
+                  </div>
+                </Link>
+              </div>
+            </div>
+            <div className="buttons">
+              {buttons}
+            </div>
+          </div>
+        </div>
       </Fragment>
     );
   }
+
+
 }

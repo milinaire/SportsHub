@@ -56,7 +56,7 @@ namespace SportsHubBL.Services
 
             if (sportArticle == null)
             {
-                throw new ArgumentException($"SportArticle {sportArticleId} not found", nameof(sportArticleId));
+                throw new Exception($"SportArticle {sportArticleId} not found");
             }
 
             var newSportArticle = GetSportArticleFromModel(model);
@@ -74,7 +74,7 @@ namespace SportsHubBL.Services
 
             if (sportArticle == null)
             {
-                throw new ArgumentException($"SportArticle {sportArticleId} not found", nameof(sportArticleId));
+                throw new Exception($"SportArticle {sportArticleId} not found");
             }
 
             _sportArticleRepository.Delete(sportArticle);
@@ -165,7 +165,7 @@ namespace SportsHubBL.Services
 
             var team = _teamRepository.Set()
                 .FirstOrDefault(t => t.Id == model.TeamId) ??
-                throw new ArgumentException($"team {model.TeamId} doesn\'t exist", nameof(model));
+                throw new Exception($"team {model.TeamId} doesn\'t exist");
 
             return new SportArticle
             {

@@ -14,12 +14,14 @@ namespace SportsHubWEB.Controllers
     public class SportArticleController : ControllerBase
     {
         private readonly ISportArticleService _sportArticleService;
+        private readonly IArticleService _articleService;
 
         public SportArticleController(
-            ISportArticleService sportArticleService
-            )
+            ISportArticleService sportArticleService,
+            IArticleService articleService)
         {
             _sportArticleService = sportArticleService;
+            _articleService = articleService;
         }
 
         [HttpGet]
@@ -58,6 +60,7 @@ namespace SportsHubWEB.Controllers
             try
             {
                 _sportArticleService.AddSportArticleFromModel(sportArticleModel);
+                _articleService.AddNewArticleLocalizationFromModel(sportArticleModel);
             }
             catch (Exception e)
             {
@@ -78,6 +81,7 @@ namespace SportsHubWEB.Controllers
             try
             {
                 _sportArticleService.UpdateSportArticleFromModel(id, sportArticleModel);
+                _articleService.UpdateArticleLocalizationFromModel(sportArticleModel);
             }
             catch (Exception e)
             {

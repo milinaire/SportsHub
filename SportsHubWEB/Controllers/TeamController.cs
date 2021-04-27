@@ -4,6 +4,7 @@ using SportsHubBL.Models;
 using System;
 using System.Linq;
 using IdentityServer4.Extensions;
+using SportsHubDAL.Entities;
 
 namespace SportsHubWEB.Controllers
 {

@@ -119,6 +119,83 @@ namespace SportsHubBL.Services
 
             _conferenceLocalizationRepository.Insert(conferenceLocalization);
         }
+        public void UpdateConferenceLocalizationFromModel(ConferenceModel model)
+        {
+            var conference = GetConferenceById(model.ConferenceId);
 
+            var originalConferenceLocalization = _conferenceLocalizationRepository.Set()
+                .FirstOrDefault(al => al.ConferenceId == conference.Id && al.LanguageId == model.LanguageId);
+
+            if (originalConferenceLocalization == null)
+            {
+                throw new Exception($"no previous localization in language {model.LanguageId} of conference {model.ConferenceId}");
+            }
+
+            var newConferenceLocalization = GetConferenceLocalizationFromModel(conference, model);
+
+            originalConferenceLocalization.Name = newConferenceLocalization.Name;
+
+            _conferenceLocalizationRepository.Update(originalConferenceLocalization);
+        }
+        public void DeleteConferenceLocalizationById(int conferenceId, int languageId)
+        {
+            var conferenceLocalization = _conferenceLocalizationRepository.Set()
+                .FirstOrDefault(al => al.ConferenceId == conferenceId && al.LanguageId == languageId);
+
+            if (conferenceLocalization == null)
+            {
+                throw new Exception($"localization for conference {conferenceId} in language {languageId} not found");
+            }
+
+            _conferenceLocalizationRepository.Delete(conferenceLocalization);
+        }
+        public IEnumerable<Conference> GetConferences(bool? show, int? categoryId)
+        {
+
+            var query = from a in _conferenceRepository.Set()
+                        where categoryId == null || a.Category.Id == categoryId 
+                        where show == null || a.Show == show
+                        select a;
+
+            return query.ToList();
+        }
+        public ConferenceModel GetConferenceModel(Conference conference, Language language)
+        {
+            if (conference == null)
+            {
+                throw new ArgumentNullException(nameof(conference));
+            }
+
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
+
+            var conferenceLocalization = conference.ConferenceLocalizations.FirstOrDefault(at => at.Language == language);
+
+            if (conferenceLocalization == null)
+            {
+                throw new Exception("can\'t find localization for conference");
+            }
+
+            return new ConferenceModel
+            {
+                ConferenceId = conference.Id,
+                LanguageId = language.Id,
+                Show = conference.Show,
+                CategoryId = conference.Category.Id,
+                Name = conferenceLocalization.Name
+            };
+        }
+        public ConferenceModel GenerateConferenceModel(Conference conference, int languageId)
+        {
+            var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
+
+            if (language == null)
+            {
+                throw new ArgumentException($"language {languageId} not found", nameof(language));
+            }
+            return this.GetConferenceModel(conference, language);
+        }
     }
 }

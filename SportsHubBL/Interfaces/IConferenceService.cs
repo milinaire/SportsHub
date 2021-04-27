@@ -15,5 +15,10 @@ namespace SportsHubBL.Interfaces
         public void DeleteConferenceById(int id);
         public void UpdateConferenceById(int id, ConferenceModel model);
         public void AddNewConferenceLocalizationFromModel(ConferenceModel model);
+        public void UpdateConferenceLocalizationFromModel(ConferenceModel model);
+        public void DeleteConferenceLocalizationById(int conferenceId, int languageId);
+        public ConferenceModel GetConferenceModel(Conference conference, Language language);
+        public ConferenceModel GenerateConferenceModel(Conference conference, int languageId);
+        public IEnumerable<Conference> GetConferences(bool? show, int? categoryId);
     }
 }

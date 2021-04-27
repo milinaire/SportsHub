@@ -34,7 +34,7 @@ namespace SportsHubWEB.Controllers
             try
             {
                 _conferenceService.AddConferenceFromModel(conferenceModel);
-                //_conferenceService.AddNewConferenceLocalizationFromModel(conferenceModel);
+                _conferenceService.AddNewConferenceLocalizationFromModel(conferenceModel);
             }
             catch (Exception e)
             {
@@ -54,6 +54,7 @@ namespace SportsHubWEB.Controllers
             try
             {
                 _conferenceService.UpdateConferenceById(id, conferenceModel);
+               // _conferenceService.UpdateConferenceLocalizationFromModel(conferenceModel);
             }
             catch (Exception e)
             {
@@ -74,6 +75,47 @@ namespace SportsHubWEB.Controllers
             }
 
             return NoContent();
+        }
+        [HttpPost("localization")]
+        public IActionResult AddNewConferenceLocalizationFromModel([FromBody] ConferenceModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("model was null");
+            }
+            try
+            {
+                _conferenceService.AddNewConferenceLocalizationFromModel(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return StatusCode(201);
+        }
+        [HttpDelete("localization")]
+        public ActionResult DeleteConferenceLocalization([FromQuery] int conferenceId,int languageId)
+        {
+            try
+            {
+                _conferenceService.DeleteConferenceLocalizationById(conferenceId, languageId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        public IEnumerable<ConferenceModel> GetSConferences([FromQuery] bool?show, int? categoryId)
+        {
+            int? languageId = 1;
+
+            return _conferenceService.GetConferences(show,categoryId)
+                .Select(sa => _conferenceService.GenerateConferenceModel(sa, languageId ?? 1));
         }
     }
 }

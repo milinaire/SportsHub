@@ -34,14 +34,14 @@ namespace SportsHubWEB.Controllers
             }
         }
         [HttpGet("categoryad/{id}")]
-        public IEnumerable<AdvertisingModel> GetAllAdvertising([FromRoute] int id)
+        public IEnumerable<AdvertisingModel> GetAllAdvertisingByCategory([FromRoute] int id)
         {
             int? languageId = 1;
             
                 return advertisingService.GetAdvertisingByCategory(id).Select(sa => advertisingService.GenerateAdvertisingModel(sa, languageId ?? 1)); 
         }
         [HttpGet]
-        public IEnumerable<AdvertisingModel> GetAdvertisingByCategory()
+        public IEnumerable<AdvertisingModel> GetAdvertising()
         {
             int? languageId = 1;
             return advertisingService.GetAllAdvertising().Select(sa => advertisingService.GenerateAdvertisingModel(sa, languageId ?? 1));
@@ -156,7 +156,7 @@ namespace SportsHubWEB.Controllers
             }
             catch (ArgumentException)
             {
-                return BadRequest($"Localization in language {model.LanguageId} for team {model.AdvertisingId} already exists");
+                return BadRequest($"Localization in language {model.LanguageId} for advertising {model.AdvertisingId} already exists");
             }
         }
 

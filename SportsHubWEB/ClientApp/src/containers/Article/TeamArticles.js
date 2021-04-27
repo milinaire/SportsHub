@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import {Link} from "react-router-dom";
+import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 export class TeamArticles extends Component {
   componentDidMount(){
@@ -69,11 +70,13 @@ export class TeamArticles extends Component {
     list.pop()
     return (
       <Fragment>
+        <PageLayout MainArticles={[]}>
         <div style={{ minHeight: "1000px" }}>
           {this.props.match.params.category}~
           {this.props.match.params.subcategory}~{this.props.match.params.team}
           {list}
         </div>
+        </PageLayout>
       </Fragment>
     );
   }

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import "./home.css"
-import {MainArticles} from "../../components/Main/MainArticles/MainArticles";
-import {Sidebar} from "../../components/Main/SideBar/Sidebar";
+import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -164,9 +163,7 @@ export class Home extends Component {
   render() {
     return (
       <Fragment>
-        <MainArticles articles={this.state.MainArticles}/>
-        <div className="content_plus_sidebar">
-          <div className="content-part">
+        <PageLayout MainArticles={this.state.MainArticles}>
           <div className="breakwrap3">
             <div className="break-line-wrap">
               <hr className="hr1"/>
@@ -176,7 +173,7 @@ export class Home extends Component {
             {this.state.BreakDown.map((com) => (
               <div key={com[0].Id} className="breakdown">
                 <div className="big-a">
-                  <img className="big-a" src={com[0].Image} alt={com[0].Alt}/>
+                  <img className="big-i" src={com[0].Image} alt={com[0].Alt}/>
                   <div className="pop-text1">
                     <p>{com[0].Caption}</p>
                   </div>
@@ -229,22 +226,6 @@ export class Home extends Component {
 
         </div>
         <div className="breakwrap1">
-          <div className="flex-most">
-            <div className="break-line-wrap1">
-              <b>MOST POPULAR</b>
-              <hr className="hr2"/>
-
-            </div>
-            <div className="arrow-right">
-              <p><span className="bb">photo</span> of the <span className="bb">day</span></p>
-            </div>
-            <img className="photo-of-the-day" src={this.state.PhotoOfTheDay.Image} alt={this.state.PhotoOfTheDay.Alt}/>
-            <div className="description-of-the-day">
-              <h3>{this.state.PhotoOfTheDay.Title}</h3>
-              <p>{this.state.PhotoOfTheDay.Description}</p>
-              <p className="text-of-the-day">{this.state.PhotoOfTheDay.Author}</p>
-            </div>
-          </div>
           <div className="breakwrap1">
             <div className="flex-most">
               <div className="break-line-wrap1">
@@ -268,7 +249,7 @@ export class Home extends Component {
                 <b>MOST COMENTED</b>
                 <hr className="hr2"/>
               </div>
-              <div className="com">
+              <div className="pop">
                 {this.state.MostCommented.map((com) => (
                   <div key={com.Id} className="pop-card">
                     <img src={com.Image} alt={com.Alt}/>
@@ -286,10 +267,7 @@ export class Home extends Component {
 
           </div>
         </div>
-        </div>
-          <Sidebar/>
-        </div>
-
+        </PageLayout>
 
       </Fragment>
     );

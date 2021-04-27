@@ -1,45 +1,26 @@
 /* Provide sufficient contrast against white background */
-.content {
-    display: flex;
-    width: 100%;
-    height: 600px;
-    background: yellow;
-    padding-left: 100px;
-}
+/*.content {*/
+/*    display: flex;*/
+/*    width: 100%;*/
+/*    height: 600px;*/
+/*    background: yellow;*/
+/*    padding-left: 100px;*/
+/*}*/
 
-.child {
-    width: 100px;
-    height: 300px;
-    background: green;
-    border: 1px solid #000;
-}
-
-.custom-nav {
-    width: 100px;
-    height: 100px;
-    background: #005cbf;
-    position: fixed;
-    top: 0;
-    transition: margin-left 400ms;
-    z-index:6;
-}
-.gray-box {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-
-    transition: background-color 400ms;
-    background-color: rgba(0, 0, 0, 0.0);
-    z-index:-1;
-}
+/*.child {*/
+/*    width: 100px;*/
+/*    height: 300px;*/
+/*    background: green;*/
+/*    border: 1px solid #000;*/
+/*}*/
 
 
-.for-link {
-    width: 100px;
-    height: 300px;
-}
+
+
+/*.for-link {*/
+/*    width: 100px;*/
+/*    height: 300px;*/
+/*}*/
 
 
 

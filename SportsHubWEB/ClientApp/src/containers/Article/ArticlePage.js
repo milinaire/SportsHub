@@ -1,5 +1,6 @@
 ﻿import 'bootstrap/dist/css/bootstrap.css';
 import React, {Component, Fragment} from 'react';
+import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 
 export  class Article extends Component {
@@ -42,6 +43,7 @@ export  class Article extends Component {
   render() {
     return (
       <Fragment>
+        <PageLayout MainArticles={[]}>
         <div style={{padding: '50px'}}>
           <div className="title-a" style={{textAlign: "center"}}>
             <h1>{this.state.Article.headline}</h1>
@@ -58,6 +60,7 @@ export  class Article extends Component {
           </div>
           <hr/>
         </div>
+        </PageLayout>
       </Fragment>
     )
   }

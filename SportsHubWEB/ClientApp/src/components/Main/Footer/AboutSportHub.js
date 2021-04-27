@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "./Footer.css";
+import {BaseLayout} from "../Layout/BaseLayout";
 
 export class AboutSportHub extends Component {
   state = {
@@ -8,10 +9,15 @@ export class AboutSportHub extends Component {
   };
   render() {
     return (
-      <div>
-        <h1>{this.state.Headline}</h1>
-        <p>{this.state.Text}</p>
-      </div>
+      <Fragment>
+        <BaseLayout>
+          <div>
+            <h1>{this.state.Headline}</h1>
+            <p>{this.state.Text}</p>
+          </div>
+        </BaseLayout>
+      </Fragment>
+
     );
   }
 }

@@ -15,6 +15,7 @@ import {CompanyInfo} from "./components/Main/Footer/CompanyInfo";
 import {Contributors} from "./components/Main/Footer/Contributors";
 import {ContactUs} from "./components/Main/Footer/ContactUs";
 import {AboutSportHub} from "./components/Main/Footer/AboutSportHub";
+import Test from "./Test";
 
 export default class App extends Component {
 
@@ -23,13 +24,14 @@ export default class App extends Component {
       <Fragment>
         <Layout>
           <Route exact path="/" component={Home}/>
+          <Route exact path="/test" component={Test}/>
           <Route exact path="/about" component={AboutSportHub}/>
           <Route exact path="/terms" component={Terms}/>
           <Route exact path="/privacy" component={Privacy}/>
           <Route exact path="/contact" component={ContactUs}/>
-          <Route exact path="/nav/:category" component={CategoryArticles}/>
           <Route exact path="/company-info/:name" component={CompanyInfo}/>
           <Route exact path="/contributors/:name" component={Contributors}/>
+          <Route exact path="/nav/:category" component={CategoryArticles}/>
           <Route exact path="/nav/:category/:subcategory" component={SubCategoryArticles}/>
           <Route exact path="/nav/:category/:subcategory/:team" component={TeamArticles}/>
           <Route exact path="/nav/:category/:subcategory/:team/:article" component={Article}/>

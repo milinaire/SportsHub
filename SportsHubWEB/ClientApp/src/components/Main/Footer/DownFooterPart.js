@@ -34,7 +34,7 @@ export class DownFooterPart extends Component {
   render() {
     return (
       <footer>
-        <div className={"footer-info"}>
+        <div className="footer-info">
           <div className="logo">
             <Link to="/">
               <div className="footer-link">

@@ -1,24 +1,24 @@
 import React, {Component, Fragment} from "react";
-import {Carousel} from "react-responsive-carousel";
 import "./MainArticles.css";
+import {Link} from "react-router-dom";
 
 const MainArticle = ({isSelected, alt, caption, headLine, img, published, category, setIndex, length, index, changeIndex, articles}) => {
   let buttons = []
 
-  buttons.push(<button
+  buttons.push(<button key={0}
     style={{borderRadius: "50%", width: "2vw", border: "3px solid #eee", background: 'white', height: "2vw",}}
     onClick={() => changeIndex(-1, length)}>
     {"<"}
   </button>)
   for (let i = 0; i < length; i++) {
     if (i === index) {
-      buttons.push(<button
+      buttons.push(<button key={i+2}
         style={{borderRadius: "50%", width: "2vw", border: "0px solid #e00",color:"#f00", background: 'white', height: "2vw",}}
         onClick={() => setIndex(i)}>
         {"0"+ (i + 1)}
       </button>)
     } else {
-      buttons.push(<button style={{
+      buttons.push(<button key={i+2} style={{
         borderRadius: "50%",
         width: "2vw",
         height: "2vw",
@@ -32,7 +32,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
     }
 
   }
-  buttons.push(<button
+  buttons.push(<button key={1}
     style={{borderRadius: "50%", width: "2vw", border: "3px solid #eee", background: 'white', height: "2vw",}}
     onClick={() => changeIndex(1, length)}>
     {">"}
@@ -65,6 +65,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
           overflow: "hidden",
           zIndex: -1,
         }}>
+          <Link to="/">
           <div style={{
             background: '#f22',
             position: 'absolute',
@@ -77,7 +78,7 @@ const MainArticle = ({isSelected, alt, caption, headLine, img, published, catego
             justifyContent: "center",
             alignItems: "center"
           }}>
-            <b style={{fontSize: "1vw", padding: 0, display: "block"}}>More</b></div>
+            <b style={{fontSize: "1vw", padding: 0, display: "block"}}>More</b></div></Link>
           <p style={{color: '#666', textAlign: 'left', marginLeft: '50px', marginRight: '30px', fontSize: "1vw"}}>
             <b>Published/ {published}</b></p>
           <h5 style={{color: 'red', textAlign: 'left', marginLeft: '50px', marginTop: '10px', fontSize: "1vw"}}>
@@ -142,13 +143,13 @@ export class MainArticles extends Component {
       <Fragment>
         {this.props.articles.length ?
           <div className="main-articles">
-            {console.log("ee", this.props.articles, this.state.index)}
-            <MainArticle key={this.props.articles[this.state.index].id}
-                         alt={this.props.articles[this.state.index].Alt}
-                         caption={this.props.articles[this.state.index].Caption}
-                         headLine={this.props.articles[this.state.index].HeadLine}
-                         img={this.props.articles[this.state.index].Image}
-                         published={this.props.articles[this.state.index].Published}
+
+            <MainArticle key={this.props.articles[this.state.index].articleId}
+                         alt={this.props.articles[this.state.index].alt}
+                         caption={this.props.articles[this.state.index].caption}
+                         headLine={this.props.articles[this.state.index].headline}
+                         img={this.props.articles[this.state.index].imageUri}
+                         published={this.props.articles[this.state.index].datePublished}
                          category={this.props.articles[this.state.index].Category}
                          setIndex={this.setIndex.bind(this)}
                          changeIndex={this.changeIndex.bind(this)}

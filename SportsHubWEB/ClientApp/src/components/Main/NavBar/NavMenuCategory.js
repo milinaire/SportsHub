@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from "react";
-import { NavLink } from "react-router-dom";
+import React, {Component, Fragment} from "react";
+import {NavLink} from "react-router-dom";
 import "./NavMenuCategory.css";
-import { SubCategory } from "./NavMenySubCategory";
+import {SubCategory} from "./NavMenySubCategory";
 
 export class Category extends Component {
   state = {
@@ -13,18 +13,19 @@ export class Category extends Component {
       <Fragment>
         {this.state.isOpenSubcategory ? (
           <div className="hide-footer">
-            <div className="modal-full" />{" "}
+            <div className="modal-full"/>
+            {" "}
           </div>
         ) : null}
         <div
           className="category"
           onMouseEnter={() => {
             if (this.props.subcategories.length > 0) {
-              this.setState({ isOpenSubcategory: true });
+              this.setState({isOpenSubcategory: true});
             }
           }}
           onMouseLeave={() => {
-            this.setState({ isOpenSubcategory: false });
+            this.setState({isOpenSubcategory: false});
           }}
         >
           <NavLink

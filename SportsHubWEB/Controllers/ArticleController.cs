@@ -31,23 +31,23 @@ namespace SportsHubWEB.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ArticleModel> GetMainArticles()
+        public IEnumerable<ArticleModel> GetMainArticles([FromQuery] bool showHidden = false)
         {
             // TODO: cange this call to use language
             int? languageId = 1;
 
             var mainArticles = _articleService.GetMainPageArticles();
 
-            var articleModels = mainArticles.Select(mam =>
+            var articleModels = mainArticles.Where(mam => mam.Show).Select(mam =>
             {
                 var sportArticle = _sportArticleService.GetConnectedSportArticle(mam.ArticleId);
                 if (sportArticle == null)
                 {
-                    return _articleModelService.GenerateArticleModel(_articleService.GetArticleById(mam.ArticleId), languageId?? 1);
+                    return _articleModelService.GenerateArticleModel(_articleService.GetArticleById(mam.ArticleId), languageId ?? 1);
                 }
                 else
                 {
-                    return _sportArticleService.GenerateSportArticleModel(sportArticle, languageId?? 1);
+                    return _sportArticleService.GenerateSportArticleModel(sportArticle, languageId ?? 1);
                 }
             }
             );
@@ -110,6 +110,65 @@ namespace SportsHubWEB.Controllers
             return Ok();
         }
 
+        [HttpGet("{id}/localization")]
+        public ActionResult<IEnumerable<ArticleLocalization>> GetAllArticleLocalizations([FromRoute]int id)
+        {
+            try
+            {
+                return _articleService.GetArticleLocalizations(id).ToList();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
+        [HttpGet("{id}/localization/{languageId}")]
+        public ActionResult<ArticleLocalization> GetArticleLocalization([FromRoute] int id, [FromRoute] int languageId)
+        {
+            try
+            {
+                return _articleService.GetArticleLocalization(id, languageId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("{id}/localization/{languageId}")]
+        public ActionResult UpdateArticleLocalization([FromRoute] int id, [FromRoute] int languageId, [FromBody] ArticleModel model)
+        {
+            if (model.LanguageId != languageId || model.ArticleId != id)
+            {
+                return BadRequest("id\'s in the model and in the route have to be identical");
+            }
+
+            try
+            {
+                _articleService.UpdateArticleLocalizationFromModel(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/localization/{languageId}")]
+        public ActionResult DeleteArticleLocalization([FromRoute] int id, [FromRoute] int languageId)
+        {
+            try
+            {
+                _articleService.DeleteArticleLocalizationById(id, languageId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return Ok();
+        }
     }
 }

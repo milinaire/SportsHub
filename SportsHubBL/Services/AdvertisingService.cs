@@ -53,8 +53,6 @@ namespace SportsHubBL.Services
         }
         public void UpdateAdvertisingLocalizationFromModel(AdvertisingModel model)
         {
-            
-
             var originalAdvertisingLocalization = advertisingLocalizationRepository.Set()
                 .FirstOrDefault(al => al.AdvertisingId == model.AdvertisingId && al.LanguageId == model.LanguageId);
 
@@ -86,7 +84,6 @@ namespace SportsHubBL.Services
             }
 
             return advertisingLocalizationRepository.Set().FirstOrDefault(al => al.Advertising == advertising && al.Language == language) ;
-
 
         }
         private AdvertisingLocalization GetAdvertisingLocalizationFromModel(AdvertisingModel model)
@@ -287,7 +284,7 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(language));
             }
 
-            if (advertising.Image == null || advertising.AdvertisingLocalizations==null)
+            if (advertising.Image == null || advertising.AdvertisingLocalizations==null )
             {
                 advertising = advertisingRepository.Set()
                     .Include(a => a.Image)
@@ -307,23 +304,25 @@ namespace SportsHubBL.Services
                 throw new ArgumentException("can\'t find localization for advertising");
             }
             var categoryAd = advertising.CategoryAds.FirstOrDefault(at => at.AdvertisingId == advertising.Id);
-
-            return new AdvertisingModel
-            {
-                AdvertisingId = advertising.Id,
-                ImageId = advertising?.Image.Id,
-                ImageUri = advertising?.Image.Uri,
-                DateCreated = advertising.DateCreated,
-                IsActive = advertising.IsActive,
-                LanguageId = advertisingLocalization?.LanguageId ?? default,
-                CategoryId = categoryAd.CategoryId,
-                Opened = categoryAd.Opened,
-                Displayed = categoryAd.Displayed,
-                Headline = advertisingLocalization?.Headline
-            };
+            
+                return new AdvertisingModel
+                {
+                    AdvertisingId = advertising.Id,
+                    ImageId = advertising.Image.Id,
+                    ImageUri = advertising.Image.Uri,
+                    Url = advertising.Url,
+                    DateCreated = advertising.DateCreated,
+                    IsActive = advertising.IsActive,
+                    LanguageId = advertisingLocalization?.LanguageId ?? default,
+                    CategoryId = categoryAd?.CategoryId ?? 0,
+                    Opened = categoryAd?.Opened ?? 0,
+                    Displayed = categoryAd?.Displayed ?? 0,
+                    Headline = advertisingLocalization?.Headline
+                };
+            
         }
       
-            public AdvertisingModel GenerateAdvertisingModel(Advertising advertising, int languageId)
+        public AdvertisingModel GenerateAdvertisingModel(Advertising advertising, int languageId)
         {
             var language = languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
@@ -331,7 +330,6 @@ namespace SportsHubBL.Services
             {
                 throw new ArgumentException($"language {languageId} not found", nameof(language));
             }
-
             return this.GetAdvertisingModel(advertising, language);
         }
 
@@ -343,16 +341,9 @@ namespace SportsHubBL.Services
             {
                 throw new ArgumentException("category was null", nameof(categoryId));
             }
-            var query = from a in advertisingRepository.Set()
-                    .Include(sa => sa.CategoryAds.Where(a=>a.CategoryId== categoryId))
-                       
-                        select a;
-            
-            
-
-            return query.ToList(); ;
-
-            
+            var query = advertisingRepository.Set()
+                    .Include(sa => sa.CategoryAds).Where(a => a.CategoryAds.Any(a => a.CategoryId == categoryId));
+            return query.Where(a=>a.IsActive==true);
         }   
 
     }

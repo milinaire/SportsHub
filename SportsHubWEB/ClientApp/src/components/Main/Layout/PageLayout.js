@@ -15,7 +15,10 @@ export class PageLayout extends Component {
           <MainArticles articles={this.props.MainArticles}/>
           <div className="main-content">
             <div className="content">{this.props.children}</div>
-            <Sidebar category={this.props.Category}/>
+            <div className="side">
+              <Sidebar category={this.props.Category}/>
+            </div>
+
           </div>
           <UpFooterPart/>
         </div>

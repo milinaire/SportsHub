@@ -180,21 +180,21 @@ export class Home extends Component {
                 </div>
                 <div className="com">
                   <div className="pop-card">
-                    <img src={com[1].Image} alt={com[1].Alt}/>
+                    <img className="small-i" src={com[1].Image} alt={com[1].Alt}/>
                     <div className="pop-text">
                       <b><p>{com[1].HeadLine}</p></b>
                       <p>{com[1].Caption}</p>
                     </div>
                   </div>
                   <div className="pop-card">
-                    <img src={com[2].Image} alt={com[2].Alt}/>
+                    <img className="small-i" src={com[2].Image} alt={com[2].Alt}/>
                     <div className="pop-text">
                       <b><p>{com[2].HeadLine}</p></b>
                       <p>{com[2].Caption}</p>
                     </div>
                   </div>
                   <div className="pop-card">
-                    <img src={com[3].Image} alt={com[3].Alt}/>
+                    <img className="small-i" src={com[3].Image} alt={com[3].Alt}/>
                     <div className="pop-text">
                       <b><p>{com[3].HeadLine}</p></b>
                       <p>{com[3].Caption}</p>
@@ -226,7 +226,7 @@ export class Home extends Component {
 
         </div>
         <div className="breakwrap1">
-          <div className="breakwrap1">
+
             <div className="flex-most">
               <div className="break-line-wrap1">
                 <b>MOST POPULAR</b>
@@ -265,7 +265,7 @@ export class Home extends Component {
                   </div>
             </div>
 
-          </div>
+
         </div>
         </PageLayout>
 

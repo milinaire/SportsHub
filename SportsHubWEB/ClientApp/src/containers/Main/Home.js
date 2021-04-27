@@ -204,14 +204,36 @@ export class Home extends Component {
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+
+
+
+            </div>
+          ))}
+        </div>
+        <div className="breakwrap">
+
+          <div className="break-line-wrap">
+            <hr className="hr1"/>
+            <div className="break-line"><b>PHOTO OF THE DAY</b></div>
+            <hr className="hr1"/>
           </div>
-          <div className="breakwrap">
-            <div className="break-line-wrap">
-              <hr className="hr1"/>
-              <div className="break-line"><b>PHOTO OF THE DAY</b></div>
-              <hr className="hr1"/>
+          <div className="arrow-right">
+            <p><span className="bb">photo</span> of the <span className="bb">day</span></p>
+          </div>
+          <img className="photo-of-the-day" src={this.state.PhotoOfTheDay.Image} alt={this.state.PhotoOfTheDay.Alt}/>
+          <div className="description-of-the-day">
+            <h3>{this.state.PhotoOfTheDay.Title}</h3>
+            <p>{this.state.PhotoOfTheDay.Description}</p>
+            <p className="text-of-the-day">{this.state.PhotoOfTheDay.Author}</p>
+          </div>
+
+        </div>
+        <div className="breakwrap1">
+          <div className="flex-most">
+            <div className="break-line-wrap1">
+              <b>MOST POPULAR</b>
+              <hr className="hr2"/>
+
             </div>
             <div className="arrow-right">
               <p><span className="bb">photo</span> of the <span className="bb">day</span></p>
@@ -255,14 +277,19 @@ export class Home extends Component {
                       <p>{com.Caption}</p>
                     </div>
                   </div>
-                ))}
-              </div>
+
+
+
+              ))}
+                  </div>
             </div>
 
           </div>
         </div>
+        </div>
           <Sidebar/>
         </div>
+
 
       </Fragment>
     );

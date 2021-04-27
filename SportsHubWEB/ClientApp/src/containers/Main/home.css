@@ -23,39 +23,51 @@
     margin-top: 70px;
     margin-bottom: 90px;
     flex-wrap: wrap;
-    align-items: content;
+    justify-content:center;
 }
 
-.breakwrap {
-    width: 50.9vw;
-    height: 800px;
+
+.breakwrap{ 
+    width: 100%;
+    height:auto;
     display: flex;
     flex-grow: 1;
     margin-bottom: 90px;
     flex-wrap: wrap;
+    justify-content: center;
+    left:0;
+    right: 0;
 
 }
 
 
-.breakdown {
+.breakdown{
     margin-top: 45px;
-    width: 978px;
+    width:100%;
     height: 400px;
     z-index: -1;
-
+  
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
+  
 
 }
+.big-wrap{width:45%;
+    height:  360px;}
 
-.big-a {
-    width: 470px;
+
+.big-a{
+    width:100%;
+
     height: 360px;
-    margin-right: 38px
+    margin-right: 38px;
 }
 
-.breakwrap1 {
-    width: 50.9vw;
+
+.breakwrap1{ 
+    width: 100%;
+
     height: 500px;
     display: flex;
     flex-wrap: wrap;
@@ -65,27 +77,32 @@
 
 }
 
-.flex-most {
+.flex-most{
+    width:48%;
 
     display: flex;
     flex-direction: column;
 }
 
-.hr1 {
-    width: 389px;
+
+.hr1{
+    width:100%;
     border-top: 1px solid grey;
 }
 
-.hr2 {
-    width: 290px;
+.hr2{
+    width:80%;
+
     border-top: 1px solid grey;
 }
 
 .break-line {
     border: 1px solid grey;
     border-radius: 80px;
-    width: 12vw;
-    height: 50px;
+
+    width:490px;
+    height:50px;
+  
 
     display: flex;
     align-content: center;
@@ -107,17 +124,28 @@
     width: 100%;
     height: 50px;
     display: flex;
-    align-items: center;
 
+    align-items: center;  
+    justify-content: center;
+ 
 }
-
-.break-line-wrap1 {
-    width: inherit;
-    height: 50px;
+.break-line-wrap1{
+    width:100%;
+    height:50px;
     display: flex;
     align-items: center;
+   
+    margin:0;
+}   
+.break-line-wrap1>b{
+    width:180px;
+    
 
-    margin: 0;
+}
+.photo-arrow{
+    width: 100%;
+    z-index:-1;
+    height: 100%;
 }
 
 .break-line-wrap1 > b {
@@ -136,10 +164,12 @@
 
 .description-of-the-day {
     padding-left: 15px;
-    position: relative;
-    height: 130px;
-    bottom: 130px;
-    z-index: -1;
+
+    position:relative ;
+    height:130px;
+    bottom:130px; 
+    z-index: 0;
+
     color: #fff;
     width: 100%;
     background-color: rgba(51, 51, 51, 0.5);
@@ -176,9 +206,11 @@
     border-bottom: 75px solid transparent;
     border-left: 200px solid red;
     position: relative;
-    top: 50px;
-    left: -20px;
-    z-index: -1;
+
+    top:50px;
+    left:-20px;
+    z-index: 0;
+
 }
 
 .arrow-right > p {
@@ -195,18 +227,30 @@
     font-weight: bold;
 }
 
-.pop {
-    width: 470px;
+
+.pop{
+    width:100%;
+
     height: 360px;
 }
 
 
-.com {
-    width: 470px;
-    height: 400px;
 
+
+.com{
+    width:100%;
+    height: 400px;
+   
 
 }
+.com1-wrap{
+    width:45%;
+    height: 400px;
+}
+.com1{
+    width:100%;
+    height: 400px;
+}   
 
 
 .pop-card {
@@ -248,109 +292,67 @@
     position: relative;
     bottom: 120px;
     padding-left: 10px;
-    background-color: #fff;
 
-    border-right: 0.5px solid lightgrey;
-    border-bottom: 0.5px solid lightgrey;
-    border-left: 0.5px solid lightgrey;
-
+   background-color:  #fff;
+   border-right:0.5px solid lightgrey ;
+   border-bottom: 0.5px solid lightgrey ;
+   border-left: 0.5px solid lightgrey ;
+   width:100%;
 }
 
-@media only screen and (max-width: 1850px) {
-    .breakwrap1 {
-        width: 55vw
-    }
-}
-
-@media only screen and (max-width: 1750px) {
-    .breakwrap1 {
-        width: 60vw;
-    }
-
-}
 
 @media only screen and (max-width: 1700px) {
-    .breakwrap > .break-line-wrap > .break-line {
+    .breakwrap>.break-line-wrap>.break-line{
         width: 120%;
-    }
-
-    .description-of-the-day {
+   }
+   .description-of-the-day{
         height: 150px;
         bottom: 150px;
     }
-
-    .breakwrap > .break-line-wrap {
+   .breakwrap>.break-line-wrap{
         margin-bottom: -300px;
+   }
+   .breakwrap{
+       margin-bottom: 0;
     }
-
-    .breakwrap {
-        margin-bottom: 0;
+   .breakwrap3>.breakdown>.big-a{
+       margin-bottom: -40px;
     }
-
-    .breakwrap3 > .breakdown > .big-a {
-        margin-bottom: -40px;
+   .breakwrap3>.breakdown>.com{
+       margin-top: 50px;
+       padding: 0;
     }
-
-    .breakwrap3 > .breakdown > .com {
-        margin-top: 50px;
+   .breakwrap1{
+       margin-top:-100px;
     }
-
-    .breakdown {
-        margin-bottom: 300px;
-    }
-
-    .breakwrap1 {
-        margin-top: -100px;
-        margin-bottom: 400px;
-    }
+  
 }
 
+@media only screen and (max-width: 1550px) {
+    .breakdown{margin-bottom: 300px;}
+    .breakwrap3>.breakdown>.big-wrap{width:400px; margin-bottom:70px;}
+   .breakwrap3>.breakdown>.com1-wrap{width:400px; margin-top:-55px;}
+   .breakwrap3>.break-line-wrap{width:80%;}
+   .breakwrap1{margin-bottom:400px;}
+   .breakwrap1>.flex-most{width:450px;}
+   
+}
 
-@media only screen and (max-width: 1200px) {
-    .breakwrap3 > .break-line-wrap {
-        width: 466px
-    }
+@media only screen and (max-width: 1300px) {
+    .breakwrap{width:537px;height:auto;margin-left:80px;}
+    
 }
 
 @media only screen and (max-width: 1100px) {
+    .breakwrap3>.breakdown>.big-wrap{width:80%;}
+    .breakwrap3>.breakdown>.com1-wrap{width:80%;}
+    .breakwrap1>.flex-most{width:80%;}
+    .description-of-the-day{}
+    .description-of-the-day>p{width:90%;}
 
-    .breakwrap > .break-line-wrap > .break-line {
-        width: 200%;
-    }
+    .breakwrap{margin-bottom: 0;width:80%; min-height:352px;}
+   
+  
 
-    .description-of-the-day {
-        height: 170px;
-        bottom: 170px;
-    }
-
-    .description-of-the-day > p {
-        width: 90%;
-    }
-
-    .breakwrap > .break-line-wrap {
-        padding-top: 100px;
-    }
-
-    .breakwrap {
-        margin-bottom: 0;
-    }
-
-    .arrow-right {
-        top: 100px;
-        left: -20;
-        border-left: 160px solid red;
-        border-top: 50px solid transparent;
-        border-bottom: 50px solid transparent;
-    }
-
-    .arrow-right > p {
-        left: -140px;
-        top: -28px;
-        font-size: 13px
-    }
-
-    .breakwrap1 {
-        width: 50.9vw;
-    }
 
 }

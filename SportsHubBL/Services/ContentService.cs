@@ -59,7 +59,7 @@ namespace SportsHubBL.Services
 
             if (content == null)
             {
-                throw new ArgumentException($"content {contentId} not found");
+                throw new Exception($"content {contentId} not found");
             }
 
             _contentRepository.Delete(content);
@@ -73,7 +73,7 @@ namespace SportsHubBL.Services
 
             if (item == null)
             {
-                throw new ArgumentException($"item with id {itemId} not found");
+                throw new Exception($"item with id {itemId} not found");
             }
 
             DeleteContent(item.Content.Id);
@@ -87,14 +87,14 @@ namespace SportsHubBL.Services
 
             if (item == null)
             {
-                throw new ArgumentException($"item {itemId} not found");
+                throw new Exception($"item {itemId} not found");
             }
 
             var content = item.Content;
 
             if (content == null)
             {
-                throw new ArgumentException($"no content for item {itemId}");
+                throw new Exception($"no content for item {itemId}");
             }
 
             return new ContentModel
@@ -121,14 +121,14 @@ namespace SportsHubBL.Services
 
             if (item == null)
             {
-                throw new ArgumentException($"item with id {itemId} not found");
+                throw new Exception($"item with id {itemId} not found");
             }
 
             var content = item.Content;
 
             if (content == null)
             {
-                throw new ArgumentException($"item {itemId} has no content to update");
+                throw new Exception($"item {itemId} has no content to update");
             }
 
             var newContent = GetContentFromModel(model);
@@ -162,7 +162,7 @@ namespace SportsHubBL.Services
                 ContentItemType.CommentContent => (IRepository<IDBEntityWithContent>)_commentRepository,
                 ContentItemType.ArticleContent => (IRepository<IDBEntityWithContent>)_articleRepository,
                 ContentItemType.ViewContent => (IRepository<IDBEntityWithContent>)_viewsRepository,
-                _ => throw new ArgumentException("invalid enum")
+                _ => throw new ArgumentException("invalid enum", nameof(itemType))
             };
         }
     }

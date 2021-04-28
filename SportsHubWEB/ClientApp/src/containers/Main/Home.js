@@ -8,8 +8,6 @@ export class Home extends Component {
     index: 0,
 
     BreakDown: [
-
-
     ],
     PhotoOfTheDay: {
       Image:
@@ -73,7 +71,6 @@ export class Home extends Component {
       },
     ],
     MainArticles: []
-
   };
 
   componentDidMount() {

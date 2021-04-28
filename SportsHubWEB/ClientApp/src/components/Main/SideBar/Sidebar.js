@@ -11,6 +11,10 @@ export class Sidebar extends Component {
     num:0
   };
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+  }
+
   componentDidMount() {
     fetch("https://localhost:5001/banner")
       .then(res => res.json())
@@ -19,9 +23,9 @@ export class Sidebar extends Component {
 
           if(this.props.category){
             result = result.filter(ban=> String(ban.categoryId) === String(this.props.category))
-            result.push(result[0])
+            if(result.length){result.push(result[0])}
           }else{
-            result.push(result[0])
+            if(result.length){result.push(result[0])}
           }
           this.setState({Banner: result})
 
@@ -35,15 +39,18 @@ export class Sidebar extends Component {
 
 
     this.interval = setInterval(() => {
-      if (this.state.index === 1) {
-        this.setState({animated: ""});
-        this.state.Banner.shift()
-        this.setState({index: this.state.index - 1});
-        this.setState({Banner: [...this.state.Banner, this.state.Banner[0]]});
-      } else {
-        this.setState({animated: "animated"});
+      if(this.state.Banner.length)
+      {
+        if (this.state.index === 1) {
+          this.setState({animated: ""});
+          this.state.Banner.shift()
+          this.setState({index: this.state.index - 1});
+          this.setState({Banner: [...this.state.Banner, this.state.Banner[0]]});
+        } else {
+          this.setState({animated: "animated"});
 
-        this.setState({index: this.state.index + 1});
+          this.setState({index: this.state.index + 1});
+        }
       }
     }, 2500);
   }
@@ -65,6 +72,7 @@ componentWillUnmount() {
               transform: `translate3d(0, -${this.state.index * 450}px, 0)`,
             }}
           >
+
             {this.state.Banner.map((banner, id) =>
 
                 <div key={id} className="facebook-video slide">

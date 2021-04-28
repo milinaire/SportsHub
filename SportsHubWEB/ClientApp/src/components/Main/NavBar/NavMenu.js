@@ -3,116 +3,14 @@ import "./NavMenu.css";
 import {NavLink} from "react-router-dom";
 
 export class NavMenu extends Component {
+
+
   state = {
     isOpenSubcategory: false,
-    Categories: [
-      {
-        title: "NBA",
-        id: 1,
-        show: true,
-        url: "NBA",
-        subCategories: [
-          {
-            title: "NBA1",
-            id: 1,
-            teams: [
-              {title: "1teamNBA1", id: 1},
-              {title: "2teamNBA1", id: 2},
-              {title: "3teamNBA1", id: 3},
-              {title: "4teamNBA1", id: 4},
-            ],
-          },
-          {
-            title: "NBA2",
-            id: 2,
-            teams: [
-              {title: "1teamNBA2", id: 1},
-              {title: "2teamNBA2", id: 2},
-              {title: "3teamNBA2", id: 3},
-              {title: "4teamNBA2", id: 4},
-            ],
-          },
-          {
-            title: "NBA3",
-            id: 3,
-            teams: [
-              {title: "1teamNBA3", id: 1},
-              {title: "2teamNBA3", id: 2},
-              {title: "3teamNBA3", id: 3},
-              {title: "4teamNBA3", id: 4},
-            ],
-          },
-          {
-            title: "NBA4",
-            id: 4,
-            teams: [
-              {title: "1teamNBA4", id: 1},
-              {title: "2teamNBA4", id: 2},
-              {title: "3teamNBA4", id: 3},
-              {title: "4teamNBA4", id: 4},
-            ],
-          },
-        ],
-      },
-      {
-        title: "UFC",
-        id: 2,
-        show: true,
-        url: "UFC",
-        subCategories: [
-          {
-            title: "UFC1",
-            id: 1,
-            teams: [
-              {title: "1teamUFC1", id: 1},
-              {title: "2teamUFC1", id: 2},
-              {title: "3teamUFC1", id: 3},
-              {title: "4teamUFC1", id: 4},
-            ],
-          },
-          {
-            title: "UFC2",
-            id: 2,
-            teams: [
-              {title: "1teamUFC2", id: 1},
-              {title: "2teamUFC2", id: 2},
-              {title: "3teamUFC2", id: 3},
-              {title: "4teamUFC2", id: 4},
-            ],
-          },
-          {
-            title: "UFC3",
-            id: 3,
-            teams: [
-              {title: "1teamUFC3", id: 1},
-              {title: "2teamUFC3", id: 2},
-              {title: "3teamUFC3", id: 3},
-              {title: "4teamUFC3", id: 4},
-            ],
-          },
-          {
-            title: "UFC4",
-            id: 4,
-            teams: [
-              {title: "1teamUFC4", id: 1},
-              {title: "2teamUFC4", id: 2},
-              {title: "3teamUFC4", id: 3},
-              {title: "4teamUFC4", id: 4},
-            ],
-          },
-        ],
-      },
-      {
-        title: "KPD",
-        id: 3,
-        show: true,
-        url: "KPD",
-        subCategories: [
-          {title: "UFC1", id: 1, teams: []}
-        ],
-      },
-    ],
+    Categories: [],
     follow: [{show: true}, {show: true}, {show: true}, {show: true}],
+    SubCategories:[],
+    Teams:[],
     NavSubCategories: {
       sub: [],
       cat: undefined
@@ -124,34 +22,90 @@ export class NavMenu extends Component {
     },
   };
 
-  setHovered = (id, left, categoryId, subcategoryId) => {
-    for (let i = 0; i < id.length; i++) {
-      document.getElementById(id[i]).style.marginLeft = `${left[i]}px`;
-    }
-    clearTimeout(this.timeout)
+  componentDidMount() {
+    fetch("https://localhost:5001/category?languageId=1")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({Categories: result})
+        },
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
+    fetch("https://localhost:5001/conference?languageId=1")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({SubCategories: result})
+        },
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
+    fetch("https://localhost:5001/team?languageId=1")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({Teams: result})
+        },
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
+  }
 
+  setHovered = (id, left, categoryId, subcategoryId) => {
+    let flagc = true
+    let flags = true
     if (categoryId) {
       this.setState({
         NavSubCategories: {
-          sub: this.state.Categories.find(category => category.id === categoryId).subCategories,
+          sub: this.state.SubCategories.filter(category => category.categoryId === categoryId),
           cat: categoryId
         }
       })
+      if(!this.state.SubCategories.filter(category => category.categoryId === categoryId).length){
+        flagc = false
+      }
     }
+
     if (subcategoryId) {
       this.setState({
         NavTeams: {
-          teams: this.state.NavSubCategories.sub.find(category => category.id === subcategoryId).teams,
+          teams: this.state.Teams.filter(category => category.conferenceId === subcategoryId),
           cat: this.state.NavSubCategories.cat,
           sub: subcategoryId
         }
       })
+      if(!this.state.Teams.filter(category => category.conferenceId === subcategoryId).length){
+        flags = false
+      }
     }
-    document.getElementById("1").style.height = "calc(100vh - 100px)";
-    document.getElementById("2").style.height = "calc(100vh - 100px)";
-    document.getElementById("3").style.height = "calc(100vh - 100px)";
-    document.getElementById("box").style.zIndex = "5";
-    document.getElementById("box").style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+
+
+    if(flagc && flags){
+      document.getElementById(id[1]).style.marginLeft = `${left[1]}px`;
+    }
+    if(flagc && flags){
+      document.getElementById(id[0]).style.marginLeft = `${left[0]}px`;
+    }
+
+    if(flagc){
+      clearTimeout(this.timeout)
+      document.getElementById("1").style.height = "calc(100vh - 100px)";
+      document.getElementById("2").style.height = "calc(100vh - 100px)";
+      document.getElementById("3").style.height = "calc(100vh - 100px)";
+      document.getElementById("box").style.zIndex = "5";
+      document.getElementById("box").style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    }
+
   }
   unsetHovered = (id, left, flag) => {
     for (let i = 0; i < id.length; i++) {
@@ -179,12 +133,12 @@ export class NavMenu extends Component {
             <ul className="subcategories">
               {this.state.NavTeams.teams.map((category) => (
                 <NavLink
-                  key={category.id}
+                  key={category.teamId}
                   className="not-active"
                   activeClassName={"active-subcategory"}
-                  to={`/nav/${this.state.NavTeams.cat}/${this.state.NavTeams.sub}/${category.id}`}>
+                  to={`/nav/${this.state.NavTeams.cat}/${this.state.NavTeams.sub}/${category.teamId}`}>
                   <li className={"subcategory"}>
-                    {category.title}
+                    {category.name}
                   </li>
                 </NavLink>
               ))}
@@ -199,17 +153,17 @@ export class NavMenu extends Component {
               {this.state.NavSubCategories.sub.map((category) => (
                 <NavLink
                   onMouseEnter={() => {
-                    if (category.teams.length) {
-                      this.setHovered([1, 2], [600, 300], undefined, category.id)
-                    }
+
+                      this.setHovered([1, 2], [600, 300], undefined, category.conferenceId)
+
                   }}
                   onMouseLeave={() => this.unsetHovered([1, 2], [300, 300], false)}
-                  key={category.id}
+                  key={category.conferenceId}
                   className="not-active"
                   activeClassName={"active-subcategory"}
-                  to={`/nav/${this.state.NavSubCategories.cat}/${category.id}`}>
+                  to={`/nav/${this.state.NavSubCategories.cat}/${category.conferenceId}`}>
                   <li className={"subcategory"}>
-                    {category.title}
+                    {category.name}
                   </li>
                 </NavLink>
               ))}
@@ -229,17 +183,14 @@ export class NavMenu extends Component {
               {this.state.Categories.map((category) => (
                 <NavLink
                   onMouseEnter={() => {
-                    if (category.subCategories.length) {
-                      this.setHovered([1, 2], [300, 300], category.id)
-                    }
+                    this.setHovered([1, 2], [300, 300], category.id)
                   }}
                   onMouseLeave={() => this.unsetHovered([1, 2], [0, 0], true)}
                   key={category.id}
                   className="not-active"
-                  
                   to={`/nav/${category.id}`}
                   activeClassName={"active"}>
-                  <li className="category">{category.title}</li>
+                  <li className="category">{category.name}</li>
                 </NavLink>
               ))}
             </ul>

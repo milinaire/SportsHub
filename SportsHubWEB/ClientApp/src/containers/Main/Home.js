@@ -197,7 +197,7 @@ export class Home extends Component {
         },
       ],
     ],
-    PhotoOfTheDay: [{ 
+    PhotoOfTheDay: { 
       Image:
         "https://images.ctfassets.net/u0haasspfa6q/2xl0w4P7lIAVEESotMPxlF/12eb1aba070dfbbbd0d0c1127798abec/AMA_EVERTON_LIVERPOOL_RJB_27",
       Alt: "Alt",
@@ -205,7 +205,7 @@ export class Home extends Component {
       Description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquet ac felis sit amet molestie. Nam fringilla eros lectus, eu gravida dolor volutpat ut.",
       Author: "Author",
     
-    }],
+    },
     MostPopular: [
       {
         Id: 1,
@@ -279,32 +279,6 @@ export class Home extends Component {
   }
 
   componentWillUnmount() {
-<<<<<<< HEAD
-    this.props.setArticles([])
-
-  }
-  arrowNext = () => {
-    let b = []
-    this.state.MainArticles.map((Article) => (
-      b.push(<div>
-        <img alt={Article.Alt} src={Article.Image}/>
-        <p className="legend">{Article.HeadLine}</p>
-      </div>)
-    ))
-    return (b)
-  }
-  arrowPrev = () => {
-    let b = []
-    this.state.MainArticles.map((Article) => (
-      b.push(<div>
-        <img alt={Article.Alt} src={Article.Image}/>
-        <p className="legend">{Article.HeadLine}</p>
-      </div>)
-    ))
-    return (b)
-=======
-
->>>>>>> b810ff9c83e902e584f9d685bc08a53bff759025
   }
   indicator = () => {
     let b = []
@@ -367,42 +341,11 @@ export class Home extends Component {
                     </div>
                   </div>
                 </div>
-<<<<<<< HEAD
-
-
-
             </div>
           ))}
 
         </div>
-
-        {this.state.PhotoOfTheDay.map((photo) => (
-        <div className="breakwrap">
-
-            <div className="break-line-wrap">  
-              <hr class="hr1"/><div className="break-line"><b>PHOTO OF THE DAY</b></div><hr class="hr1"/>
-            </div>
-            <div className="photo-arrow">
-            <div className="arrow-right">
-              <p><span className="bb">photo</span> of the <span className="bb">day</span></p>
-            </div>
-            <img className="photo-of-the-day" src={photo.Image}></img>
-            <div className="description-of-the-day">
-              <h3>{photo.Title}</h3>
-              <p >{photo.Description}</p>
-              <p className="text-of-the-day">{photo.Author}</p>
-            </div>
-            </div>
-        </div>
-         ))}
-  
-        <div className="breakwrap1">
-
-
-=======
-              </div>
-            ))}
-          </div>
+              
           <div className="breakwrap">
             <div className="break-line-wrap">
               <hr className="hr1"/>
@@ -420,7 +363,6 @@ export class Home extends Component {
             </div>
           </div>
           <div className="breakwrap1">
->>>>>>> b810ff9c83e902e584f9d685bc08a53bff759025
             <div className="flex-most">
               <div className="break-line-wrap1">
                 <b>MOST POPULAR</b>

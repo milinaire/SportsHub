@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import {Route} from "react-router";
 import {Layout} from "./components/Main/Layout/Layout";
+import {AdminLayout} from "./components/Main/Layout/AdminLayout";
 import {Home} from "./containers/Main/Home";
 //import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
@@ -30,6 +31,7 @@ export default class App extends Component {
           <Route exact path="/terms" component={Terms}/>
           <Route exact path="/privacy" component={Privacy}/>
           <Route exact path="/contact" component={ContactUs}/>
+          <Route exact path="/admin" component={AdminLayout}/>
           <Route exact path="/company-info/:name" component={CompanyInfo}/>
           <Route exact path="/contributors/:name" component={Contributors}/>
           <Route exact path="/art/:article" component={Article}/>

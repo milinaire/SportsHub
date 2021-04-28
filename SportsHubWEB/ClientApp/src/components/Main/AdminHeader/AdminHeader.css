@@ -64,21 +64,44 @@
 .horizontal-menu{justify-content: center;}
 
 
-.menu-item {
+.menu-item1{
     padding: 0 40px;
     margin: 5px 10px;
     user-select: none;
     cursor: pointer;
     border: none;
+    list-style-type: none!important;
+    text-decoration: none!important;
+    color: lightslategray!important;
+    background-color: white!important;
   }
-  .menu-item-wrapper.active {
-    border: 1px blue solid;
+  
+.menu-item1.active{
+   
+    list-style-type: none!important;
+    text-decoration: none!important;
+    color: lightslategray!important;
+    background-color: white!important;
   }
-  .menu-item.active {
-    border: 1px green solid;
-  }
+  
   
   .scroll-menu-arrow {
     padding: 20px;
     cursor: pointer;
   }
+
+
+  .menu-item-wrapper.active{
+    border: none;
+    list-style-type: none!important;
+    text-decoration: none!important;
+    color: lightslategray!important;
+    background-color: white!important;
+  }
+  .horizontal-menu{justify-content: space-evenly;}
+  .menu-wrapper{}
+  .menu-wrapper--inner{
+    display:flex;
+    justify-content: space-evenly;
+    
+}

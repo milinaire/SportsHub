@@ -18,6 +18,7 @@ import {ContactUs} from "./components/Main/Footer/ContactUs";
 import {AboutSportHub} from "./components/Main/Footer/AboutSportHub";
 import Test from "./Test";
 import {Article} from "./containers/Article/SimpleArticle";
+import {AdminPage} from "./containers/Admin/AdminPage";
 
 export default class App extends Component {
 
@@ -31,7 +32,7 @@ export default class App extends Component {
           <Route exact path="/terms" component={Terms}/>
           <Route exact path="/privacy" component={Privacy}/>
           <Route exact path="/contact" component={ContactUs}/>
-          <Route exact path="/admin" component={AdminLayout}/>
+          <Route exact path="/admin" component={AdminPage}/>
           <Route exact path="/company-info/:name" component={CompanyInfo}/>
           <Route exact path="/contributors/:name" component={Contributors}/>
           <Route exact path="/art/:article" component={Article}/>

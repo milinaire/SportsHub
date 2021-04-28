@@ -1,0 +1,12 @@
+.const-wrap{
+    width:80%;
+    height:5000px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+}
+
+.main-a-const{  width:100%;height:300px;}
+.breakdown-const{ width:100%;height:300px;}
+.photo-of-the-day-const{ width:100%;height:300px;}
+.mots-sec-const{ width:100%;height:300px;}

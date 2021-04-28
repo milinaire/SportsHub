@@ -4,68 +4,11 @@ import {NavLink} from "react-router-dom";
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 
 
-const list =  [
-  {
-    title: "HOME",
-    url: "HOME",
-    path:"./admin"
-},
-    {
-        title: "NBA",
-        url: "NBA",
-        path:"./admin"
-    },
-    {
-        title: "UFC",
-        url: "UFC",
-        path:"./admin"
-    },
-    {
-        title: "KPD",
-        url: "KPD",
-        path:"./admin"
-    },
-    {
-      title: "UFC",
-      url: "UFC",
-      path:"./admin"
-    },
-    {
-        title: "UFC",
-        url: "UFC",
-        path:"./admin"
-    },
-    {
-      title: "UFC",
-      url: "UFC",
-      path:"./admin"
-    },
-    {
-      title: "UFC",
-      url: "UFC",
-      path:"./admin"
-    },
-    {
-      title: "UFC",
-      url: "UFC",
-      path:"./admin"
-    },
-    {
-      title: "UFC",
-      url: "UFC",
-      path:"./admin"
-    },
-    {
-      title: "UFC",
-      url: "UFC",
-      path:"./admin"
-    }
-]
 
 const MenuItem = ({text, path, selected}) => {
   return <div
     className={`menu-item ${selected ? 'active' : ''}`}
-    > <NavLink  to={`path`}> 
+    > <NavLink  to={`${path}`}> 
     {text}
   </NavLink></div>;
 };
@@ -73,8 +16,9 @@ const MenuItem = ({text, path, selected}) => {
 
 export const Menu = (list,  selected) =>
   list.map(el => {
-    const {title} = el;
-    return <MenuItem text={title} key={title} selected={selected} />;
+    {console.log(el)}
+    const {name, id} = el;
+    return <MenuItem path={id} text={name} key={id} selected={selected} />;
   });
 
 
@@ -94,66 +38,22 @@ const selected = 'item1';
 
 
 export class AdminHeader extends Component {
-  
+  componentDidMount(){
+    fetch("/category?languageId=1")
+  .then(res => res.json())
+  .then(
+    (result) => {
+      this.setState({Categories: result})
+    },
+    (error) => {
+      this.setState({
+        error
+      });
+    }
+  )}
   state = {
     selected,
-    Categories: [
-      {
-        title: "HOME",
-        url: "HOME",
-        path:"./admin"
-    },
-        {
-            title: "NBA",
-            url: "NBA",
-            path:"./admin"
-        },
-        {
-            title: "UFC",
-            url: "UFC",
-            path:"./admin"
-        },
-        {
-            title: "KPD",
-            url: "KPD",
-            path:"./admin"
-        },
-        {
-          title: "UFC",
-          url: "UFC",
-          path:"./admin"
-        },
-        {
-            title: "UFC",
-            url: "UFC",
-            path:"./admin"
-        },
-        {
-          title: "UFC",
-          url: "UFC",
-          path:"./admin"
-        },
-        {
-          title: "UFC",
-          url: "UFC",
-          path:"./admin"
-        },
-        {
-          title: "UFC",
-          url: "UFC",
-          path:"./admin"
-        },
-        {
-          title: "UFC",
-          url: "UFC",
-          path:"./admin"
-        },
-        {
-          title: "UFC",
-          url: "UFC",
-          path:"./admin"
-        }
-    ]
+    Categories: []
   }
   constructor(props) {
     super(props);
@@ -165,16 +65,25 @@ export class AdminHeader extends Component {
   render() {
     const { selected } = this.state;
     // Create menu from items
-    const menu = this.menuItems;
+    let menu = [] ;
+    for (let i = 0; i < this.state.Categories.length; i++) {
+      menu.push(<div
+        className={`menu-item1 ${selected ? 'active' : ''}`}
+        > <NavLink  to={`/admin/${this.state.Categories[i].id}`}> 
+        {this.state.Categories[i].name}
+      </NavLink></div>)
+    }
     return (
+     
         <div className="head-wrap">
+             {console.log(this.state.Categories)}
              <div  className="head-title">
                  <div className="hdt"></div>
                  <div className="head-func"></div>
              </div>
            
              <ScrollMenu
-             className="hdt-a"
+                  className="head-list"
                   data={menu}
                   arrowLeft={ArrowLeft}
                   arrowRight={ArrowRight}

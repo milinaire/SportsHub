@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react";
 import {AdminHeader} from  "../AdminHeader/AdminHeader";
-import "./Layout.css";
+
 import "./AdminLayout.css";
 
 export class AdminLayout extends Component {
@@ -9,12 +9,9 @@ export class AdminLayout extends Component {
     return (
       <Fragment>
       <AdminHeader/>
-        <div className="main-part">
-          <div className="main-content">
-            <div className="content">{this.props.children}</div>
-          </div>
-        </div>
-    
+      <div className="wrap-shit">
+        {this.props.children}
+      </div>
       </Fragment>
     );
   }

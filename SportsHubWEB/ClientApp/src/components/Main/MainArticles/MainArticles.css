@@ -3,9 +3,9 @@
     width: 96%;
     display: flex;
     height: calc((100vw - 300px) * 0.38125);
-    background-size: 65% 100%;
+    background-size: 70% 100%;
     background-repeat: no-repeat;
-    margin: calc((100vw - 300px) * 0.03) calc((100vw - 300px) * 0.06);
+    margin: calc((100vw - 300px) * 0.035) ;
     transition: background 800ms;
 }
 
@@ -13,7 +13,7 @@
     width: 35%;
     height: calc((100vw - 300px) * 0.3);
 
-    margin-left: 41%;
+    margin-left: 46%;
     margin-top: calc((100vw - 300px) * 0.06);
     flex-direction: column;
 }

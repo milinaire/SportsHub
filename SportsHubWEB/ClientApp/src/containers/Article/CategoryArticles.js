@@ -59,10 +59,9 @@ export class CategoryArticles extends Component {
 
     return (
       <Fragment>
-        <PageLayout MainArticles={[]} Category={this.props.match.params.category}>
+        <PageLayout MainArticles={this.state.Articles.length > 0 &&[this.state.Articles[0]]} link={this.state.Articles.length > 0 && `nav/${this.state.Articles[0].categoryId}/${this.state.Articles[0].conferenceId}/${this.state.Articles[0].teamId}`} Category={this.props.match.params.category}>
           <div style={{minHeight: "1000px", zIndex: -2}}>
-            {this.props.match.params.category}
-            <ListArticles Articles={this.state.Articles}/>
+            <ListArticles Articles={this.state.Articles.slice(1)}/>
           </div>
         </PageLayout>
       </Fragment>

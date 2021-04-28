@@ -137,7 +137,7 @@ export class Home extends Component {
   render() {
     return (
       <Fragment>
-        <PageLayout MainArticles={this.state.MainArticles}>
+        <PageLayout MainArticles={this.state.MainArticles} link="art">
           <div className="breakwrap3">
             <div className="break-line-wrap">
               <hr className="hr1"/>

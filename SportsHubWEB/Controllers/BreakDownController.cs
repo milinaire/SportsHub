@@ -43,7 +43,6 @@ namespace SportsHubWEB.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-                throw;
             }
 
             return StatusCode(201);

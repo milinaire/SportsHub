@@ -17,109 +17,86 @@
 
 .breakwrap3 {
     width: 100%;
-
     display: flex;
     flex-grow: 1;
-    margin-top: 70px;
+
     margin-bottom: 90px;
     flex-wrap: wrap;
-    justify-content:center;
+    justify-content: center;
     padding: 0 2% 0 2%;
 }
 
 
-.breakwrap{ 
+.breakwrap {
     width: 100%;
-    height:auto;
+    height: auto;
     display: flex;
     flex-grow: 1;
     margin-bottom: 90px;
     flex-wrap: wrap;
-
-    left:0;
+    left: 0;
     right: 0;
     padding: 0 2% 0 2%;
-
 }
 
-
-.breakdown{
+.breakdown {
     margin-top: 45px;
-    width:100%;
-
-    z-index: -1;
-  
-    display: flex;
-    /*flex-wrap: wrap;*/
-    justify-content: space-around;
-  
-
-}
-.big-wrap{width:45%;
-    height:  360px;}
-
-
-.big-a{
-    width:46%;
-
-    height: 360px;
-
-}
-.big-i{
-    width:100%;
-
-    height: 360px;
-}
-.small-i{
-    width:50%;
-
-
-}
-
-
-.breakwrap1{ 
     width: 100%;
-
-
+    z-index: -1;
     display: flex;
-    /*flex-wrap: wrap;*/
+    justify-content: space-around;
+}
+
+.big-wrap {
+    width: 45%;
+    height: 360px;
+}
+
+.big-a {
+    width: 46%;
+    height: 360px;
+}
+
+.big-i {
+    width: 100%;
+    height: 360px;
+}
+
+.small-i {
+    width: 50%;
+}
+
+.breakwrap1 {
+    width: 100%;
+    display: flex;
     margin-bottom: 90px;
     justify-content: space-around;
-
-
 }
 
-.flex-most{
-    width:48%;
-
+.flex-most {
+    width: 48%;
     display: flex;
     flex-direction: column;
 }
 
-
-.hr1{
-    width:100%;
+.hr1 {
+    width: 100%;
     border-top: 1px solid grey;
 }
 
-.hr2{
-    width:80%;
-
+.hr2 {
+    width: 80%;
     border-top: 1px solid grey;
 }
 
 .break-line {
     border: 1px solid grey;
     border-radius: 80px;
-
-    width:490px;
-    height:50px;
-  
-
+    width: 490px;
+    height: 50px;
     display: flex;
     align-content: center;
     justify-content: center;
-
 }
 
 .break-line > b {
@@ -128,41 +105,36 @@
     padding-top: 12px;
     letter-spacing: .001rem;
     color: black;
-
-
 }
 
 .break-line-wrap {
     width: 100%;
     height: 50px;
     display: flex;
-
-    align-items: center;  
+    align-items: center;
     justify-content: center;
- 
 }
-.break-line-wrap1{
-    width:100%;
-    height:50px;
+
+.break-line-wrap1 {
+    width: 100%;
+    height: 50px;
     display: flex;
     align-items: center;
-   
-    margin:0;
-}   
-.break-line-wrap1>b{
-    width:180px;
-    
-
+    margin: 0;
 }
-.photo-arrow{
+
+.break-line-wrap1 > b {
+    width: 180px;
+}
+
+.photo-arrow {
     width: 100%;
-    z-index:-1;
+    z-index: -1;
     height: 100%;
 }
 
 .break-line-wrap1 > b {
     width: 147px;
-
 }
 
 .photo-of-the-day {
@@ -171,24 +143,20 @@
     z-index: -2;
     background-size: contain;
     margin-top: -80px;
-
 }
 
 .description-of-the-day {
     padding-left: 15px;
-
-    position:relative ;
-    height:130px;
-    bottom:130px; 
+    position: relative;
+    height: 130px;
+    bottom: 130px;
     z-index: 0;
-
     color: #fff;
     width: 100%;
     background-color: rgba(51, 51, 51, 0.5);
     left: 0;
     display: flex;
     margin: 0;
-
     flex-wrap: wrap;
 }
 
@@ -218,11 +186,9 @@
     border-bottom: 75px solid transparent;
     border-left: 200px solid red;
     position: relative;
-
-    top:50px;
+    top: 50px;
     left: -2%;
     z-index: 0;
-
 }
 
 .arrow-right > p {
@@ -240,38 +206,32 @@
 }
 
 
-.pop{
-    width:100%;
-
+.pop {
+    width: 100%;
     height: 360px;
 }
 
 
-
-
-.com{
-
-    width:46%;
-    height: 400px;
-   
-
-}
-.com1-wrap{
-    width:45%;
+.com {
+    width: 46%;
     height: 400px;
 }
-.com1{
-    width:100%;
+
+.com1-wrap {
+    width: 45%;
     height: 400px;
-}   
+}
+
+.com1 {
+    width: 100%;
+    height: 400px;
+}
 
 
 .pop-card {
     width: 100%;
     display: flex;
     height: 120px;
-
-
 }
 
 .pop-card > img {
@@ -307,93 +267,35 @@
     bottom: 120px;
     padding-left: 10px;
 
-   background-color:  #fff;
-   border-right:0.5px solid lightgrey ;
-   border-bottom: 0.5px solid lightgrey ;
-   border-left: 0.5px solid lightgrey ;
-   width:100%;
+    background-color: #fff;
+    border-right: 0.5px solid lightgrey;
+    border-bottom: 0.5px solid lightgrey;
+    border-left: 0.5px solid lightgrey;
+    width: 100%;
 }
 
 
 @media only screen and (max-width: 1500px) {
-    .breakdown{
+    .breakdown {
         flex-direction: column;
         align-items: center;
     }
-    .com{
 
-        width:96%;
+    .com {
+        width: 96%;
         height: 400px;
-
-
     }
 
-    .big-a{
-        width:96%;
-
+    .big-a {
+        width: 96%;
         height: 360px;
-
     }
-    .breakwrap1{
+
+    .breakwrap1 {
         flex-direction: column;
-
-
     }
-    .flex-most{
-        width:96%;
 
+    .flex-most {
+        width: 96%;
     }
-   /* .breakwrap>.break-line-wrap>.break-line{*/
-   /*     width: 120%;*/
-   /*}*/
-   /*.description-of-the-day{*/
-   /*     height: 150px;*/
-   /*     bottom: 150px;*/
-   /* }*/
-   /*.breakwrap>.break-line-wrap{*/
-   /*     margin-bottom: -300px;*/
-   /*}*/
-   /*.breakwrap{*/
-   /*    margin-bottom: 0;*/
-   /* }*/
-   /*.breakwrap3>.breakdown>.big-a{*/
-   /*    margin-bottom: -40px;*/
-   /* }*/
-   /*.breakwrap3>.breakdown>.com{*/
-   /*    margin-top: 50px;*/
-   /*    padding: 0;*/
-   /* }*/
-   /*.breakwrap1{*/
-   /*    margin-top:-100px;*/
-   /* }*/
-
 }
-
-/*@media only screen and (max-width: 1550px) {*/
-/*    .breakdown{margin-bottom: 300px;}*/
-/*    .breakwrap3>.breakdown>.big-wrap{width:400px; margin-bottom:70px;}*/
-/*   .breakwrap3>.breakdown>.com1-wrap{width:400px; margin-top:-55px;}*/
-/*   .breakwrap3>.break-line-wrap{width:80%;}*/
-/*   .breakwrap1{margin-bottom:400px;}*/
-/*   .breakwrap1>.flex-most{width:450px;}*/
-/*   */
-/*}*/
-
-/*@media only screen and (max-width: 1300px) {*/
-/*    .breakwrap{width:537px;height:auto;margin-left:80px;}*/
-/*    */
-/*}*/
-
-/*@media only screen and (max-width: 1100px) {*/
-/*    .breakwrap3>.breakdown>.big-wrap{width:80%;}*/
-/*    .breakwrap3>.breakdown>.com1-wrap{width:80%;}*/
-/*    .breakwrap1>.flex-most{width:80%;}*/
-/*    .description-of-the-day{}*/
-/*    .description-of-the-day>p{width:90%;}*/
-
-/*    .breakwrap{margin-bottom: 0;width:80%; min-height:352px;}*/
-/*   */
-/*  */
-
-
-/*}*/

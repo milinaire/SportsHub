@@ -12,13 +12,12 @@ export class PageLayout extends Component {
       <Fragment>
         <NavMenu/>
         <div className="main-part">
-          <MainArticles articles={this.props.MainArticles}/>
+          {this.props.MainArticles.length > 0 && <MainArticles articles={this.props.MainArticles}/>}
           <div className="main-content">
             <div className="content">{this.props.children}</div>
             <div className="side">
               <Sidebar category={this.props.Category}/>
             </div>
-
           </div>
           <UpFooterPart/>
         </div>

@@ -14,18 +14,21 @@
     flex-direction: row;
 }
 
-.side{
+.side {
     display: block;
 }
 
 .content {
     min-width:450px;
     width: calc(100% - 450px);
-
 }
+
 @media only screen and (max-width: 1200px) {
-    .content { width:90%;}
-    .side{
+    .content {
+        width: 90%;
+    }
+
+    .side {
         display: none;
     }
 }

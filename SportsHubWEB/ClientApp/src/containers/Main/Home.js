@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, {Component, Fragment} from "react";
 import "./home.css"
 import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
@@ -279,6 +279,7 @@ export class Home extends Component {
   }
 
   componentWillUnmount() {
+<<<<<<< HEAD
     this.props.setArticles([])
 
   }
@@ -301,6 +302,9 @@ export class Home extends Component {
       </div>)
     ))
     return (b)
+=======
+
+>>>>>>> b810ff9c83e902e584f9d685bc08a53bff759025
   }
   indicator = () => {
     let b = []
@@ -363,6 +367,7 @@ export class Home extends Component {
                     </div>
                   </div>
                 </div>
+<<<<<<< HEAD
 
 
 
@@ -394,6 +399,28 @@ export class Home extends Component {
         <div className="breakwrap1">
 
 
+=======
+              </div>
+            ))}
+          </div>
+          <div className="breakwrap">
+            <div className="break-line-wrap">
+              <hr className="hr1"/>
+              <div className="break-line"><b>PHOTO OF THE DAY</b></div>
+              <hr className="hr1"/>
+            </div>
+            <div className="arrow-right">
+              <p><span className="bb">photo</span> of the <span className="bb">day</span></p>
+            </div>
+            <img className="photo-of-the-day" src={this.state.PhotoOfTheDay.Image} alt={this.state.PhotoOfTheDay.Alt}/>
+            <div className="description-of-the-day">
+              <h3>{this.state.PhotoOfTheDay.Title}</h3>
+              <p>{this.state.PhotoOfTheDay.Description}</p>
+              <p className="text-of-the-day">{this.state.PhotoOfTheDay.Author}</p>
+            </div>
+          </div>
+          <div className="breakwrap1">
+>>>>>>> b810ff9c83e902e584f9d685bc08a53bff759025
             <div className="flex-most">
               <div className="break-line-wrap1">
                 <b>MOST POPULAR</b>
@@ -425,17 +452,11 @@ export class Home extends Component {
                       <p>{com.Caption}</p>
                     </div>
                   </div>
-
-
-
-              ))}
-                  </div>
+                ))}
+              </div>
             </div>
-
-
-        </div>
+          </div>
         </PageLayout>
-
       </Fragment>
 
     );

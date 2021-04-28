@@ -27,7 +27,7 @@ export class CategoryArticles extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.match.params.category !== this.props.match.params.category) {
-      console.log("hi")
+
 
       fetch(`https://localhost:5001/sportarticle?categoryId=${this.props.match.params.category}`)
         .then(res => res.json())
@@ -45,9 +45,7 @@ export class CategoryArticles extends Component {
         )
     }
   }
-  constructor(props) {
-    super(props);
-  }
+
 
   componentWillUnmount() {
   }

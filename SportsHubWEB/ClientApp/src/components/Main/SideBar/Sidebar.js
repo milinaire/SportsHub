@@ -11,8 +11,31 @@ export class Sidebar extends Component {
     num:0
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
 
+  componentDidUpdate(nextProps, nextState, nextContext) {
+
+    if(nextProps.category !== this.props.category){
+      fetch("https://localhost:5001/banner")
+        .then(res => res.json())
+        .then(
+          (result) => {
+
+            if(this.props.category){
+              result = result.filter(ban=> String(ban.categoryId) === String(this.props.category))
+              if(result.length){result.push(result[0])}
+            }else{
+              if(result.length){result.push(result[0])}
+            }
+            this.setState({Banner: result})
+
+          },
+          (error) => {
+            this.setState({
+              error
+            });
+          }
+        )
+    }
   }
 
   componentDidMount() {
@@ -39,7 +62,7 @@ export class Sidebar extends Component {
 
 
     this.interval = setInterval(() => {
-      if(this.state.Banner.length)
+      if(this.state.Banner.length > 2)
       {
         if (this.state.index === 1) {
           this.setState({animated: ""});

@@ -66,10 +66,10 @@ export class MainArticles extends Component {
   render() {
     let buttons = []
 
-    buttons.push(<div key={0}
+    buttons.push(<button key={0}
                          onClick={() => this.changeIndex(-1, this.props.articles.length)} className={"arrow-btn"}>
       {"<"}
-    </div>)
+    </button>)
     for (let i = 0; i < this.props.articles.length; i++) {
       if (i === this.state.index) {
         buttons.push(<div key={i + 2}
@@ -86,11 +86,11 @@ export class MainArticles extends Component {
       }
 
     }
-    buttons.push(<div key={1}
+    buttons.push(<button key={1}
                          className={"arrow-btn"}
                          onClick={() => this.changeIndex(1, this.props.articles.length)}>
       {">"}
-    </div>)
+    </button>)
     return (
       <Fragment>
         <div className="main-articles"

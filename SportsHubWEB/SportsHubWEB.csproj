@@ -10,8 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-=======
+
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.4" />
@@ -25,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
->>>>>>> 720bf7c3bc05dcd50389edff6dc6f2ed1c3dfc4e
+
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />

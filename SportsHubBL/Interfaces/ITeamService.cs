@@ -11,6 +11,8 @@ namespace SportsHubBL.Interfaces
     public interface ITeamService
     {
         public IEnumerable<Team> GetTeams(int? conferenceId, int? categoryId, int? teamId, int? locationId);
+
+        public TeamLocalization GetTeamLocalization(int teamId, int languageId);
         
         public void AddTeamFromModel(TeamModel team);
         

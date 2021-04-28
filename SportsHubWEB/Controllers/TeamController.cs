@@ -1,11 +1,8 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportsHubBL.Interfaces;
 using SportsHubBL.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using SportsHubDAL.Entities;
 
@@ -64,43 +61,6 @@ namespace SportsHubWEB.Controllers
 
         }
         
-        
-        [HttpPost("localization")]
-        public IActionResult AddNewTeamLocalizationFromModel([FromBody] TeamModel model)
-        {
-            try
-            {
-                _teamService.AddNewTeamLocalizationFromModel(model);
-                return Ok($"Team {model.TeamId} successfully added");
-            }
-            catch (ArgumentNullException)
-            {
-                return BadRequest($"Team {model.TeamId} was null");
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
-            }
-        }
-
-        [HttpPut]
-        public IActionResult UpdateTeamLocalizationFromModel([FromBody] TeamModel model)
-        {
-            try
-            {
-                _teamService.UpdateTeamLocalizationFromModel(model);
-                return Ok($"Team  {model.TeamId} successfully updated");
-            }
-            catch (ArgumentNullException)
-            {
-                return BadRequest($"Team {model.TeamId} was null");
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
-            }
-        }
-        
         [HttpPut("{id:int}")]
         public IActionResult UpdateTeamFromModel([FromRoute] int id, [FromBody] TeamModel teamModel)
         {
@@ -134,22 +94,52 @@ namespace SportsHubWEB.Controllers
             
         }
         
-        [HttpDelete]
-        public IActionResult DeleteTeamLocalizationById([FromQuery] int teamId, int languageId)
+        [HttpGet("{id:int}/localization/{languageId:int}")]
+        public ActionResult<TeamLocalization> GetTeamLocalization([FromRoute] int id, [FromRoute] int languageId)
         {
             try
             {
-                _teamService.DeleteTeamLocalizationById(teamId,  languageId);
-                return Ok($"Team  {teamId} successfully deleted");
+                return _teamService.GetTeamLocalization(id, languageId);
             }
-            catch (ArgumentNullException)
+            catch (Exception e)
             {
-                return BadRequest($"Team {teamId} was null");
+                return BadRequest(e.Message);
             }
-            catch (ArgumentException)
+        }
+
+        [HttpPut("{id:int}/localization/{languageId:int}")]
+        public ActionResult UpdateTeamLocalization([FromRoute] int id, [FromRoute] int languageId, [FromBody] TeamModel model)
+        {
+            if (model.LanguageId != languageId || model.TeamId != id)
             {
-                return BadRequest($"Localization in language {languageId} for team {teamId} already exists");
+                return BadRequest("id\'s in the model and in the route have to be identical");
             }
+
+            try
+            {
+                _teamService.UpdateTeamLocalizationFromModel(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}/localization/{languageId:int}")]
+        public ActionResult DeleteTeamLocalization([FromRoute] int id, [FromRoute] int languageId)
+        {
+            try
+            {
+                _teamService.DeleteTeamLocalizationById(id, languageId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return Ok();
         }
         
     }

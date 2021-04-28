@@ -198,7 +198,24 @@ namespace SportsHubBL.Services
             };
             
         }
-                
+        public TeamLocalization GetTeamLocalization(int teamId, int languageId)
+        {
+            var team = _teamRepository.Set().FirstOrDefault(a => a.Id == teamId);
+
+            if (team == null)
+            {
+                throw new ArgumentException("team was null", nameof(teamId));
+            }
+
+            var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
+
+            if (language == null)
+            {
+                throw new ArgumentException("language was null", nameof(languageId));
+            }
+
+            return _teamLocalizationRepository.Set().FirstOrDefault(al => al.Team == team && al.Language == language);
+        }
         private TeamModel LocalizeTeamModel(TeamModel model, Team team, int languageId)
         {
             if (team?.Conference == null)

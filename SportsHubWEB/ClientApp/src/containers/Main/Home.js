@@ -279,7 +279,7 @@ export class Home extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.setArticles([])
+    this.props.setArticles([])
 
   }
   arrowNext = () => {

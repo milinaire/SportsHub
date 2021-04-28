@@ -5,7 +5,7 @@ import {ListArticles} from "./ArticlesList";
 
 export class SubCategoryArticles extends Component {
   componentDidMount() {
-    fetch(`https://localhost:5001/sportarticle?conferenceId=${this.props.match.params.subcategory}`)
+    fetch(`/sportarticle?conferenceId=${this.props.match.params.subcategory}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -27,7 +27,7 @@ export class SubCategoryArticles extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.match.params.subcategory !== this.props.match.params.subcategory) {
-      fetch(`https://localhost:5001/sportarticle?conferenceId=${this.props.match.params.subcategory}`)
+      fetch(`/sportarticle?conferenceId=${this.props.match.params.subcategory}`)
         .then(res => res.json())
         .then(
           (result) => {

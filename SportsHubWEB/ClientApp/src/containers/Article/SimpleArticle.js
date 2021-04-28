@@ -9,7 +9,7 @@ export class Article extends Component {
 
   componentDidMount() {
 
-    fetch(`https://localhost:5001/article`)
+    fetch(`/article`)
       .then(res => res.json())
       .then(
         (result) => {

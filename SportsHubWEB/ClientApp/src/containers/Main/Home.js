@@ -74,7 +74,7 @@ export class Home extends Component {
   };
 
   componentDidMount() {
-    fetch("https://localhost:5001/article")
+    fetch("/article")
       .then(res => res.json())
       .then(
         (result) => {
@@ -88,17 +88,17 @@ export class Home extends Component {
       )
 
     let str=""
-    fetch("https://localhost:5001/breakdown")
+    fetch("/breakdown")
       .then(res => res.json())
       .then(
         (result) => {
           for (let i = 0; i < result.length; i++) {
             if(result[i].categoryId){
-              str = `https://localhost:5001/sportarticle?categoryId=${result[i].categoryId}`
+              str = `/sportarticle?categoryId=${result[i].categoryId}`
             }else if(result[i].conferenceId) {
-              str = `https://localhost:5001/sportarticle?conferenceId=${result[i].conferenceId}`
+              str = `/sportarticle?conferenceId=${result[i].conferenceId}`
             }else if(result[i].teamId){
-              str = `https://localhost:5001/sportarticle?teamId=${result[i].teamId}`
+              str = `/sportarticle?teamId=${result[i].teamId}`
             }
             if(str){
               fetch(str)

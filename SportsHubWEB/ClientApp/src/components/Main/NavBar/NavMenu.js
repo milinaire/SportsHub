@@ -23,7 +23,7 @@ export class NavMenu extends Component {
   };
 
   componentDidMount() {
-    fetch("https://localhost:5001/category?languageId=1")
+    fetch("/category?languageId=1")
       .then(res => res.json())
       .then(
         (result) => {
@@ -35,7 +35,7 @@ export class NavMenu extends Component {
           });
         }
       )
-    fetch("https://localhost:5001/conference?languageId=1")
+    fetch("/conference?languageId=1")
       .then(res => res.json())
       .then(
         (result) => {
@@ -47,7 +47,7 @@ export class NavMenu extends Component {
           });
         }
       )
-    fetch("https://localhost:5001/team?languageId=1")
+    fetch("/team?languageId=1")
       .then(res => res.json())
       .then(
         (result) => {

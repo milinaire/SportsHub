@@ -5,7 +5,7 @@ import {ListArticles} from "./ArticlesList";
 
 export class CategoryArticles extends Component {
   componentDidMount() {
-    fetch(`https://localhost:5001/sportarticle?categoryId=${this.props.match.params.category}`)
+    fetch(`/sportarticle?categoryId=${this.props.match.params.category}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -29,7 +29,7 @@ export class CategoryArticles extends Component {
     if (prevProps.match.params.category !== this.props.match.params.category) {
 
 
-      fetch(`https://localhost:5001/sportarticle?categoryId=${this.props.match.params.category}`)
+      fetch(`/sportarticle?categoryId=${this.props.match.params.category}`)
         .then(res => res.json())
         .then(
           (result) => {

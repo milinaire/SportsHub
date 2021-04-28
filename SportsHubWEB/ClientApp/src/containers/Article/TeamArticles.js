@@ -5,7 +5,7 @@ import {ListArticles} from "./ArticlesList";
 
 export class TeamArticles extends Component {
   componentDidMount(){
-    fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
+    fetch(`/sportarticle?teamId=${this.props.match.params.team}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -25,7 +25,7 @@ export class TeamArticles extends Component {
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.match.params.team!==this.props.match.params.team){
-      fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
+      fetch(`/sportarticle?teamId=${this.props.match.params.team}`)
         .then(res => res.json())
         .then(
           (result) => {

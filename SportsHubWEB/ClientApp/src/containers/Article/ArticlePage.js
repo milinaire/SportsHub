@@ -10,7 +10,7 @@ export class SportArticle extends Component {
 
   componentDidMount() {
 
-    fetch(`https://localhost:5001/sportarticle/${this.props.match.params.article}`)
+    fetch(`/sportarticle/${this.props.match.params.article}`)
       .then(res => res.json())
       .then(
         (result) => {

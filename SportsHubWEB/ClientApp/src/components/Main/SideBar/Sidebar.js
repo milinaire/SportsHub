@@ -15,7 +15,7 @@ export class Sidebar extends Component {
   componentDidUpdate(nextProps, nextState, nextContext) {
 
     if(nextProps.category !== this.props.category){
-      fetch("https://localhost:5001/banner")
+      fetch("/banner")
         .then(res => res.json())
         .then(
           (result) => {
@@ -39,7 +39,7 @@ export class Sidebar extends Component {
   }
 
   componentDidMount() {
-    fetch("https://localhost:5001/banner")
+    fetch("/banner")
       .then(res => res.json())
       .then(
         (result) => {

@@ -9,7 +9,7 @@ export class Article extends Component {
 
   componentDidMount() {
 
-    fetch(`https://localhost:5001/article`)
+    fetch(`/article`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -33,19 +33,8 @@ export class Article extends Component {
     return (
       <Fragment>
 
-        <PageLayout MainArticles={[]}>
+        <PageLayout MainArticles={this.state.Article !== {} &&[this.state.Article]}>
           <div style={{padding: '50px'}}>
-
-            <div className="title-a" style={{textAlign: "center"}}>
-              <h1>{this.state.Article.headline}</h1>
-            </div>
-            <div className="img-a">
-              <img style={{
-                width: "calc(100vw - 870px)"
-              }}
-                   src={this.state.Article.imageUri} alt={this.state.Article.alt}/>
-            </div>
-            <hr/>
             <div className="text-a">
               <h3 className="text-lg-left">{this.state.Article.text}</h3>
             </div>

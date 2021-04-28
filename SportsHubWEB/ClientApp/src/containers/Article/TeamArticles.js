@@ -5,7 +5,7 @@ import {ListArticles} from "./ArticlesList";
 
 export class TeamArticles extends Component {
   componentDidMount(){
-    fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
+    fetch(`/sportarticle?teamId=${this.props.match.params.team}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -25,7 +25,7 @@ export class TeamArticles extends Component {
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.match.params.team!==this.props.match.params.team){
-      fetch(`https://localhost:5001/sportarticle?teamId=${this.props.match.params.team}`)
+      fetch(`/sportarticle?teamId=${this.props.match.params.team}`)
         .then(res => res.json())
         .then(
           (result) => {
@@ -52,11 +52,9 @@ export class TeamArticles extends Component {
   render() {
     return (
       <Fragment>
-        <PageLayout MainArticles={[]}>
+        <PageLayout MainArticles={this.state.Articles.length > 0 &&[this.state.Articles[0]]} link={this.state.Articles.length > 0 && `nav/${this.state.Articles[0].categoryId}/${this.state.Articles[0].conferenceId}/${this.state.Articles[0].teamId}`} Category={this.props.match.params.category}>
         <div style={{ minHeight: "1000px" }}>
-          {this.props.match.params.category}~
-          {this.props.match.params.subcategory}~{this.props.match.params.team}
-          <ListArticles Articles={this.state.Articles}/>
+          <ListArticles Articles={this.state.Articles.slice(1)}/>
         </div>
         </PageLayout>
       </Fragment>

@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 export class MainArticles extends Component {
   state = {
     index: 0,
+    Categories:[]
   }
 
   stopSliding() {
@@ -19,6 +20,19 @@ export class MainArticles extends Component {
   }
 
   componentDidMount() {
+      fetch("/category?languageId=1")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({Categories:  result})
+
+          },
+          (error) => {
+            this.setState({
+              error
+            });
+          }
+        )
     this.setState({index: 0})
     this.interval = setInterval(() => {
       this.setState({index: (this.state.index + 1) % this.props.articles.length});
@@ -66,10 +80,10 @@ export class MainArticles extends Component {
   render() {
     let buttons = []
 
-    buttons.push(<div key={0}
+    buttons.push(<button key={0}
                          onClick={() => this.changeIndex(-1, this.props.articles.length)} className={"arrow-btn"}>
       {"<"}
-    </div>)
+    </button>)
     for (let i = 0; i < this.props.articles.length; i++) {
       if (i === this.state.index) {
         buttons.push(<div key={i + 2}
@@ -86,21 +100,30 @@ export class MainArticles extends Component {
       }
 
     }
-    buttons.push(<div key={1}
+    buttons.push(<button key={1}
                          className={"arrow-btn"}
                          onClick={() => this.changeIndex(1, this.props.articles.length)}>
       {">"}
-    </div>)
+    </button>)
     return (
       <Fragment>
         <div className="main-articles"
              style={{backgroundImage: `url(${this.props.articles[this.state.index].imageUri})`}}
              onMouseEnter={() => this.stopSliding()}
              onMouseLeave={() => this.startSliding()}>
-          <div className="cat">
+          {this.props.link?
+            <div className="cat">
 
-            {this.props.articles[this.state.index].categoryId}
-          </div>
+              {
+                this.state.Categories && this.state.Categories.find(category => String(category.id) === String(this.props.articles[this.state.index].categoryId)).name
+              }
+            </div>:
+            <div style={{width:"12%"}}>
+
+            </div>
+
+          }
+
           <div className="info">
             <div className="table">
               <div className="text-table">
@@ -109,16 +132,16 @@ export class MainArticles extends Component {
                 <b className="caption">{this.props.articles[this.state.index].caption}</b>
               </div>
 
-              <div className="more">
-                <Link to={`/art/${this.props.articles[this.state.index].articleId}`}>
+              {this.props.link && <div className="more">
+                <Link to={`/${this.props.link}/${this.props.articles[this.state.index].articleId}`}>
                   <div className="link-more">
                     <b>More</b>
                   </div>
                 </Link>
-              </div>
+              </div>}
             </div>
             <div className="buttons">
-              {buttons}
+              {this.props.articles.length > 1 && buttons}
             </div>
           </div>
         </div>

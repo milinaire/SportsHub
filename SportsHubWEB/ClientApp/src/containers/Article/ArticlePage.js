@@ -10,7 +10,7 @@ export class SportArticle extends Component {
 
   componentDidMount() {
 
-    fetch(`https://localhost:5001/sportarticle/${this.props.match.params.article}`)
+    fetch(`/sportarticle/${this.props.match.params.article}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -41,18 +41,8 @@ export class SportArticle extends Component {
   render() {
     return (
       <Fragment>
-        <PageLayout MainArticles={[]}>
-          <div style={{padding: '50px'}}>
-            <div className="title-a" style={{textAlign: "center"}}>
-              <h1>{this.state.Article.headline}</h1>
-            </div>
-            <div className="img-a">
-              <img style={{
-                width: "calc(100vw - 870px)"
-              }}
-                   src={this.state.Article.imageUri} alt={this.state.Article.alt}/>
-            </div>
-            <hr/>
+        <PageLayout MainArticles={this.state.Article !== {} &&[this.state.Article]}>
+          <div style={{padding: '0 50px'}}>
             <div className="text-a">
               <h3 className="text-lg-left">{this.state.Article.text}</h3>
             </div>

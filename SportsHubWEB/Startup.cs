@@ -52,10 +52,14 @@ namespace SportsHubWEB
             services.AddScoped<IArticleModelService, ArticleModelService>();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            
 
             services.AddScoped<ISportArticleService, SportArticleService>();
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IAdvertisingService, AdvertisingService>();
+            services.AddScoped<IConferenceService, ConferenceService>();
+
             services.AddScoped<IBannerService, BannerService>();
             services.AddScoped<IBreakDownService, BreakDownService>();
             services.AddControllersWithViews();

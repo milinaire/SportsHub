@@ -33,5 +33,7 @@ namespace SportsHubBL.Models
         
         public string Description { get; set; }
         
+        public int NewsLetterSubId { get; set; }
+        
     }
 }

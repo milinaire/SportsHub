@@ -42,6 +42,11 @@ namespace SportsHubBL.Services
             _languageRepository.Delete(_languageRepository.GetById(id));
         }
 
+        public IEnumerable<Language> GetAllLanguages()
+        {
+            return _languageRepository.Set().ToList();
+        }
+
         public Language GetLanguage(int id)
         {
             return _languageRepository.GetById(id);
@@ -56,6 +61,11 @@ namespace SportsHubBL.Services
         public async Task SetUserPreferredLanguageAsync(string userId, int languageId)
         {
             var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new Exception($"User {userId} not found");
+            }
 
             user.PreferredLanguage = languageId;
 
@@ -76,7 +86,6 @@ namespace SportsHubBL.Services
                 throw new Exception($"language {id} not found");
             }
 
-            oldLanguage.Id = language.Id;
             oldLanguage.LanguageName = language.LanguageName;
 
             _languageRepository.Update(oldLanguage);

@@ -24,5 +24,7 @@ namespace SportsHubBL.Interfaces
         public void DeleteLanguage(int id);
 
         public Language GetLanguage(int id);
+
+        public IEnumerable<Language> GetAllLanguages();
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SportsHubBL.Interfaces;
 using SportsHubBL.Models;
+using SportsHubDAL.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,18 +15,24 @@ namespace SportsHubWEB.Controllers
     public class BreakDownController : ControllerBase
     {
         private readonly IBreakDownService _breakDownService;
-        public BreakDownController(IBreakDownService breakDownService)
+        private readonly ILanguageService _languageService;
+
+        public BreakDownController(IBreakDownService breakDownService,
+            ILanguageService languageService)
         {
             _breakDownService = breakDownService;
+            _languageService = languageService;
         }
 
         [HttpGet]
-        public IEnumerable<BreakDownModel> GetBreakDowns([FromQuery]bool showHidden = false)
+        public IEnumerable<BreakDownModel> GetBreakDowns([FromQuery]bool showHidden = false, [FromQuery]int? languageId = null)
         {
-            // TODO: cange this call to use language
-            int? languageId = 1;
+            if (languageId == null)
+            {
+                languageId = _languageService.DefaultSiteLanguageId;
+            }
 
-            return _breakDownService.GetBreakDowns(languageId?? 1/*english*/, showHidden);
+            return _breakDownService.GetBreakDowns((int)languageId, showHidden);
         }
 
         [HttpPost]

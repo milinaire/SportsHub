@@ -7,6 +7,7 @@ using SportsHubDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 
@@ -128,7 +129,9 @@ namespace SportsHubWEB.Controllers
         {
             try
             {
-                return _articleService.GetArticleLocalization(id, languageId);
+                var articleLocalization = _articleService.GetArticleLocalization(id, languageId);
+
+                return Content(JsonSerializer.Serialize(articleLocalization), "application/json");
             }
             catch (Exception e)
             {

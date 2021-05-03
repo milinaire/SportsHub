@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import "./Footer.css";
-import {BaseLayout} from "../Layout/BaseLayout";
 
 export class ContactUs extends Component {
   state = {
@@ -9,18 +8,16 @@ export class ContactUs extends Component {
     Tel: "Tel from db",
     Email: "Email from db",
   };
+
   render() {
     return (
-
       <Fragment>
-        <BaseLayout>
-          <div>
-            <h1>{this.state.Headline}</h1>
-            <p>{this.state.Address}</p>
-            <p>{this.state.Tel}</p>
-            <p>{this.state.Email}</p>
-          </div>
-        </BaseLayout>
+        <div className="main-part">
+          <h1>{this.state.Headline}</h1>
+          <p>{this.state.Address}</p>
+          <p>{this.state.Tel}</p>
+          <p>{this.state.Email}</p>
+        </div>
       </Fragment>
     );
   }

@@ -99,6 +99,14 @@ export class Header extends Component {
               <Row className="profile-section-row">
                 {this.state.User.login === true ? (
                   <>
+                    <div style={{borderRadius:"100%", height:"50px", width:"50px", background:"red", color:"white"}}>
+                      <Link to="/admin">
+                        <div style={{borderRadius:"100%", height:"50px", width:"50px", display:"flex", justifyContent:"center", alignItems:"center"}}>
+                            admin
+                        </div>
+                      </Link>
+                    </div>
+
                     <Image
                       className="profile-section avatar-img"
                       src={this.state.User.image_url}

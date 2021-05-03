@@ -1,9 +1,8 @@
 ﻿import 'bootstrap/dist/css/bootstrap.css';
 import React, {Component, Fragment} from 'react';
-import {PageLayout} from "../../components/Main/Layout/PageLayout";
+import {withRouter} from "react-router-dom";
 
-
-export class SportArticle extends Component {
+class SportArticle extends Component {
   state = {
     Article: {}
   }
@@ -41,16 +40,16 @@ export class SportArticle extends Component {
   render() {
     return (
       <Fragment>
-        <PageLayout MainArticles={this.state.Article !== {} &&[this.state.Article]}>
-          <div style={{padding: '0 50px'}}>
-            <div className="text-a">
-              <h3 className="text-lg-left">{this.state.Article.text}</h3>
-            </div>
-            <hr/>
+        <div style={{padding: '0 50px'}}>
+          <div className="text-a">
+            <h3 className="text-lg-left">{this.state.Article.text}</h3>
           </div>
-        </PageLayout>
+          <hr/>
+        </div>
       </Fragment>
     )
   }
 }
+
+export default withRouter(SportArticle)
 

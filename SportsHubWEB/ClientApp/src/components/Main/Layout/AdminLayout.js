@@ -8,10 +8,11 @@ export class AdminLayout extends Component {
   render() {
     return (
       <Fragment>
-      <AdminHeader/>
-      <div className="wrap-shit">
-        {this.props.children}
-      </div>
+      {/*<AdminHeader/>*/}
+      {/*<div className="wrap-shit">*/}
+      {/*  {this.props.children}*/}
+      {/*</div>*/}
+        admin
       </Fragment>
     );
   }

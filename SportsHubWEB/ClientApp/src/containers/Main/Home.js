@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import "./home.css"
-import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 
 export class Home extends Component {
@@ -157,7 +156,6 @@ export class Home extends Component {
     return (
 
       <Fragment>
-        <PageLayout MainArticles={this.state.MainArticles} link="art">
           <div className="breakwrap3">
             <div className="break-line-wrap">
               <hr className="hr1"/>
@@ -252,9 +250,7 @@ export class Home extends Component {
               </div>
             </div>
           </div>
-        </PageLayout>
       </Fragment>
-
     );
   }
 }

@@ -1,9 +1,9 @@
 import React, {Component, Fragment} from "react";
 import "./style.css"
-import {PageLayout} from "../../components/Main/Layout/PageLayout";
 import {ListArticles} from "./ArticlesList";
+import {withRouter} from "react-router-dom";
 
-export class CategoryArticles extends Component {
+class CategoryArticles extends Component {
   componentDidMount() {
     fetch(`/sportarticle?categoryId=${this.props.match.params.category}`)
       .then(res => res.json())
@@ -59,12 +59,11 @@ export class CategoryArticles extends Component {
 
     return (
       <Fragment>
-        <PageLayout MainArticles={this.state.Articles.length > 0 &&[this.state.Articles[0]]} link={this.state.Articles.length > 0 && `nav/${this.state.Articles[0].categoryId}/${this.state.Articles[0].conferenceId}/${this.state.Articles[0].teamId}`} Category={this.props.match.params.category}>
           <div style={{minHeight: "1000px", zIndex: -2}}>
             <ListArticles Articles={this.state.Articles.slice(1)}/>
           </div>
-        </PageLayout>
       </Fragment>
     );
   }
 }
+export default withRouter(CategoryArticles)

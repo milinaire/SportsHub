@@ -111,6 +111,25 @@ namespace SportsHubWEB.Controllers
             return Ok();
         }
 
+        [HttpPost("{id}/localization")]
+        public ActionResult AddArticleLocalization([FromRoute]int id, [FromBody] ArticleModel model)
+        {
+            if (model.ArticleId != id)
+            {
+                return BadRequest("id\'s in the model and in the route have to be identical");
+            }
+
+            try
+            {
+                _articleService.AddNewArticleLocalizationFromModel(model);
+                return StatusCode(201);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpGet("{id}/localization")]
         public ActionResult<IEnumerable<ArticleLocalization>> GetAllArticleLocalizations([FromRoute]int id)
         {

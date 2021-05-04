@@ -8,33 +8,57 @@ import {Home} from "../../../containers/Main/Home";
 import CategoryArticles from "../../../containers/Article/CategoryArticles";
 import SubCategoryArticles from "../../../containers/Article/SubCategoryArticles";
 import TeamArticles from "../../../containers/Article/TeamArticles";
-import SportArticle from "../../../containers/Article/ArticlePage";
+import SportArticle from "../../../containers/Article/SportArticle";
+import {MainArticles} from "../MainArticles/MainArticles";
+import MainArticle from "../../../containers/Article/MainArticle";
 
 class PageLayout extends Component {
+  state = {
+    MainArticles: [],
+    ShowCategory: false,
+    Link: undefined
+  }
+
+  setMainArticles(articles, showCategory, link) {
+    this.setState({
+      MainArticles: articles,
+      ShowCategory: showCategory,
+      Link: link
+    })
+  }
+
+  constructor(props) {
+    super(props);
+    this.setMainArticles = this.setMainArticles.bind(this);
+  }
 
   render() {
+
     return (
       <Fragment>
         <NavMenu/>
         <div className="main-part">
-          {/*{this.props.MainArticles.length > 0 && <MainArticles articles={this.props.MainArticles} link={this.props.link}/>}*/}
+          {this.state.MainArticles && <MainArticles articles={this.state.MainArticles} showCategory={this.state.ShowCategory} link={this.state.Link}/>}
           <div className="main-content">
             <div className="content">
               <Switch>
                 <Route exact path={`/`}>
-                  <Home/>
+                  <Home setMainArticles={this.setMainArticles}/>
+                </Route>
+                <Route exact path={`/main-article/:article`}>
+                  <MainArticle setMainArticles={this.setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category`}>
-                  <CategoryArticles/>
+                  <CategoryArticles setMainArticles={this.setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category/:subcategory`}>
-                  <SubCategoryArticles/>
+                  <SubCategoryArticles setMainArticles={this.setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category/:subcategory/:team`}>
-                  <TeamArticles/>
+                  <TeamArticles setMainArticles={this.setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category/:subcategory/:team/:article`}>
-                  <SportArticle/>
+                  <SportArticle setMainArticles={this.setMainArticles}/>
                 </Route>
                 <Route>
                   <NotFound/>
@@ -42,7 +66,7 @@ class PageLayout extends Component {
               </Switch>
             </div>
             <div className="side">
-              <Sidebar />
+              <Sidebar/>
             </div>
           </div>
         </div>

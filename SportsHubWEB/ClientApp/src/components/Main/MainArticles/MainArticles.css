@@ -110,12 +110,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
 }
 
 .link-more {
     width: calc((100vw - 300px) * 0.115);
     height: calc((100vw - 300px) * 0.035);
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -8,7 +8,6 @@ class SportArticle extends Component {
   }
 
   componentDidMount() {
-
     fetch(`/sportarticle/${this.props.match.params.article}`)
       .then(res => res.json())
       .then(
@@ -16,6 +15,7 @@ class SportArticle extends Component {
           this.setState({
             Article: result
           });
+          this.props.setMainArticles([result], false, '')
         },
         (error) => {
           this.setState({
@@ -25,16 +25,8 @@ class SportArticle extends Component {
       )
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    return this.props.match.params.category
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.match.params.category !== this.props.match.params.category) {
-    }
-  }
-
   componentWillUnmount() {
+    this.props.setMainArticles([])
   }
 
   render() {

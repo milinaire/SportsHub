@@ -12,6 +12,10 @@ class CategoryArticles extends Component {
           this.setState({
             Articles: result
           });
+          if(result.length>0){
+            console.log(result[0])
+            this.props.setMainArticles([result[0]], false, `nav/${result[0].categoryId}/${result[0].conferenceId}/${result[0].teamId}`)
+          }
         },
         (error) => {
           this.setState({
@@ -34,8 +38,16 @@ class CategoryArticles extends Component {
         .then(
           (result) => {
             this.setState({
-              Articles: result
+               Articles: result
             });
+            console.log(result)
+            if(result.length>0){
+              console.log(result)
+              this.props.setMainArticles([result[0]], false, `nav/${result[0].categoryId}/${result[0].conferenceId}/${result[0].teamId}`)
+            }else{
+              this.props.setMainArticles([])
+            }
+
           },
           (error) => {
             this.setState({
@@ -48,6 +60,7 @@ class CategoryArticles extends Component {
 
 
   componentWillUnmount() {
+    this.props.setMainArticles([])
   }
 
   state = {

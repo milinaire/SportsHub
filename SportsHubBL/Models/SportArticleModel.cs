@@ -28,6 +28,17 @@ namespace SportsHubBL.Models
             Text = articleModel.Text;
             Caption = articleModel.Caption;
             Alt = articleModel.Alt;
+            LocationId = 0;
+            LocationUri = String.Empty;
+            TeamId = 0;
+            TeamName = String.Empty;
+            ConferenceId = 0;
+            ConferenceName = String.Empty;
+        }
+
+        public SportArticleModel()
+        {
+
         }
 
         public int LocationId { get; set; }

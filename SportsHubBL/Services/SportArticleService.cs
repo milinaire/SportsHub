@@ -14,17 +14,19 @@ namespace SportsHubBL.Services
     public class SportArticleService: ISportArticleService
     {
         private readonly IArticleModelService _articleModelService;
+        private readonly IArticleService _articleService;
         private readonly IRepository<Team> _teamRepository;
         private readonly INoIdRepository<SportArticle> _sportArticleRepository;
 
         public SportArticleService(
             IArticleModelService articleModelService,
             INoIdRepository<SportArticle> sportArticleRepository,
-            IRepository<Team> teamRepository)
+            IRepository<Team> teamRepository, IArticleService articleService)
         {
             _articleModelService = articleModelService;
             _sportArticleRepository = sportArticleRepository;
             _teamRepository = teamRepository;
+            _articleService = articleService;
         }
 
         public SportArticle GetConnectedSportArticle(Article article)
@@ -161,7 +163,7 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var article = _articleModelService.GetArticleFromModel(model);
+            var article = _articleService.GetArticleById(model.ArticleId)?? _articleModelService.GetArticleFromModel(model);
 
             var team = _teamRepository.Set()
                 .FirstOrDefault(t => t.Id == model.TeamId) ??
@@ -169,8 +171,9 @@ namespace SportsHubBL.Services
 
             return new SportArticle
             {
+                ArticleId = model.ArticleId,
                 Article = article,
-                Team = team
+                Team = team,
             };
         }
     }

@@ -70,6 +70,7 @@ namespace SportsHubBL.Services
 
             return new Article
             {
+                Id = model.ArticleId,
                 Image = image,
                 Category = category,
                 Content = content

@@ -19,7 +19,6 @@
     width: 100%;
     display: flex;
     flex-grow: 1;
-
     margin-bottom: 90px;
     flex-wrap: wrap;
     justify-content: center;
@@ -32,7 +31,6 @@
     height: auto;
     display: flex;
     flex-grow: 1;
-    margin-bottom: 90px;
     flex-wrap: wrap;
     left: 0;
     right: 0;
@@ -81,18 +79,18 @@
 
 .hr1 {
     width: 100%;
-    border-top: 1px solid grey;
+    border-top: 1px solid lightgrey;
 }
 
 .hr2 {
     width: 80%;
-    border-top: 1px solid grey;
+    border-top: 1px solid lightgrey;
 }
 
 .break-line {
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
     border-radius: 80px;
-    width: 490px;
+    width: 650px;
     height: 50px;
     display: flex;
     align-content: center;
@@ -124,7 +122,7 @@
 }
 
 .break-line-wrap1 > b {
-    width: 180px;
+    width: 200px;
 }
 
 .photo-arrow {
@@ -133,9 +131,7 @@
     height: 100%;
 }
 
-.break-line-wrap1 > b {
-    width: 147px;
-}
+
 
 .photo-of-the-day {
     width: 100%;

@@ -236,6 +236,7 @@ export class Home extends Component {
             </div>
             <div className="flex-most">
               <div className="break-line-wrap1">
+                
                 <b>MOST COMENTED</b>
                 <hr className="hr2"/>
               </div>

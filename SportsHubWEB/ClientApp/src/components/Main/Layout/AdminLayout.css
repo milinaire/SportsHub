@@ -9,4 +9,5 @@
 .all-page{flex-direction: column;}
 */
 
-.wrap-shit{width:100%; height:5000px;}
+.wrap-shit{width:100%; height:5000px;display: flex;
+flex-direction: column; flex-wrap:wrap;align-items: center;}

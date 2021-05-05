@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   padding: 40px 200px 40px 20px;
+  margin-left: 300px;
 }
 .footer-categiry {
   width: 33%;

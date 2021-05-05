@@ -47,7 +47,7 @@ export class ArticleConstructor extends Component {
   
         <Fragment>
          
-          <AdminLayout>
+        
            
           <div className="const-wrap">
               
@@ -126,7 +126,7 @@ export class ArticleConstructor extends Component {
                
 
             </div>
-          </AdminLayout>
+         
           
            
           

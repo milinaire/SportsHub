@@ -1,7 +1,10 @@
 import React, {Component, Fragment} from "react";
-import {AdminHeader} from  "../AdminHeader/AdminHeader";
-
 import "./AdminLayout.css";
+import {Route, Switch} from "react-router-dom";
+import { ArticleConstructor } from "../../../containers/Admin/ArticleConstructor";
+import { AdminPage } from "../../../containers/Admin/AdminPage";
+import { AdminHeader } from "../AdminHeader/AdminHeader";
+import ScrollToTop from "./ScrollToTop";
 
 export class AdminLayout extends Component {
 
@@ -10,8 +13,21 @@ export class AdminLayout extends Component {
       <Fragment>
       <AdminHeader/>
       <div className="wrap-shit">
-        {this.props.children}
-      </div>
+          <Switch>
+            <Route path="/admin/home">
+              
+               
+               <AdminPage/>
+            </Route>
+            <Route path="/admin/article">
+           
+                <ArticleConstructor/>
+             
+            </Route>
+            
+          </Switch>
+       </div>
+      
       </Fragment>
     );
   }

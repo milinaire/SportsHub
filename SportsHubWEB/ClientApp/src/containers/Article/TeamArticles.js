@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from "react";
-
-import {PageLayout} from "../../components/Main/Layout/PageLayout";
 import {ListArticles} from "./ArticlesList";
+import {withRouter} from "react-router-dom";
 
-export class TeamArticles extends Component {
+class TeamArticles extends Component {
   componentDidMount(){
     fetch(`/sportarticle?teamId=${this.props.match.params.team}`)
       .then(res => res.json())
@@ -12,6 +11,10 @@ export class TeamArticles extends Component {
           this.setState({
             Articles: result
           });
+          if(result.length>0){
+            console.log(result[0])
+            this.props.setMainArticles([result[0]], false, `nav/${result[0].categoryId}/${result[0].conferenceId}/${result[0].teamId}`)
+          }
         },
         (error) => {
           this.setState({
@@ -32,6 +35,12 @@ export class TeamArticles extends Component {
             this.setState({
               Articles: result
             });
+            if(result.length>0){
+              console.log(result)
+              this.props.setMainArticles([result[0]], false, `nav/${result[0].categoryId}/${result[0].conferenceId}/${result[0].teamId}`)
+            }else{
+              this.props.setMainArticles([])
+            }
           },
           (error) => {
             this.setState({
@@ -42,7 +51,7 @@ export class TeamArticles extends Component {
     }
   }
   componentWillUnmount(){
-
+    this.props.setMainArticles([])
   }
   state={
     Articles: [
@@ -52,12 +61,11 @@ export class TeamArticles extends Component {
   render() {
     return (
       <Fragment>
-        <PageLayout MainArticles={this.state.Articles.length > 0 &&[this.state.Articles[0]]} link={this.state.Articles.length > 0 && `nav/${this.state.Articles[0].categoryId}/${this.state.Articles[0].conferenceId}/${this.state.Articles[0].teamId}`} Category={this.props.match.params.category}>
         <div style={{ minHeight: "1000px" }}>
           <ListArticles Articles={this.state.Articles.slice(1)}/>
         </div>
-        </PageLayout>
       </Fragment>
     );
   }
 }
+export default withRouter(TeamArticles)

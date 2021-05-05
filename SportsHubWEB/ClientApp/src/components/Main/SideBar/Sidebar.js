@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import "./Sidebar.css";
 import "./style.css";
+import {withRouter} from "react-router-dom";
 
-export class Sidebar extends Component {
+class Sidebar extends Component {
   state = {
     Banner: [
     ],
@@ -135,3 +136,4 @@ componentWillUnmount() {
     );
   }
 }
+export default withRouter(Sidebar)

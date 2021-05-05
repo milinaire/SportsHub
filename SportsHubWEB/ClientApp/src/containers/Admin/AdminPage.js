@@ -47,7 +47,7 @@ export class AdminPage extends Component {
   
         <Fragment>
          
-          <AdminLayout>
+          
            
           <div className="const-wrap">
               <div className="main-a-const">
@@ -265,7 +265,7 @@ export class AdminPage extends Component {
                
 
             </div>
-          </AdminLayout>
+         
           
            
           

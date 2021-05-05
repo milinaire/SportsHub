@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import "./home.css"
-import {PageLayout} from "../../components/Main/Layout/PageLayout";
 
 
 export class Home extends Component {
@@ -80,7 +79,8 @@ export class Home extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          this.setState({MainArticles: result})
+          //this.setState({MainArticles: result})
+          this.props.setMainArticles(result, true, 'main-article')
         },
         (error) => {
           this.setState({
@@ -133,31 +133,13 @@ export class Home extends Component {
   }
 
   componentWillUnmount() {
+    this.props.setMainArticles([])
   }
-  indicator = () => {
-    let b = []
-    this.state.MainArticles.map((Article) => (
-      b.push(<div>
-        <img alt={Article.Alt} src={Article.Image}/>
-        <p className="legend">{Article.HeadLine}</p>
-      </div>)
-    ))
-    return (b)
-  }
-  item = (item, props) => <item.type {...item.props} {...props} />;
-  thumbs = (children) =>
-    children.map((item) => {
-      return <img src={item.props.img}  alt={item.props.alt}/>;
-    });
-
   render() {
-    
-
 
     return (
 
       <Fragment>
-        <PageLayout MainArticles={this.state.MainArticles} link="art">
           <div className="breakwrap3">
             <div className="break-line-wrap">
               <hr className="hr1"/>
@@ -253,9 +235,7 @@ export class Home extends Component {
               </div>
             </div>
           </div>
-        </PageLayout>
       </Fragment>
-
     );
   }
 }

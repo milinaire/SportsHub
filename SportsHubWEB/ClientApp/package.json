@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/react-select": "^4.0.15",
     "bootstrap": "^4.6.0",
     "jquery": "^3.5.1",
     "merge": "^1.2.1",

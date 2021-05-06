@@ -34,7 +34,7 @@ namespace SportsHubWEB.Controllers
             _languageService = languageService;
         }
 
-        [HttpGet]
+        [HttpGet("main")]
         public IEnumerable<ArticleModel> GetMainArticles([FromQuery] bool showHidden = false, [FromQuery] int? languageId = null)
         {
             if (languageId == null)
@@ -49,7 +49,7 @@ namespace SportsHubWEB.Controllers
                 var sportArticle = _sportArticleService.GetConnectedSportArticle(mam.ArticleId);
                 if (sportArticle == null)
                 {
-                    return _articleModelService.GenerateArticleModel(_articleService.GetArticleById(mam.ArticleId), (int)languageId);
+                    return _articleModelService.GetLocalizedArticleModel(_articleService.GetArticleById(mam.ArticleId), (int)languageId);
                 }
                 else
                 {
@@ -60,6 +60,55 @@ namespace SportsHubWEB.Controllers
 
             return articleModels;
         }
+
+        [HttpGet] 
+        public ActionResult<IEnumerable<ArticleModel>> GetArticles([FromQuery] int? languageId = null)
+        {
+            var articles = _articleService.GetAllArticles();
+
+            try
+            {
+                IEnumerable<ArticleModel> models;
+
+                if (languageId == null)
+                {
+                    models = articles.Select(a => _articleModelService.GetBaseArticleModel(a));
+                }
+                else
+                {
+                    models = articles.Select(a => _articleModelService.GetLocalizedArticleModel(a, (int)languageId));
+                }
+                return Ok(models);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<ArticleModel> GetArticleById([FromRoute] int id, [FromQuery]int? languageId = null)
+        {
+            try
+            {
+                ArticleModel model;
+
+                if (languageId == null)
+                {
+                    model = _articleModelService.GetBaseArticleModel(_articleService.GetArticleById(id));
+                }
+                else
+                {
+                    model = _articleModelService.GetLocalizedArticleModel(_articleService.GetArticleById(id), (int)languageId);
+                }
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
         [HttpPost]
         public ActionResult AddArticle([FromBody] ArticleModel model)

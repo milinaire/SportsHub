@@ -149,7 +149,7 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(sportArticle));
             }
 
-            var articleModel = _articleModelService.GenerateArticleModel(sportArticle.Article, languageId);
+            var articleModel = _articleModelService.GetLocalizedArticleModel(sportArticle.Article, languageId);
 
             var sportArticleModel = LocalizeSportArticleModel(new SportArticleModel(articleModel), sportArticle, languageId);
 

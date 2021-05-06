@@ -167,5 +167,10 @@ namespace SportsHubBL.Services
         {
             return _articleLocalizationRepository.Set().Where(al => al.ArticleId == articleId);
         }
+
+        public IEnumerable<Article> GetAllArticles()
+        {
+            return _articleRepository.Set().ToList();
+        }
     }
 }

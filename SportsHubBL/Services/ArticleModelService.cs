@@ -97,7 +97,7 @@ namespace SportsHubBL.Services
             };
         }
 
-        public ArticleModel GetArticleModel(Article article, Language language)
+        public ArticleModel GetLocalizedArticleModel(Article article, Language language)
         {
             if (article == null)
             {
@@ -107,6 +107,60 @@ namespace SportsHubBL.Services
             if (language == null)
             {
                 throw new ArgumentNullException(nameof(language));
+            }
+
+            var model = FormBaseArticleModel(article);
+
+            try
+            {
+                model = LocalizeArticleModel(model, article, language);
+            }
+            catch (Exception e)
+            {
+                model.Caption = e.Message;
+            }
+
+            return model;
+        }
+
+        private ArticleModel LocalizeArticleModel(ArticleModel model, Article article, Language language)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
+            }
+
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
+
+            if (article.ArticleLocalizations == null)
+            {
+                article = _articleRepository.Set().Include(a => a.ArticleLocalizations).FirstOrDefault(a => a == article);
+            }
+
+            model.LanguageId = language.Id;
+
+            var articleLocalization = article.ArticleLocalizations.FirstOrDefault(at => at.Language == language);
+
+            if (articleLocalization == null)
+            {
+                throw new Exception($"Localization in language {language.Id} for article {article.Id} not found");
+            }
+            model.Headline = articleLocalization.Headline;
+            model.Text = articleLocalization.Text;
+            model.Caption = articleLocalization.Caption;
+            model.Alt = articleLocalization.Alt;
+
+            return model;
+        }
+
+        private ArticleModel FormBaseArticleModel(Article article)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
             }
 
             if (article.Content == null
@@ -127,32 +181,20 @@ namespace SportsHubBL.Services
                 }
             }
 
-            var articleLocalization = article.ArticleLocalizations.FirstOrDefault(at => at.Language == language);
-
-            if (articleLocalization == null)
-            {
-                throw new Exception("can\'t find localization for article");
-            }
-
             return new ArticleModel
             {
                 ArticleId = article.Id,
-                LanguageId = language.Id,
-                ImageId = article.Image.Id,
-                ImageUri = article.Image.Uri,
-                CategoryId = article.Category.Id,
-                ContentId = article.Content.Id,
-                IsPublished = article.Content.IsPublished,
-                DatePublished = article.Content.Datetime,
-                ShowComments = article.Content.ShowComments,
-                Headline = articleLocalization.Headline,
-                Text = articleLocalization.Text,
-                Caption = articleLocalization.Caption,
-                Alt = articleLocalization.Alt
+                ImageId = article.Image?.Id,
+                ImageUri = article.Image?.Uri,
+                CategoryId = article.Category?.Id,
+                ContentId = article.Content?.Id,
+                IsPublished = article.Content?.IsPublished,
+                DatePublished = article.Content?.Datetime,
+                ShowComments = article.Content?.ShowComments,
             };
         }
 
-        public ArticleModel GenerateArticleModel(Article article, int languageId)
+        public ArticleModel GetLocalizedArticleModel(Article article, int languageId)
         {
             var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
@@ -161,7 +203,7 @@ namespace SportsHubBL.Services
                 throw new Exception($"language {languageId} not found");
             }
 
-            return this.GetArticleModel(article, language);
+            return this.GetLocalizedArticleModel(article, language);
         }
 
         public MainArticleModel GenerateMainArticleModel(MainArticle mainArticle)
@@ -186,6 +228,18 @@ namespace SportsHubBL.Services
                 ArticleId = mainArticle.Article.Id,
                 Show = mainArticle.Show
             };
+        }
+
+        public ArticleModel GetBaseArticleModel(Article article)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
+            }
+
+            var model = FormBaseArticleModel(article);
+
+            return model;
         }
     }
 }

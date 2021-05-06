@@ -18,6 +18,8 @@ namespace SportsHubBL.Interfaces
 
         public Article GetArticleById(int id);
 
+        public IEnumerable<Article> GetAllArticles();
+
         public void AddArticleFromModel(ArticleModel model);
 
         public void AddNewArticleLocalizationFromModel(ArticleModel model);

@@ -14,25 +14,30 @@ namespace SportsHubWEB.Controllers
     public class SportArticleController : ControllerBase
     {
         private readonly ISportArticleService _sportArticleService;
+        private readonly ILanguageService _languageService;
 
         public SportArticleController(
-            ISportArticleService sportArticleService)
+            ISportArticleService sportArticleService,
+            ILanguageService languageService)
         {
             _sportArticleService = sportArticleService;
+            _languageService = languageService;
         }
 
         [HttpGet]
-        public IEnumerable<SportArticleModel> GetSportsArticles([FromQuery] int? categoryId, [FromQuery] int? conferenceId, [FromQuery] int? teamId, [FromQuery] int? locationId, int count = 10)
+        public IEnumerable<SportArticleModel> GetSportsArticles([FromQuery] int? categoryId, [FromQuery] int? conferenceId, [FromQuery] int? teamId, [FromQuery] int? locationId, [FromQuery] int? languageId = null, int count = 10)
         {
-            // TODO: cange this call to use language
-            int? languageId = 1;
+            if (languageId == null)
+            {
+                languageId = _languageService.DefaultSiteLanguageId;
+            }
 
             return _sportArticleService.GetSportArticles(categoryId, conferenceId, teamId, locationId, count)
-                .Select(sa => _sportArticleService.GenerateSportArticleModel(sa, languageId ?? 1));
+                .Select(sa => _sportArticleService.GenerateSportArticleModel(sa, (int)languageId));
         }
 
         [HttpGet("{id}")]
-        public ActionResult<SportArticleModel> GetSportArticleById([FromRoute] int id)
+        public ActionResult<SportArticleModel> GetSportArticleById([FromRoute] int id, [FromQuery] int? languageId)
         {
             var sportArticle = _sportArticleService.GetConnectedSportArticle(id);
 
@@ -40,10 +45,13 @@ namespace SportsHubWEB.Controllers
             {
                 return NotFound(id);
             }
-            // TODO: cange this call to use language
-            int? languageId = 1;
 
-            return _sportArticleService.GenerateSportArticleModel(sportArticle, languageId ?? 1);
+            if (languageId == null)
+            {
+                languageId = _languageService.DefaultSiteLanguageId;
+            }
+
+            return _sportArticleService.GenerateSportArticleModel(sportArticle, (int)languageId);
         }
 
         [HttpPost]

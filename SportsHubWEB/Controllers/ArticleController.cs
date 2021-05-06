@@ -20,35 +20,40 @@ namespace SportsHubWEB.Controllers
         private readonly IArticleService _articleService;
         private readonly ISportArticleService _sportArticleService;
         private readonly IArticleModelService _articleModelService;
+        private readonly ILanguageService _languageService;
 
         public ArticleController(
             IArticleService articleService,
             ISportArticleService sportArticleService,
-            IArticleModelService articleModelService)
+            IArticleModelService articleModelService, 
+            ILanguageService languageService)
         {
             _articleService = articleService;
             _sportArticleService = sportArticleService;
             _articleModelService = articleModelService;
+            _languageService = languageService;
         }
 
         [HttpGet]
-        public IEnumerable<ArticleModel> GetMainArticles([FromQuery] bool showHidden = false)
+        public IEnumerable<ArticleModel> GetMainArticles([FromQuery] bool showHidden = false, [FromQuery] int? languageId = null)
         {
-            // TODO: cange this call to use language
-            int? languageId = 1;
+            if (languageId == null)
+            {
+                languageId = _languageService.DefaultSiteLanguageId;
+            }
 
-            var mainArticles = _articleService.GetMainPageArticles();
+            var mainArticles = _articleService.GetMainPageArticles(showHidden);
 
             var articleModels = mainArticles.Where(mam => mam.Show).Select(mam =>
             {
                 var sportArticle = _sportArticleService.GetConnectedSportArticle(mam.ArticleId);
                 if (sportArticle == null)
                 {
-                    return _articleModelService.GenerateArticleModel(_articleService.GetArticleById(mam.ArticleId), languageId ?? 1);
+                    return _articleModelService.GenerateArticleModel(_articleService.GetArticleById(mam.ArticleId), (int)languageId);
                 }
                 else
                 {
-                    return _sportArticleService.GenerateSportArticleModel(sportArticle, languageId ?? 1);
+                    return _sportArticleService.GenerateSportArticleModel(sportArticle, (int)languageId);
                 }
             }
             );
@@ -131,7 +136,7 @@ namespace SportsHubWEB.Controllers
         }
 
         [HttpGet("{id}/localization")]
-        public ActionResult<IEnumerable<ArticleLocalization>> GetAllArticleLocalizations([FromRoute]int id)
+        public ActionResult<IEnumerable<ArticleLocalization>> GetAllArticleLocalizations([FromRoute] int id)
         {
             try
             {

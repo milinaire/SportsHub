@@ -120,14 +120,13 @@ namespace SportsHubWEB.Controllers
 
             try
             {
-                _articleService.AddArticleFromModel(model);
+                var res =  _articleService.AddArticleFromModel(model);
+                return Content(JsonSerializer.Serialize(_articleService.GetModel(res)), "application/json");
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
-            return StatusCode(201);
         }
 
         [HttpPut("{id}")]
@@ -140,7 +139,8 @@ namespace SportsHubWEB.Controllers
 
             try
             {
-                _articleService.UpdateArticleById(id, model);
+                var res =  _articleService.UpdateArticleById(id, model);
+                return Content(JsonSerializer.Serialize(_articleService.GetModel(res)), "application/json");
             }
             catch (Exception e)
             {
@@ -175,8 +175,8 @@ namespace SportsHubWEB.Controllers
 
             try
             {
-                _articleService.AddNewArticleLocalizationFromModel(model);
-                return StatusCode(201);
+                var res =  _articleService.AddNewArticleLocalizationFromModel(model);
+                return Content(JsonSerializer.Serialize(_articleService.GetModelLocalization(res)), "application/json");
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace SportsHubWEB.Controllers
 
             try
             {
-                _articleService.UpdateArticleLocalizationFromModel(model);
+                
+                var res =  _articleService.UpdateArticleLocalizationFromModel(model);
+                return Content(JsonSerializer.Serialize(_articleService.GetModelLocalization(res)), "application/json");
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
-            return NoContent();
         }
 
         [HttpDelete("{id}/localization/{languageId}")]

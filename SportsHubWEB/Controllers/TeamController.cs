@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using IdentityServer4.Extensions;
 using SportsHubDAL.Entities;
+using System.Text.Json;
 
 namespace SportsHubWEB.Controllers
 {
@@ -13,10 +14,11 @@ namespace SportsHubWEB.Controllers
     public class TeamController : ControllerBase
     {
         private readonly ITeamService _teamService;
-
-        public TeamController(ITeamService teamService)
+        private readonly ILanguageService _languageService;
+        public TeamController(ITeamService teamService, ILanguageService languageService)
         {
             _teamService = teamService;
+            _languageService = languageService;
         }
         
         
@@ -32,7 +34,8 @@ namespace SportsHubWEB.Controllers
         {
             try
             {
-                var result = _teamService.GetTeams(conferenceId,categoryId,teamId,locationId).Select(sa => _teamService.GenerateTeamModel(sa, locationId ?? 1));
+                var result = _teamService.GetTeams(conferenceId,categoryId,teamId,locationId)
+                    .Select(sa => _teamService.GenerateTeamModel(sa, locationId ?? 1));
                 if(result.IsNullOrEmpty())
                     return NotFound("Teams are not found");
                 return Ok(result);
@@ -51,8 +54,8 @@ namespace SportsHubWEB.Controllers
         {
             try
             {
-                _teamService.AddTeamFromModel(model);
-                return Ok($"Team {model.TeamId} successfully added");
+                var res = _teamService.AddTeamFromModel(model);
+                return Content(JsonSerializer.Serialize(_teamService.GetModel(res)), "application/json");
             }
             catch (ArgumentNullException)
             {
@@ -74,8 +77,8 @@ namespace SportsHubWEB.Controllers
                 {
                     return BadRequest("Model was null");
                 }
-                _teamService.UpdateTeamFromModel(id, teamModel);
-                return Ok($"Team {id} successfully Updated");
+                var res = _teamService.UpdateTeamFromModel(id, teamModel);
+                return Content(JsonSerializer.Serialize(_teamService.GetModel(res)), "application/json");
             }
             catch (Exception e)
             {
@@ -106,14 +109,30 @@ namespace SportsHubWEB.Controllers
         {
             try
             {
-                return _teamService.GetTeamLocalization(id, languageId);
+                var teamLocalization = _teamService.GetTeamLocalization(id, languageId);
+                
+                return Content(JsonSerializer.Serialize(teamLocalization), "application/json");
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
-
+        
+        [HttpPost("{id:int}/localization/{languageId:int}")]
+        public ActionResult AddNewTeamLocalizationFromModel([FromRoute] int id, [FromRoute] int languageId, [FromBody] TeamModel model)
+        {
+            try
+            {
+                var res  = _teamService.AddNewTeamLocalizationFromModel(model);
+                return  Content(JsonSerializer.Serialize(_teamService.GetModelLocalization(res)), "application/json");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        
         [HttpPut("{id:int}/localization/{languageId:int}")]
         public ActionResult UpdateTeamLocalization([FromRoute] int id, [FromRoute] int languageId, [FromBody] TeamModel model)
         {

@@ -8,10 +8,14 @@ namespace SportsHubBL.Interfaces
         public IEnumerable<Team> GetTeams(int? conferenceId, int? categoryId, int? teamId, int? locationId);
 
         public TeamLocalization GetTeamLocalization(int teamId, int languageId);
+
+        public TeamModel GetModel(Team team);
+
+        public TeamModel GetModelLocalization(TeamLocalization team);
+
+        public Team AddTeamFromModel(TeamModel team);
         
-        public void AddTeamFromModel(TeamModel team);
-        
-        public void AddNewTeamLocalizationFromModel(TeamModel model);
+        public TeamLocalization AddNewTeamLocalizationFromModel(TeamModel model);
          
         public TeamModel GetTeamModel(Team team, Language language);
 
@@ -20,7 +24,7 @@ namespace SportsHubBL.Interfaces
         public void DeleteTeamById(int id);
         
         public void DeleteTeamLocalizationById(int teamId, int languageId);
-        public void UpdateTeamFromModel(int teamId, TeamModel model);
+        public Team UpdateTeamFromModel(int teamId, TeamModel model);
         public void UpdateTeamLocalizationFromModel(TeamModel model);
 
     }

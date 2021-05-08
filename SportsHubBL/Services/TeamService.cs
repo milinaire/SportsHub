@@ -55,12 +55,38 @@ namespace SportsHubBL.Services
             return query.ToList();
         }
 
-        public void AddTeamFromModel(TeamModel model)
+        public Team AddTeamFromModel(TeamModel model)
         {
             var team = GetTeamFromModel(model);
             _teamRepository.Insert(team);
+            return team;    
         }
-        
+
+        public TeamModel GetModel(Team team)
+        {
+            return new()
+            {
+                TeamId = team.Id,
+                ConferenceId = team.Conference.Id,
+                CategoryId = team.Conference.Category.Id,
+                LocationId = team.Location.Id,
+                LocationUri =  team.Location.Uri,
+                Show = team.Show,
+                ImageId = team.Image.Id,
+                ImageUri = team.Image.Uri,
+                DateCreated = team.DateCreated
+            };
+        }
+
+        public TeamModel GetModelLocalization(TeamLocalization team)
+        {
+            return new()
+            {
+                TeamId = team.TeamId,
+                Name = team.Name,
+                Description = team.Description
+            };
+        }
         private TeamLocalization GetTeamLocalizationFromModel(Team team, TeamModel model)
         {
             var language = _languageRepository.Set().FirstOrDefault(l => l.Id == model.LanguageId);
@@ -80,11 +106,10 @@ namespace SportsHubBL.Services
         }
 
         
-        public void AddNewTeamLocalizationFromModel(TeamModel model)
+        public TeamLocalization AddNewTeamLocalizationFromModel(TeamModel model)
         {
             var team = GetTeamFromModel(model);
             
-
             var teamLocalization = GetTeamLocalizationFromModel(team, model);
 
             if (_teamLocalizationRepository.Set()
@@ -92,8 +117,8 @@ namespace SportsHubBL.Services
             {
                 throw new ArgumentException($"localization in language {model.LanguageId} for team {model.TeamId} already exists", nameof(model));
             }
-
             _teamLocalizationRepository.Insert(teamLocalization);
+            return teamLocalization;
         }
 
         public TeamModel GetTeamModel(Team team, Language language)
@@ -193,14 +218,14 @@ namespace SportsHubBL.Services
 
             if (team == null)
             {
-                throw new ArgumentException("team was null", nameof(teamId));
+                throw new Exception("team was null");
             }
 
             var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
             if (language == null)
             {
-                throw new ArgumentException("language was null", nameof(languageId));
+                throw new Exception("language was null");
             }
 
             return _teamLocalizationRepository.Set().FirstOrDefault(al => al.Team == team && al.Language == language);
@@ -299,7 +324,7 @@ namespace SportsHubBL.Services
             _teamLocalizationRepository.Update(originalTeamLocalization);
         }
 
-        public void UpdateTeamFromModel(int teamId, TeamModel model)
+        public Team UpdateTeamFromModel(int teamId, TeamModel model)
         {
             var team = _teamRepository.Set()
                 .Include(t => t.Conference).ThenInclude(t=>t.Category)
@@ -334,6 +359,8 @@ namespace SportsHubBL.Services
                 
             }
             _teamRepository.Update(team);
+
+            return team;
         }
     }
 }

@@ -34,11 +34,13 @@ namespace SportsHubBL.Services
             _mainArticlesRepository = mainArticlesRepository;
         }
 
-        public void AddArticleFromModel(ArticleModel model)
+        public Article AddArticleFromModel(ArticleModel model)
         {
             var article = _articleModelService.GetArticleFromModel(model);
 
             _articleRepository.Insert(article);
+
+            return article;
         }
 
         public void DeleteArticleById(int id)
@@ -53,7 +55,7 @@ namespace SportsHubBL.Services
             _articleRepository.Delete(article);
         }
 
-        public void UpdateArticleById(int id, ArticleModel model)
+        public Article UpdateArticleById(int id, ArticleModel model)
         {
             var originalArticle = _articleRepository.Set().FirstOrDefault(a => a.Id == id);
 
@@ -70,6 +72,8 @@ namespace SportsHubBL.Services
             originalArticle.Content = article.Content;
 
             _articleRepository.Update(originalArticle);
+
+            return originalArticle;
         }
 
         public Article GetArticleById(int id)
@@ -82,6 +86,20 @@ namespace SportsHubBL.Services
         public IEnumerable<MainArticleModel> GetMainPageArticles(bool showHidden = false)
         {
             return _mainArticlesRepository.Set().Where(ma => showHidden || ma.Show == true).Select(ma => _articleModelService.GenerateMainArticleModel(ma));
+        }
+
+        public ArticleModel GetModelLocalization(ArticleLocalization article)
+        {
+            return new()
+            {
+                ArticleId = article.ArticleId,
+                LanguageId = article.LanguageId,
+                Headline = article.Headline,
+                Text = article.Text,
+                Caption = article.Caption,
+                Alt = article.Alt,
+                
+            };
         }
 
         public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan)
@@ -112,8 +130,23 @@ namespace SportsHubBL.Services
 
             return _articleLocalizationRepository.Set().FirstOrDefault(al => al.Article == article && al.Language == language);
         }
+        
+        public ArticleModel GetModel(Article article)
+        {
+            return new()
+            {
+                ArticleId = article.Id,
+                IsPublished = article.Content.IsPublished,
+                ContentId = article.Content.Id,
+                CategoryId = article.Category.Id,
+                ImageId = article.Image.Id,
+                ImageUri = article.Image.Uri,
+                ShowComments = article.Content.ShowComments,
+                DatePublished = article.Content.Datetime,
+            };
+        }
 
-        public void AddNewArticleLocalizationFromModel(ArticleModel model)
+        public ArticleLocalization AddNewArticleLocalizationFromModel(ArticleModel model)
         {
             var article = GetArticleById(model.ArticleId);
 
@@ -126,9 +159,11 @@ namespace SportsHubBL.Services
             }
 
             _articleLocalizationRepository.Insert(articleLocalization);
+
+            return articleLocalization;
         }
 
-        public void UpdateArticleLocalizationFromModel(ArticleModel model)
+        public ArticleLocalization UpdateArticleLocalizationFromModel(ArticleModel model)
         {
             var article = GetArticleById(model.ArticleId);
 
@@ -148,6 +183,8 @@ namespace SportsHubBL.Services
             originalArticleLocalization.Alt = newArticleLocalization.Alt;
 
             _articleLocalizationRepository.Update(originalArticleLocalization);
+
+            return originalArticleLocalization;
         }
 
         public void DeleteArticleLocalizationById(int articleId, int languageId)

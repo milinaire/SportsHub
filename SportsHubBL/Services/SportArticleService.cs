@@ -39,19 +39,30 @@ namespace SportsHubBL.Services
             return _sportArticleRepository.Set().Include(sa => sa.Article).FirstOrDefault(sa => sa.Article == article);
         }
 
+        public SportArticle GetModel(SportArticle article)
+        {
+            return new()
+            {
+                ArticleId = article.ArticleId,
+                TeamId = article.TeamId,
+            };
+        }
+
         public SportArticle GetConnectedSportArticle(int articleId)
         {
             return _sportArticleRepository.Set().FirstOrDefault(sa => sa.ArticleId == articleId);
         }
 
-        public void AddSportArticleFromModel(SportArticleModel model)
+        public SportArticle AddSportArticleFromModel(SportArticleModel model)
         {
             var sportArticle = GetSportArticleFromModel(model);
 
             _sportArticleRepository.Insert(sportArticle);
+
+            return sportArticle;
         }
 
-        public void UpdateSportArticleFromModel(int sportArticleId, SportArticleModel model)
+        public SportArticle UpdateSportArticleFromModel(int sportArticleId, SportArticleModel model)
         {
             var sportArticle = _sportArticleRepository.Set()
                 .FirstOrDefault(sa => sa.ArticleId == model.ArticleId);
@@ -67,6 +78,8 @@ namespace SportsHubBL.Services
             sportArticle.TeamId = newSportArticle.TeamId;
 
             _sportArticleRepository.Update(sportArticle);
+
+            return sportArticle;
         }
 
         public void DeleteSportArticle(int sportArticleId)

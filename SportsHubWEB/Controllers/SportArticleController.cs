@@ -5,6 +5,7 @@ using SportsHubBL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SportsHubWEB.Controllers
@@ -64,7 +65,9 @@ namespace SportsHubWEB.Controllers
 
             try
             {
-                _sportArticleService.AddSportArticleFromModel(sportArticleModel);
+               
+                var res = _sportArticleService.AddSportArticleFromModel(sportArticleModel);
+                return Content(JsonSerializer.Serialize(_sportArticleService.GetModel(res)), "application/json");
             }
             catch (Exception e)
             {
@@ -84,7 +87,9 @@ namespace SportsHubWEB.Controllers
 
             try
             {
-                _sportArticleService.UpdateSportArticleFromModel(id, sportArticleModel);
+                
+                var res = _sportArticleService.UpdateSportArticleFromModel(id, sportArticleModel);
+                return Content(JsonSerializer.Serialize(_sportArticleService.GetModel(res)), "application/json");
             }
             catch (Exception e)
             {

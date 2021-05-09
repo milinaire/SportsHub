@@ -10,7 +10,7 @@ class MainArticle extends Component {
   }
 
   componentDidMount() {
-    fetch(`/article`)
+    fetch(`/article/main`)
       .then(res => res.json())
       .then(
         (result) => {

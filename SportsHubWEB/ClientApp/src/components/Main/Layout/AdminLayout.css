@@ -9,5 +9,40 @@
 .all-page{flex-direction: column;}
 */
 
-.wrap-shit{width:100%; height:5000px;display: flex;
-flex-direction: column; flex-wrap:wrap;align-items: center;}
+.wrap-shit {
+    width: 100%;
+    margin-left: 100px;
+    padding-top:300px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.admin-nav-menu{
+    padding: 20px 0;
+    width: 100px;
+    height: 100%;
+    background: #fff;
+    position: fixed;
+    top: 260px;
+
+}
+.admin-nav-menu a{
+    text-decoration: none;
+    color: #ccc;
+
+}
+.admin-nav-menu-item{
+    height:calc((100vh - 300px) * 0.1);
+    width: 100%;
+    background:#fff;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.admin-nav-menu-item-not-active{
+    color: #ccc;
+}
+.admin-nav-menu-item-active{
+    color: #b21f2d!important;
+}

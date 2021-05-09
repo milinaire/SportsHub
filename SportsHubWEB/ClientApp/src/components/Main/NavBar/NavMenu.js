@@ -47,7 +47,7 @@ export class NavMenu extends Component {
           });
         }
       )
-    fetch("/team?languageId=1")
+    fetch("/team")
       .then(res => res.json())
       .then(
         (result) => {

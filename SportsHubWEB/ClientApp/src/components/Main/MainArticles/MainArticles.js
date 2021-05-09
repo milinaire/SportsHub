@@ -44,8 +44,7 @@ export class MainArticles extends Component {
     if (!this.state.index && this.state.index !== 0) {
       this.setState({index: 0})
     }
-    console.log(this.props.articles,this.state.index)
-    if(this.state.index > this.props.articles.length-1 && this.state.index !== 0){
+    if (this.state.index > this.props.articles.length - 1 && this.state.index !== 0) {
       this.setState({index: 0})
     }
   }
@@ -109,7 +108,6 @@ export class MainArticles extends Component {
     )
     return (
       <Fragment>
-        {console.log(this.props.articles,this.state.index)}
         {this.props.articles.length > 0 &&
         <div className="main-articles"
              style={{backgroundImage: `url(${this.props.articles[this.state.index].imageUri})`}}

@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from "react";
-import {AdminLayout} from "../../components/Main/Layout/AdminLayout";
 import "./AdminPage.css";
 import  "../../containers/Main/home.css"
 import Select from 'react-dropdown-select';
@@ -38,7 +37,7 @@ export class AdminPage extends Component {
       let {imagePreviewUrl} = this.state;
       let $imagePreview = null;
       if (imagePreviewUrl) {
-        $imagePreview = (<img className="imgPreview" src={imagePreviewUrl} />);
+        $imagePreview = (<img alt={""} className="imgPreview" src={imagePreviewUrl} />);
       } else {
         $imagePreview = (<div className="previewText"><p><span style={{color: "red"}}>+Add picture </span>or drop it right here</p><p>You can add next formats: png. jpg. jpeg. tif</p></div>);
       }

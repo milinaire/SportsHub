@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { NavLink, Row } from "reactstrap";
-import { Link } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import "./Header.css";
 import { Form, FormControl, NavDropdown, Image, Button } from "react-bootstrap";
 
-export class Header extends Component {
+class Header extends Component {
   static displayName = Header.name;
 
   server = {
@@ -100,7 +100,7 @@ export class Header extends Component {
                 {this.state.User.login === true ? (
                   <>
                     <div style={{borderRadius:"100%", height:"50px", width:"50px", background:"red", color:"white"}}>
-                      <Link to="/admin">
+                      <Link to={`/admin${this.props.location.pathname}`}>
                         <div style={{borderRadius:"100%", height:"50px", width:"50px", display:"flex", justifyContent:"center", alignItems:"center"}}>
                             admin
                         </div>
@@ -164,3 +164,4 @@ export class Header extends Component {
     );
   }
 }
+export default withRouter(Header)

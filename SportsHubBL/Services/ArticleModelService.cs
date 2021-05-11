@@ -18,6 +18,7 @@ namespace SportsHubBL.Services
         private readonly INoIdRepository<Content> _contentRepository;
         private readonly INoIdRepository<Category> _categoryRepository;
         private readonly INoIdRepository<Image> _imageRepository;
+        private readonly ILanguageService _languageService;
         private readonly IRepository<MainArticle> _mainArticleRepository;
 
         public ArticleModelService(
@@ -25,9 +26,9 @@ namespace SportsHubBL.Services
             INoIdRepository<Content> contentRepository,
             INoIdRepository<Category> categoryRepository,
             INoIdRepository<Image> imageRepository,
-            INoIdRepository<Article> articleRepository, 
+            INoIdRepository<Article> articleRepository,
             IRepository<MainArticle> mainArticleRepository
-            )
+, ILanguageService languageService)
         {
             _languageRepository = languageRepository;
             _contentRepository = contentRepository;
@@ -35,6 +36,7 @@ namespace SportsHubBL.Services
             _imageRepository = imageRepository;
             _articleRepository = articleRepository;
             _mainArticleRepository = mainArticleRepository;
+            _languageService = languageService;
         }
 
         public Article GetArticleFromModel(ArticleModel model)
@@ -110,14 +112,13 @@ namespace SportsHubBL.Services
             }
 
             var model = FormBaseArticleModel(article);
-
             try
             {
                 model = LocalizeArticleModel(model, article, language);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                model.Caption = e.Message;
+                model = LocalizeArticleModel(model, article, _languageService.DefaultSiteLanguage);
             }
 
             return model;

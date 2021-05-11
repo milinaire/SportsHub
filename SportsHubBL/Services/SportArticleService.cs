@@ -65,7 +65,7 @@ namespace SportsHubBL.Services
         public SportArticle UpdateSportArticleFromModel(int sportArticleId, SportArticleModel model)
         {
             var sportArticle = _sportArticleRepository.Set()
-                .FirstOrDefault(sa => sa.ArticleId == model.ArticleId);
+                .FirstOrDefault(sa => sa.ArticleId == sportArticleId);
 
             if (sportArticle == null)
             {

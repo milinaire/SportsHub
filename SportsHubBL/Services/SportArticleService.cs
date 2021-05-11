@@ -186,6 +186,7 @@ namespace SportsHubBL.Services
                 ArticleId = model.ArticleId,
                 Article = article,
                 Team = team,
+                TeamId = team.Id
             };
         }
     }

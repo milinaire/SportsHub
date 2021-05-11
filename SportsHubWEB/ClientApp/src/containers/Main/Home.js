@@ -75,7 +75,7 @@ export class Home extends Component {
 
 
   componentDidMount() {
-    fetch("/article/main")
+    fetch("/article/main/display")
       .then(res => res.json())
       .then(
         (result) => {

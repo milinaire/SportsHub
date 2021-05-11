@@ -5,37 +5,9 @@ import ScrollMenu from 'react-horizontal-scrolling-menu';
 import {Row} from "reactstrap";
 import {Image, NavDropdown} from "react-bootstrap";
 
-
-const MenuItem = ({text, path, selected}) => {
-  return <div
-    className={`menu-item ${selected ? 'active' : ''}`}
-  ><NavLink to={`${path}`}>
-    {text}
-  </NavLink></div>;
-};
-
-
-export const Menu = (list, selected) =>
-  list.map(el => {
-    const {name, id} = el;
-    return <MenuItem path={id} text={name} key={id} selected={selected}/>;
-  });
-
-
-const Arrow = ({text, className}) => {
-  return (
-    <div
-      className={className}
-    >{text}</div>
-  );
-};
-
-
+const Arrow = ({text, className}) => <div className={className}>{text}</div>;
 const ArrowLeft = Arrow({text: '<', className: 'arrow-prev'});
 const ArrowRight = Arrow({text: '>', className: 'arrow-next'});
-
-const selected = 'item1';
-
 
 class AdminHeader extends Component {
   componentDidMount() {
@@ -54,8 +26,7 @@ class AdminHeader extends Component {
   }
 
   state = {
-
-    selected,
+    selected: '',
     Categories: [],
     User: {
       login: true,
@@ -75,7 +46,7 @@ class AdminHeader extends Component {
 
   constructor(props) {
     super(props);
-    this.menuItems = Menu(this.state.Categories, selected);
+
   }
 
   onSelect = key => {
@@ -84,14 +55,16 @@ class AdminHeader extends Component {
 
   render() {
     const {selected} = this.state;
-    // Create menu from items
     let menu = [];
     for (let i = 0; i < this.state.Categories.length; i++) {
-      menu.push(<div
-        className={`menu-item1 ${selected ? 'active' : ''}`}
-      ><NavLink to={`/admin/${this.state.Categories[i].id}`}>
-        {this.state.Categories[i].name}
-      </NavLink></div>)
+      menu.push(
+        <div className={`menu-item1 ${selected ? 'selected-category' : ''}`}>
+          <NavLink activeClassName="selected-category" to={`/admin/${this.state.Categories[i].id}`}>
+            <div className="link-box">
+              <b style={{fontSize: "150%"}}>{this.state.Categories[i].name}</b>
+            </div>
+          </NavLink>
+        </div>)
     }
     return (
 
@@ -146,10 +119,10 @@ class AdminHeader extends Component {
         </div>
         <div className="head-title">
           <div className="hdt">
-            <b style={{fontSize:"200%"}}>{this.props.currentSection}</b>
+            <b style={{fontSize: "200%"}}>{this.props.currentSection}</b>
           </div>
           <div className="head-func">
-
+            {this.props.buttonElem}
           </div>
         </div>
         <ScrollMenu

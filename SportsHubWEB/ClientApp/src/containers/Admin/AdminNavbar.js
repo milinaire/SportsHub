@@ -8,52 +8,52 @@ export class AdminNavMenu extends Component {
         <div className="admin-nav-menu">
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/surveys">
               <div className="admin-nav-menu-item">
-                Surveys
+                <b>Surveys</b>
               </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/banners">
             <div className="admin-nav-menu-item">
-              Banners
+              <b>Banners</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/languages">
             <div className="admin-nav-menu-item">
-              Languages
+              <b>Languages</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/footer">
             <div className="admin-nav-menu-item">
-              Footer
+              <b>Footer</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/social_networks">
             <div className="admin-nav-menu-item">
-              Social Networks
+              <b>Social Networks</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/users">
             <div className="admin-nav-menu-item">
-              Users
+              <b>Users</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/information_architecture">
             <div className="admin-nav-menu-item">
-              IA
+              <b>IA</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/teams">
             <div className="admin-nav-menu-item">
-              Teams
+              <b>Teams</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/news_partners">
             <div className="admin-nav-menu-item">
-              News Partners
+              <b>News Partners</b>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/advertising">
             <div className="admin-nav-menu-item">
-              Advertising
+              <b>Advertising</b>
             </div>
           </NavLink>
         </div>

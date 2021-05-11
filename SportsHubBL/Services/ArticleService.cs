@@ -17,21 +17,18 @@ namespace SportsHubBL.Services
         private readonly INoIdRepository<Language> _languageRepository;
         private readonly INoIdRepository<ArticleLocalization> _articleLocalizationRepository;
         private readonly IArticleModelService _articleModelService;
-        private readonly IRepository<MainArticle> _mainArticlesRepository;
 
         public ArticleService(
             INoIdRepository<Article> articleRepository,
             INoIdRepository<Language> languageRepository,
             INoIdRepository<ArticleLocalization> articleLocalizationRepository,
-            IArticleModelService articleModelService,
-            IRepository<MainArticle> mainArticlesRepository
+            IArticleModelService articleModelService
             )
         {
             _articleModelService = articleModelService;
             _articleRepository = articleRepository;
             _languageRepository = languageRepository;
             _articleLocalizationRepository = articleLocalizationRepository;
-            _mainArticlesRepository = mainArticlesRepository;
         }
 
         public Article AddArticleFromModel(ArticleModel model)
@@ -83,25 +80,6 @@ namespace SportsHubBL.Services
             return article;
         }
 
-        public IEnumerable<MainArticleModel> GetMainPageArticles(bool showHidden = false)
-        {
-            return _mainArticlesRepository.Set().Where(ma => showHidden || ma.Show == true).Select(ma => _articleModelService.GenerateMainArticleModel(ma));
-        }
-
-        public ArticleModel GetModelLocalization(ArticleLocalization article)
-        {
-            return new()
-            {
-                ArticleId = article.ArticleId,
-                LanguageId = article.LanguageId,
-                Headline = article.Headline,
-                Text = article.Text,
-                Caption = article.Caption,
-                Alt = article.Alt,
-                
-            };
-        }
-
         public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan)
         {
             throw new NotImplementedException();
@@ -129,21 +107,6 @@ namespace SportsHubBL.Services
             }
 
             return _articleLocalizationRepository.Set().FirstOrDefault(al => al.Article == article && al.Language == language);
-        }
-        
-        public ArticleModel GetModel(Article article)
-        {
-            return new()
-            {
-                ArticleId = article.Id,
-                IsPublished = article.Content.IsPublished,
-                ContentId = article.Content.Id,
-                CategoryId = article.Category.Id,
-                ImageId = article.Image.Id,
-                ImageUri = article.Image.Uri,
-                ShowComments = article.Content.ShowComments,
-                DatePublished = article.Content.Datetime,
-            };
         }
 
         public ArticleLocalization AddNewArticleLocalizationFromModel(ArticleModel model)

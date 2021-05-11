@@ -10,13 +10,9 @@ namespace SportsHubBL.Interfaces
 {
     public interface IArticleService
     {
-        public IEnumerable<MainArticleModel> GetMainPageArticles(bool showHidden = false);
-
         public ArticleLocalization GetArticleLocalization(int articleId, int languageId);
 
         public IEnumerable<ArticleLocalization> GetArticleLocalizations(int articleId);
-
-        public ArticleModel GetModel(Article article);
 
         public Article GetArticleById(int id);
 
@@ -33,8 +29,6 @@ namespace SportsHubBL.Interfaces
         public Article UpdateArticleById(int id, ArticleModel model);
 
         public ArticleLocalization UpdateArticleLocalizationFromModel(ArticleModel model);
-        
-        public ArticleModel GetModelLocalization(ArticleLocalization article);
 
         public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan);
 

@@ -67,14 +67,12 @@ namespace SportsHubWEB.Controllers
             {
                
                 var res = _sportArticleService.AddSportArticleFromModel(sportArticleModel);
-                return Content(JsonSerializer.Serialize(_sportArticleService.GetModel(res)), "application/json");
+                return Content(JsonSerializer.Serialize(_sportArticleService.GetBaseModel(res)), "application/json");
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
-            return StatusCode(201);
         }
 
         [HttpPut("{id}")]
@@ -89,14 +87,12 @@ namespace SportsHubWEB.Controllers
             {
                 
                 var res = _sportArticleService.UpdateSportArticleFromModel(id, sportArticleModel);
-                return Content(JsonSerializer.Serialize(_sportArticleService.GetModel(res)), "application/json");
+                return Content(JsonSerializer.Serialize(_sportArticleService.GetBaseModel(res)), "application/json");
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
-            return NoContent();
         }
 
         [HttpDelete("{id}")]

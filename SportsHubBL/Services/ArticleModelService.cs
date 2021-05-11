@@ -13,21 +13,21 @@ namespace SportsHubBL.Services
 {
     public class ArticleModelService : IArticleModelService
     {
-        private readonly INoIdRepository<Article> _articleRepository;
-        private readonly INoIdRepository<Language> _languageRepository;
+        private readonly IRepository<Article> _articleRepository;
+        private readonly IRepository<Language> _languageRepository;
         private readonly INoIdRepository<Content> _contentRepository;
         private readonly INoIdRepository<Category> _categoryRepository;
         private readonly INoIdRepository<Image> _imageRepository;
         private readonly ILanguageService _languageService;
-        private readonly IRepository<MainArticle> _mainArticleRepository;
+        private readonly INoIdRepository<MainArticle> _mainArticleRepository;
 
         public ArticleModelService(
-            INoIdRepository<Language> languageRepository,
+            IRepository<Language> languageRepository,
             INoIdRepository<Content> contentRepository,
             INoIdRepository<Category> categoryRepository,
             INoIdRepository<Image> imageRepository,
-            INoIdRepository<Article> articleRepository,
-            IRepository<MainArticle> mainArticleRepository
+            IRepository<Article> articleRepository,
+            INoIdRepository<MainArticle> mainArticleRepository
 , ILanguageService languageService)
         {
             _languageRepository = languageRepository;
@@ -207,6 +207,18 @@ namespace SportsHubBL.Services
             return this.GetLocalizedArticleModel(article, language);
         }
 
+        public ArticleModel GetLocalizedArticleModel(int articleId, int languageId)
+        {
+            var article = _articleRepository.GetById(articleId);
+
+            if (article == null)
+            {
+                throw new Exception($"article {articleId} not found");
+            }
+
+            return this.GetLocalizedArticleModel(article, languageId);
+        }
+
         public MainArticleModel GenerateMainArticleModel(MainArticle mainArticle)
         {
             if (mainArticle == null)
@@ -214,19 +226,9 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(mainArticle));
             }
 
-            if (mainArticle.Article == null)
-            {
-                mainArticle = _mainArticleRepository.Set().Include(ma => ma.Article).FirstOrDefault(ma => ma == mainArticle);
-                if (mainArticle.Article == null)
-                {
-                    throw new Exception($"main article {mainArticle.Id} does not contain an article");
-                }
-            }
-
             return new MainArticleModel
             {
-                Id = mainArticle.Id,
-                ArticleId = mainArticle.Article.Id,
+                ArticleId = mainArticle.ArticleId,
                 Show = mainArticle.Show
             };
         }

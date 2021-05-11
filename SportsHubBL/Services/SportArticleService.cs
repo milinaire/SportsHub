@@ -39,7 +39,7 @@ namespace SportsHubBL.Services
             return _sportArticleRepository.Set().Include(sa => sa.Article).FirstOrDefault(sa => sa.Article == article);
         }
 
-        public SportArticle GetModel(SportArticle article)
+        public SportArticleModel GetBaseModel(SportArticle article)
         {
             return new()
             {
@@ -74,7 +74,6 @@ namespace SportsHubBL.Services
 
             var newSportArticle = GetSportArticleFromModel(model);
 
-            sportArticle.ArticleId = newSportArticle.ArticleId;
             sportArticle.TeamId = newSportArticle.TeamId;
 
             _sportArticleRepository.Update(sportArticle);

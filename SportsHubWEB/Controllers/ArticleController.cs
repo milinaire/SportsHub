@@ -33,34 +33,6 @@ namespace SportsHubWEB.Controllers
             _articleModelService = articleModelService;
             _languageService = languageService;
         }
-
-        [HttpGet("main")]
-        public IEnumerable<ArticleModel> GetMainArticles([FromQuery] bool showHidden = false, [FromQuery] int? languageId = null)
-        {
-            if (languageId == null)
-            {
-                languageId = _languageService.DefaultSiteLanguageId;
-            }
-
-            var mainArticles = _articleService.GetMainPageArticles(showHidden);
-
-            var articleModels = mainArticles.Where(mam => mam.Show).Select(mam =>
-            {
-                var sportArticle = _sportArticleService.GetConnectedSportArticle(mam.ArticleId);
-                if (sportArticle == null)
-                {
-                    return _articleModelService.GetLocalizedArticleModel(_articleService.GetArticleById(mam.ArticleId), (int)languageId);
-                }
-                else
-                {
-                    return _sportArticleService.GenerateSportArticleModel(sportArticle, (int)languageId);
-                }
-            }
-            );
-
-            return articleModels;
-        }
-
         [HttpGet] 
         public ActionResult<IEnumerable<ArticleModel>> GetArticles([FromQuery] int? languageId = null)
         {
@@ -99,7 +71,7 @@ namespace SportsHubWEB.Controllers
                 }
                 else
                 {
-                    model = _articleModelService.GetLocalizedArticleModel(_articleService.GetArticleById(id), (int)languageId);
+                    model = _articleModelService.GetLocalizedArticleModel(id, (int)languageId);
                 }
                 return Ok(model);
             }
@@ -111,7 +83,7 @@ namespace SportsHubWEB.Controllers
 
 
         [HttpPost]
-        public ActionResult AddArticle([FromBody] ArticleModel model)
+        public ActionResult<ArticleModel> AddArticle([FromBody] ArticleModel model)
         {
             if (model == null)
             {
@@ -121,7 +93,7 @@ namespace SportsHubWEB.Controllers
             try
             {
                 var res =  _articleService.AddArticleFromModel(model);
-                return Content(JsonSerializer.Serialize(_articleService.GetModel(res)), "application/json");
+                return _articleModelService.GetBaseArticleModel(res);
             }
             catch (Exception e)
             {
@@ -130,7 +102,7 @@ namespace SportsHubWEB.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateArticle([FromRoute] int id, [FromBody] ArticleModel model)
+        public ActionResult<ArticleModel> UpdateArticle([FromRoute] int id, [FromBody] ArticleModel model)
         {
             if (model == null)
             {
@@ -140,14 +112,12 @@ namespace SportsHubWEB.Controllers
             try
             {
                 var res =  _articleService.UpdateArticleById(id, model);
-                return Content(JsonSerializer.Serialize(_articleService.GetModel(res)), "application/json");
+                return _articleModelService.GetBaseArticleModel(res);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
-            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -166,7 +136,7 @@ namespace SportsHubWEB.Controllers
         }
 
         [HttpPost("{id}/localization")]
-        public ActionResult AddArticleLocalization([FromRoute]int id, [FromBody] ArticleModel model)
+        public ActionResult<ArticleModel> AddArticleLocalization([FromRoute]int id, [FromBody] ArticleModel model)
         {
             if (model.ArticleId != id)
             {
@@ -176,7 +146,7 @@ namespace SportsHubWEB.Controllers
             try
             {
                 var res =  _articleService.AddNewArticleLocalizationFromModel(model);
-                return Content(JsonSerializer.Serialize(_articleService.GetModelLocalization(res)), "application/json");
+                return _articleModelService.GetLocalizedArticleModel(res.ArticleId, res.LanguageId);
             }
             catch (Exception e)
             {
@@ -213,7 +183,7 @@ namespace SportsHubWEB.Controllers
         }
 
         [HttpPut("{id}/localization/{languageId}")]
-        public ActionResult UpdateArticleLocalization([FromRoute] int id, [FromRoute] int languageId, [FromBody] ArticleModel model)
+        public ActionResult<ArticleModel> UpdateArticleLocalization([FromRoute] int id, [FromRoute] int languageId, [FromBody] ArticleModel model)
         {
             if (model.LanguageId != languageId || model.ArticleId != id)
             {
@@ -224,7 +194,7 @@ namespace SportsHubWEB.Controllers
             {
                 
                 var res =  _articleService.UpdateArticleLocalizationFromModel(model);
-                return Content(JsonSerializer.Serialize(_articleService.GetModelLocalization(res)), "application/json");
+                return _articleModelService.GetLocalizedArticleModel(res.ArticleId, res.LanguageId);
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@ import {AdminLayout} from "./components/Main/Layout/AdminLayout";
 //import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import {Switch } from "react-router-dom";
 import Layout from "./components/Main/Layout/Layout";
+import {Provider} from "react-redux";
 
 
 export class App extends Component {
@@ -11,6 +12,7 @@ export class App extends Component {
   render() {
     return (
       <Fragment>
+        {/*<Provider>*/}
         <Switch>
           <Route path="/admin">
             <AdminLayout/>
@@ -19,6 +21,7 @@ export class App extends Component {
             <Layout/>
           </Route>
         </Switch>
+        {/*</Provider>*/}
       </Fragment>
     );
   }

@@ -18,11 +18,12 @@ export class AuthorizeService {
 
     async getUser() {
         if (this._user && this._user.profile) {
-            return this._user.profile;
+            return this._user;
         }
 
         await this.ensureUserManagerInitialized();
         const user = await this.userManager.getUser();
+        console.log("hi", this.userManager)
         return user && user.profile;
     }
 

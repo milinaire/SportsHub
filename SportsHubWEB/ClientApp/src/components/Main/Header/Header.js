@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import { NavLink, Row } from "reactstrap";
+import React, {Component, Fragment} from "react";
+import {NavLink, Row} from "reactstrap";
 import {Link, withRouter} from "react-router-dom";
 import "./Header.css";
-import { Form, FormControl, NavDropdown, Image, Button } from "react-bootstrap";
+import {Form, FormControl, NavDropdown, Image, Button} from "react-bootstrap";
+import authService from "../../api-authorization/AuthorizeService";
 
 class Header extends Component {
   static displayName = Header.name;
@@ -27,11 +28,24 @@ class Header extends Component {
       available_lang: ["English", "Ukrainian", "French", "German"],
     },
   };
+
+  componentDidMount() {
+    this._subscription = authService.subscribe(() => this.authenticationChanged());
+    this.populateAuthenticationState();
+  }
+
+  componentWillUnmount() {
+    authService.unsubscribe(this._subscription);
+  }
+
   constructor(props) {
     super(props);
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
+      ready: false,
+      user:null,
+      authenticated: false,
       collapsed: true,
       ...this.server,
     };
@@ -45,7 +59,8 @@ class Header extends Component {
 
   render() {
     return (
-      <>
+      <Fragment>
+        {this.state.user&&console.log(this.state.user)}
         <header className="sticky-top">
           <link
             rel="stylesheet"
@@ -69,7 +84,7 @@ class Header extends Component {
               <Form className="search-card" inline>
                 <Row className="pl-lg-5">
                   <button type="submit">
-                    <i className="fa fa-search" />
+                    <i className="fa fa-search"/>
                   </button>
                   <FormControl
                     type="text"
@@ -84,13 +99,13 @@ class Header extends Component {
                 <Row className="pl-lg-5">
                   <h5>Share</h5>
                   <button type="submit">
-                    <i className="fa fa-facebook-f " />
+                    <i className="fa fa-facebook-f "/>
                   </button>
                   <button type="submit">
-                    <i className="fa fa-twitter " />
+                    <i className="fa fa-twitter "/>
                   </button>
                   <button type="submit">
-                    <i className="fa fa-google" />
+                    <i className="fa fa-google"/>
                   </button>
                 </Row>
               </NavLink>
@@ -99,10 +114,18 @@ class Header extends Component {
               <Row className="profile-section-row">
                 {this.state.User.login === true ? (
                   <>
-                    <div style={{borderRadius:"100%", height:"50px", width:"50px", background:"red", color:"white"}}>
-                      <Link to={`/admin${this.props.location.pathname}`}>
-                        <div style={{borderRadius:"100%", height:"50px", width:"50px", display:"flex", justifyContent:"center", alignItems:"center"}}>
-                            admin
+                    <div
+                      style={{borderRadius: "100%", height: "50px", width: "50px", background: "red", color: "white"}}>
+                      <Link to={`/admin`}>
+                        <div style={{
+                          borderRadius: "100%",
+                          height: "50px",
+                          width: "50px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}>
+                          admin
                         </div>
                       </Link>
                     </div>
@@ -160,8 +183,21 @@ class Header extends Component {
             }
           </div>
         </header>
-      </>
+      </Fragment>
     );
   }
+
+  async populateAuthenticationState() {
+    const authenticated = await authService.isAuthenticated();
+    const user = await authService.getUser();
+    console.log(authService.userManager.getUser(), authService.getAccessToken(), )
+    this.setState({ready: true, user: user, authenticated});
+  }
+
+  async authenticationChanged() {
+    this.setState({ready: false, authenticated: false});
+    await this.populateAuthenticationState();
+  }
 }
+
 export default withRouter(Header)

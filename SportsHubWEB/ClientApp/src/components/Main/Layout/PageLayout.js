@@ -11,6 +11,8 @@ import TeamArticles from "../../../containers/Article/TeamArticles";
 import SportArticle from "../../../containers/Article/SportArticle";
 import {MainArticles} from "../MainArticles/MainArticles";
 import MainArticle from "../../../containers/Article/MainArticle";
+import {ApplicationPaths} from "../../api-authorization/ApiAuthorizationConstants";
+import ApiAuthorizationRoutes from "../../api-authorization/ApiAuthorizationRoutes";
 
 class PageLayout extends Component {
   state = {
@@ -60,9 +62,7 @@ class PageLayout extends Component {
                 <Route exact path={`/nav/:category/:subcategory/:team/:article`}>
                   <SportArticle setMainArticles={this.setMainArticles}/>
                 </Route>
-                <Route>
-                  <NotFound/>
-                </Route>
+                <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
               </Switch>
             </div>
             <div className="side">

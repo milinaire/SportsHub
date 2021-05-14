@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SportsHubBL.Common;
 using SportsHubBL.Interfaces;
 using SportsHubBL.Services;
 using SportsHubDAL.Data;
@@ -48,6 +49,11 @@ namespace SportsHubWEB
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped(typeof(INoIdRepository<>),typeof(SportsHubBL.Common.NoIdRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(SportsHubBL.Common.Repository<>));
+
+            services.AddScoped<VideoRepository, VideoRepository>();
+            services.AddScoped<ViewsRepository, ViewsRepository>();
+            services.AddScoped<ArticleRepository, ArticleRepository>();
+            services.AddScoped<CommentRepository, CommentRepository>();
 
             services.AddScoped<IArticleModelService, ArticleModelService>();
             services.AddScoped<IArticleService, ArticleService>();

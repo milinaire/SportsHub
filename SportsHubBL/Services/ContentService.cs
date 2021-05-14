@@ -9,23 +9,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SportsHubDAL.Data;
+using SportsHubBL.Common;
 
 namespace SportsHubBL.Services
 {
     public class ContentService : IContentService
     {
         private readonly IRepository<Content> _contentRepository;
-        private readonly IRepository<Video> _videoRepository;
-        private readonly IRepository<Comment> _commentRepository;
-        private readonly IRepository<Views> _viewsRepository;
-        private readonly IRepository<Article> _articleRepository;
+        private readonly VideoRepository _videoRepository;
+        private readonly CommentRepository _commentRepository;
+        private readonly ViewsRepository _viewsRepository;
+        private readonly ArticleRepository _articleRepository;
 
         public ContentService(
             IRepository<Content> contentRepository,
-            IRepository<Video> videoRepository,
-            IRepository<Comment> commentRepository,
-            IRepository<Views> viewsRepository,
-            IRepository<Article> articleRepository
+            VideoRepository videoRepository,
+            CommentRepository commentRepository,
+            ViewsRepository viewsRepository,
+            ArticleRepository articleRepository
             )
         {
             _contentRepository = contentRepository;
@@ -35,13 +37,12 @@ namespace SportsHubBL.Services
             _articleRepository = articleRepository;
         }
 
-        public void AddContentFromModel(ContentModel model, int itemId, ContentItemType itemType)
+        public Content AddContentFromModel(ContentModel model, int itemId, ContentItemType itemType)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
-
             var repository = GetRepository(itemType);
 
             var content = GetContentFromModel(model);
@@ -51,6 +52,8 @@ namespace SportsHubBL.Services
             item.Content = content;
 
             repository.Insert(item);
+
+            return content;
         }
 
         public void DeleteContent(int contentId)
@@ -79,7 +82,12 @@ namespace SportsHubBL.Services
             DeleteContent(item.Content.Id);
         }
 
-        public ContentModel GetContent(int itemId, ContentItemType itemType)
+        public IEnumerable<Content> GetAllContent()
+        {
+            return _contentRepository.Set().ToList();
+        }
+
+        public ContentModel GetContentModel(int itemId, ContentItemType itemType)
         {
             var repository = GetRepository(itemType);
 
@@ -97,18 +105,26 @@ namespace SportsHubBL.Services
                 throw new Exception($"no content for item {itemId}");
             }
 
+            var model = GetBaseContentModel(content);
+
+            model.ContentItemId = itemId;
+            model.Type = itemType;
+
+            return model;
+        }
+
+        public ContentModel GetBaseContentModel(Content content)
+        {
             return new ContentModel
             {
-                Id = item.Id,
-                ContentItemId = item.Id,
-                Type = itemType,
+                Id = content.Id,
                 IsPublished = content.IsPublished,
                 Datetime = content.Datetime,
                 ShowComments = content.ShowComments
             };
         }
 
-        public void UpdateContentFromModel(ContentModel model, int itemId, ContentItemType itemType)
+        public Content UpdateContentFromModel(ContentModel model, int itemId, ContentItemType itemType)
         {
             if (model == null)
             {
@@ -133,9 +149,15 @@ namespace SportsHubBL.Services
 
             var newContent = GetContentFromModel(model);
 
+            content.Datetime = newContent.Datetime;
+            content.IsPublished = newContent.IsPublished;
+            content.ShowComments = newContent.ShowComments;
+
             item.Content = content;
 
             repository.Update(item);
+
+            return content;
         }
 
         private Content GetContentFromModel(ContentModel model)
@@ -158,12 +180,17 @@ namespace SportsHubBL.Services
         {
             return itemType switch
             {
-                ContentItemType.VideoContent => (IRepository<IDBEntityWithContent>)_videoRepository,
-                ContentItemType.CommentContent => (IRepository<IDBEntityWithContent>)_commentRepository,
-                ContentItemType.ArticleContent => (IRepository<IDBEntityWithContent>)_articleRepository,
-                ContentItemType.ViewContent => (IRepository<IDBEntityWithContent>)_viewsRepository,
+                ContentItemType.VideoContent => _videoRepository,
+                ContentItemType.CommentContent => _commentRepository,
+                ContentItemType.ArticleContent => _articleRepository,
+                ContentItemType.ViewContent => _viewsRepository,
                 _ => throw new ArgumentException("invalid enum", nameof(itemType))
             };
+        }
+
+        public Content GetContentById(int contentId)
+        {
+            return _contentRepository.GetById(contentId);
         }
     }
 }

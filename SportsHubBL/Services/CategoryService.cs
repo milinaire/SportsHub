@@ -136,7 +136,7 @@ namespace SportsHubBL.Services
 
         public void DeleteCategoryById(int id)
         {
-            var category =_categoryRepository.Set().FirstOrDefault(a => a.Id == id);
+            var category = _categoryRepository.Set().FirstOrDefault(a => a.Id == id);
 
             if (category == null)
             {
@@ -148,12 +148,31 @@ namespace SportsHubBL.Services
 
         public void DeleteCategoryLocalizationById(int categoryId, int languageId)
         {
-            throw new NotImplementedException();
+            var categoryLocalization = _categoryLocalizationRepository.Set()
+                .FirstOrDefault(al => al.CategoryId == categoryId && al.LanguageId == languageId);
+
+            if (categoryLocalization == null)
+            {
+                throw new Exception($"localization for conference {categoryId} in language {languageId} not found");
+            }
+
+            _categoryLocalizationRepository.Delete(categoryLocalization);
         }
 
         public void UpdateCategoryFromModel(int categoryId, CategoryModel model)
         {
-            throw new NotImplementedException();
+            var originalCategory = _categoryRepository.Set().FirstOrDefault(a => a.Id == categoryId);
+
+            if (originalCategory == null)
+            {
+                throw new Exception($"can\'t find category {categoryId}");
+            }
+            var category = GetCategoryFromModel(model);
+
+            originalCategory.IsEditable = model.IsEditable != null ? category.IsEditable : originalCategory.IsEditable;
+            originalCategory.Show = model.Show != null ? category.Show : originalCategory.Show;
+
+            _categoryRepository.Update(originalCategory);
         }
 
         public void UpdateCategoryLocalizationFromModel(CategoryModel model)

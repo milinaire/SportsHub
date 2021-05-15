@@ -1,18 +1,9 @@
 import React from "react";
 import axios from 'axios'
 import ArticlesList from "../../../components/User/ArticlesList/ArticlesList";
+import {getBanners} from "../SideBar/getBunners";
 
-const getBanners = (url, language, setBanners) => {
-  axios.get(`/banner?${url}languageId=${language}`)
-    .then(response => {
-      setBanners(response.data)
-    })
-    .catch(err => {
-      if (err.response.status === 404) {
-        setBanners([]);
-      }
-    });
-}
+
 const getArticles = (url, language, setMainArticles, setArticlesList) => {
   axios.get(`/sportarticle?${url}&count=100&languageId=${language}`)
     .then(response => {

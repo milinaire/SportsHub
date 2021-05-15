@@ -19,10 +19,15 @@ const MainArticle = (props) => {
               {props.categories.length ? props.categories.find(c => c.id === props.article.categoryId).name : 'Loading...'}
             </div>
             <div className={style.mainArticleInfo}>
-              Published / {new Date(props.article.datePublished).toLocaleDateString()}
-              <div>{props.article.headline}</div>
-              <div>{props.article.caption}</div>
-              {props.link?<Link to={`${props.link}/${props.article.articleId}`}>More</Link>:'share'}
+              <div>
+                <div className={style.mainArticleInfoDate}>Published / {new Date(props.article.datePublished).toLocaleDateString()}</div>
+                <div className={style.mainArticleInfoHeadline}>{props.article.headline}</div>
+                <div className={style.mainArticleInfoCaption}>{props.article.caption}</div>
+              </div>
+              {props.link
+                ?<Link className={style.mainArticleInfoMore} to={`${props.link}/${props.article.articleId}`}>More</Link>
+                :<div className={style.mainArticleInfoShare}>Share</div>
+              }
             </div>
             <div className={style.mainArticleButtons}>
               {props.buttons}

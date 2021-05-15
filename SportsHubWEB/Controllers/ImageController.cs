@@ -42,6 +42,23 @@ namespace SportsHubWEB.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateTeamFromModel([FromForm(Name = "file")] IFormFile file, int id)
+        {
+            try
+            {
+                if (file == null)
+                {
+                    throw new Exception("File was null");
+                }
+                await _imageService.AddImage(file);
+                var res = _imageService.UpdateImageById(id, file.FileName);
+                return Content(JsonSerializer.Serialize(res), "application/json");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

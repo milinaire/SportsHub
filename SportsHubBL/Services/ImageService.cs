@@ -22,12 +22,16 @@ namespace SportsHubBL.Services
         private readonly CloudStorageAccount _cloudStorageAccount = CloudStorageAccount
             .Parse("DefaultEndpointsProtocol=https;AccountName=sporthubblob;AccountKey=wH931b1Kj5i+4k6zCupv8B4kO4s4D5+BYcl+6qbnekPvx9FITssC3cr6B89bvYadwHMUHiSm13DxQy3KVvJsmg==;EndpointSuffix=core.windows.net");
 
+        /*private readonly CloudStorageAccount _cloudStorageAccount = CloudStorageAccount
+            .Parse(Configuration["Images:ConnectionString"]);*/
         public ImageService(IRepository<Image> imageRepository)
         {
             _imageRepository = imageRepository;
         }
 
+
         
+
         public async Task AddImage(IFormFile imageFile)
         {
             var cloudBlobClient = _cloudStorageAccount.CreateCloudBlobClient();
@@ -58,6 +62,24 @@ namespace SportsHubBL.Services
         {
             throw new NotImplementedException();
         }
+        
+        public ImageModel UpdateImageById(int id, string uri)
+        {
+            if (uri == null)
+            {
+                throw new Exception("File was null");
+            }
+            var image = _imageRepository.Set().FirstOrDefault(a => a.Id == id);
+            if (image == null)
+            {
+                throw new Exception("Image with such id does not exist");
+            }
+            
+            image.Uri = "https://sporthubblob.blob.core.windows.net/imagecontainer/" + uri;
+            _imageRepository.Update(image);
+
+            return GetModel(image);
+        }
 
         public Image GetImage(string uri)
         {
@@ -87,14 +109,6 @@ namespace SportsHubBL.Services
         {
             return _imageRepository.GetById(id);
         }
-
-        public Image UpdateImageById(int id, string uri)
-        {
-            var image = _imageRepository.Set().FirstOrDefault(a => a.Id == id);
-            if (image == null)
-                throw new Exception("Image with such id does not exist");
-            image.Uri = uri ?? image.Uri;
-            return image;
-        }
+        
     }
 }

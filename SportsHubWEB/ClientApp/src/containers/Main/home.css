@@ -136,7 +136,7 @@
 .photo-of-the-day {
     width: 100%;
     height: auto;
-    z-index: -2;
+
     background-size: contain;
     margin-top: -80px;
 }

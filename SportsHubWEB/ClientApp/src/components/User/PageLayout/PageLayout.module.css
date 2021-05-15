@@ -9,6 +9,7 @@
     grid-template-areas:
   "main main"
   "content side";
+    background: white;
 }
 .mainArticleWrapper{
     grid-area: main;
@@ -16,6 +17,7 @@
 }
 .contentWrapper{
     grid-area: content;
+margin: 5px;
 
 }
 .sideBarWrapper{

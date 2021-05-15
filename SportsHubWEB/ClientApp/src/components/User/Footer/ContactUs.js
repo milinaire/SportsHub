@@ -12,7 +12,7 @@ export class ContactUs extends Component {
   render() {
     return (
       <Fragment>
-        <div className="main-part">
+        <div className="main-part-footer">
           <h1>{this.state.Headline}</h1>
           <p>{this.state.Address}</p>
           <p>{this.state.Tel}</p>

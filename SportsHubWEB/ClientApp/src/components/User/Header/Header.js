@@ -4,6 +4,7 @@ import {FormControl, NavDropdown} from "react-bootstrap";
 import style from './Header.module.css'
 import {FaTwitter, FaGoogle, FaFacebookF} from "react-icons/fa"
 import {AiOutlineSwap} from 'react-icons/ai'
+import Select from "react-select";
 
 const Header = (props) => {
   return (
@@ -64,14 +65,13 @@ const Header = (props) => {
             </div>
           </div>
           <div className={style.navbarLanguage}>
-            <NavDropdown title={props.language.currentLanguage.languageName} id="languageDropdown">
-              {
-                props.language.languages.map(language => (
-                  <NavDropdown.Item onClick={() => props.setCurrentLanguage(language.id)}
-                                    key={language.id}>{language.languageName}</NavDropdown.Item>
-                ))
-              }
-            </NavDropdown>
+            <Select
+              styles={{width:'100%'}}
+              single
+              options={props.language.languages.map(language => ({value: language.id, label: language.languageName}))}
+              onChange={(language) => props.setCurrentLanguage(language.value)}
+              value={{value: props.language.currentLanguage.id, label: props.language.currentLanguage.languageName}}
+            />
           </div>
         </div>
       </header>

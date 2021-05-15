@@ -97,23 +97,7 @@ export class UpFooterPart extends Component {
             </div>
           ) : null}
         </div>
-        {/*<div className={"footer-info"}>*/}
-        {/*  <div className="logo">*/}
-        {/*    <a href="/">*/}
-        {/*      <div className="footer-link">*/}
-        {/*        <div className="logo-text">*/}
-        {/*          <a href="/">*/}
-        {/*            <p>Sports Hub</p>*/}
-        {/*          </a>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    </a>*/}
-        {/*  </div>*/}
-        {/*  <div className="copirating">*/}
-        {/*    <p>Copirating c 2019 SportHub</p>*/}
-        {/*    <Link to="/privacy">Privacy</Link>/<a href="/terms">Terms</a>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+
       </footer>
     );
   }

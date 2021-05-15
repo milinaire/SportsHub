@@ -6,6 +6,11 @@
   justify-content: space-between;
   padding: 40px 200px 40px 20px;
   margin-left: 300px;
+height: 350px;
+
+}
+.footer-categiries a{
+  text-decoration: none;
 }
 .footer-categiry {
   width: 33%;
@@ -77,4 +82,8 @@
 }
 .footer-categiry p {
   color: #aaa;
+}
+.main-part-footer{
+  min-height: calc(100vh - 570px);
+  margin-left: 300px;
 }

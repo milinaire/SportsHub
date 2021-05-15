@@ -1,4 +1,0 @@
-export const POST_LANGUAGE = 'POST_LANGUAGE';
-export const PUT_LANGUAGE = 'PUT_LANGUAGE';
-export const DELETE_LANGUAGE = 'DELETE_LANGUAGE';
-export const SET_LANGUAGE = 'SET_LANGUAGE';

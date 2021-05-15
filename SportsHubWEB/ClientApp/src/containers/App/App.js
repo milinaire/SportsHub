@@ -30,6 +30,23 @@ class AppAPI extends React.Component {
         this.props.setTeams(response.data)
       })
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps.language.currentLanguage.id!==this.props.language.currentLanguage.id)
+    {
+      axios.get(`/category?languageId=${this.props.language.currentLanguage.id}`)
+        .then(response => {
+          this.props.setCategories(response.data)
+        })
+      axios.get(`/conference?languageId=${this.props.language.currentLanguage.id}`)
+        .then(response => {
+          this.props.setConferences(response.data)
+        })
+      axios.get(`/team?languageId=${this.props.language.currentLanguage.id}`)
+        .then(response => {
+          this.props.setTeams(response.data)
+        })
+    }
+  }
 
   render() {
     return (

@@ -4,6 +4,7 @@ import languageReducer from "./languages/languagesReducer";
 import mainArticleReducer from "./mainArticles/mainArticlesReducer";
 import articleListReducer from "./articlesList/articlesListReducer";
 import sideBarReducer from "./sideBar/sideBarReducer";
+import breakdownReducer from "./breakdown/breakdownReducer";
 
 let reducers = combineReducers(
   {
@@ -11,7 +12,8 @@ let reducers = combineReducers(
     languageReducer,
     mainArticleReducer,
     articleListReducer,
-    sideBarReducer
+    sideBarReducer,
+    breakdownReducer
   }
 )
 let store = createStore(reducers);

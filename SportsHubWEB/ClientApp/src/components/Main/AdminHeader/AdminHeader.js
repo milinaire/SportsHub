@@ -80,7 +80,7 @@ class AdminHeader extends Component {
           </div>
           <div className="admin-user">
             <div style={{borderRadius: "100%", height: "50px", width: "50px", background: "red", color: "white"}}>
-              <Link to={String(this.props.location.pathname).replace("/admin", "")}>
+              <Link to={'/'}>
                 <div style={{
                   borderRadius: "100%",
                   height: "50px",
@@ -98,7 +98,8 @@ class AdminHeader extends Component {
               </Link>
             </div>
 
-            <Image
+            <img
+              style={{width:'40px'}}
               className="profile-section avatar-img"
               src={this.state.User.image_url}
             />

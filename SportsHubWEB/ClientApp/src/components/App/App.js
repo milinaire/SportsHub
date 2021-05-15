@@ -1,8 +1,8 @@
 import React, {Fragment} from "react";
 import {Route} from "react-router";
 import {Switch} from "react-router-dom";
-import AdminLayout from "../Admin/AdminLayout/AdminLayout";
 import UserLayout from "../User/UserLayout/UserLayout";
+import {AdminLayout} from "../Main/Layout/AdminLayout";
 //import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 
 const App = (props) => {

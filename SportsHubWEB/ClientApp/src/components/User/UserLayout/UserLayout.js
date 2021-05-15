@@ -1,19 +1,10 @@
 import React, {Fragment} from "react";
 import styles from "./UserLayout.module.css";
-
 import {Route, Switch} from "react-router-dom";
 import ScrollToTop from "../../Main/Layout/ScrollToTop";
-import {AboutSportHub} from "../../Main/Footer/AboutSportHub";
-import {Terms} from "../../Main/Footer/Terms";
-import {Privacy} from "../../Main/Footer/Privacy";
-import {ContactUs} from "../../Main/Footer/ContactUs";
-import {CompanyInfo} from "../../Main/Footer/CompanyInfo";
-import {Contributors} from "../../Main/Footer/Contributors";
-
 import {UpFooterPart} from "../../Main/Footer/UpFooterPart";
 import {DownFooterPart} from "../../Main/Footer/DownFooterPart";
 import Header from "../Header/Header";
-import {setLanguages} from "../../../redux/languages/languageActionCreator";
 import PageLayout from "../PageLayout/PageLayout";
 
 
@@ -62,7 +53,7 @@ const UserLayout = (props) => {
             </ScrollToTop>
           </Route>
         </Switch>
-        {/*<UpFooterPart/>*/}
+        <UpFooterPart/>
       </div>
       <DownFooterPart/>
     </Fragment>

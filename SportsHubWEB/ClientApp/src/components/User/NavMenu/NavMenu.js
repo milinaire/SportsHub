@@ -26,12 +26,13 @@ const NavMenu = (props) => {
           if (team.conferenceId === props.navigation.hoveredConference) {
             return (
               <NavLink activeClassName={style.teamsItemActive}
-                to={`/nav/${props.navigation.hoveredCategory}/${props.navigation.hoveredConference}/${team.teamId}`}
-                key={team.teamId} className={style.teamsItem}>
+                       to={`/nav/${props.navigation.hoveredCategory}/${props.navigation.hoveredConference}/${team.teamId}`}
+                       key={team.teamId} className={style.teamsItem}>
                 {team.name}
               </NavLink>
             )
           }
+          return null
         })}
       </div>
       <div
@@ -65,6 +66,7 @@ const NavMenu = (props) => {
               </NavLink>
             )
           }
+          return null
         })}
       </div>
       <div

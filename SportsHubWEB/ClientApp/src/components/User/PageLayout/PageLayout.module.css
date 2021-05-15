@@ -16,9 +16,9 @@
 }
 .contentWrapper{
     grid-area: content;
-    background: #00b3ff;
+
 }
 .sideBarWrapper{
     grid-area: side;
-    background: #34ce57;
+
 }

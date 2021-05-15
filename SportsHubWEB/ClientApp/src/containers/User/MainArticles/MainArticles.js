@@ -1,20 +1,13 @@
-import React, {Fragment} from "react";
-import UserLayout from "../../../components/User/UserLayout/UserLayout";
+import React from "react";
 import {connect} from "react-redux";
-import {setCurrentLanguage, setLanguages} from "../../../redux/languages/languageActionCreator";
-import axios from 'axios'
 import MainArticles from "../../../components/User/MainArticles/MainArticles";
 import {setCurrentArticle} from "../../../redux/mainArticles/mainArticlesActionCreator";
 
 class MainArticlesAPI extends React.Component {
-  componentDidMount() {
-
-  }
-
   render() {
-    console.log(this.props.navigation.categories)
     return (
-      <MainArticles categories={this.props.navigation.categories} mainArticles={this.props.mainArticles} setCurrentArticle={this.props.setCurrentArticle}/>
+      <MainArticles categories={this.props.navigation.categories} mainArticles={this.props.mainArticles}
+                    setCurrentArticle={this.props.setCurrentArticle}/>
     )
   }
 }
@@ -26,6 +19,5 @@ let mapStateToProps = (state) => {
   }
 }
 const MainArticlesContainer = connect(mapStateToProps, {setCurrentArticle})(MainArticlesAPI)
-
 
 export default MainArticlesContainer;

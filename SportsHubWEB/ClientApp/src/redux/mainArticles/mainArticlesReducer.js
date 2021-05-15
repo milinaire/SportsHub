@@ -5,6 +5,7 @@ import {
 
 let initialState = {
   mainArticles: [],
+  link:'',
   currentArticle: null
 }
 const mainArticleReducer = (state = initialState, action) => {
@@ -15,6 +16,7 @@ const mainArticleReducer = (state = initialState, action) => {
       return {
         ...state,
         mainArticles: action.mainArticles,
+        link: action.link,
         currentArticle: action.mainArticles.length ? action.mainArticles[0].articleId : null
       };
     default:

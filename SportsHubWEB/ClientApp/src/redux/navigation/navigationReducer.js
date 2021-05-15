@@ -3,8 +3,6 @@ import {
   SET_CATEGORIES,
   SET_CONFERENCES,
   SET_TEAMS,
-  SET_IS_TEAMS_OPENED,
-  SET_IS_CONFERENCES_OPENED,
   SET_HOVERED_CATEGORY,
   SET_HOVERED_CONFERENCE
 } from './navigationActions'
@@ -13,8 +11,6 @@ let initialState = {
   categories: [],
   conferences: [],
   teams: [],
-  isConferencesOpened: false,
-  isTeamsOpened: false,
   hoveredCategory: null,
   hoveredConference: null
 }
@@ -28,10 +24,6 @@ const navigationReducer = (state = initialState, action) => {
       return {...state, conferences: action.conferences};
     case SET_TEAMS:
       return {...state, teams: action.teams};
-    case SET_IS_TEAMS_OPENED:
-      return {...state, isTeamsOpened: action.isTeamsOpened};
-    case SET_IS_CONFERENCES_OPENED:
-      return {...state, isConferencesOpened: action.isConferencesOpened};
     case SET_HOVERED_CATEGORY:
       return {...state, hoveredCategory: action.id};
     case SET_HOVERED_CONFERENCE:

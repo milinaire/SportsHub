@@ -1,25 +1,24 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import axios from 'axios'
 import Home from "../../../components/User/Home/Home";
 import {setMainArticles, setCurrentArticle} from "../../../redux/mainArticles/mainArticlesActionCreator";
-import mainArticleReducer from "../../../redux/mainArticles/mainArticlesReducer";
 
 class HomeAPI extends React.Component {
   componentDidMount() {
     axios.get(`/article/main/display?languageId=${this.props.language.currentLanguage.id}`)
       .then(response => {
-        this.props.setMainArticles(response.data)
+        this.props.setMainArticles(response.data,'/main-article')
       })
   }
+
   componentWillUnmount() {
     this.props.setMainArticles([])
   }
 
   render() {
-    console.log(this.props)
     return (
-      <Home />
+      <Home/>
     )
   }
 }
@@ -31,6 +30,5 @@ let mapStateToProps = (state) => {
   }
 }
 const HomeContainer = connect(mapStateToProps, {setMainArticles, setCurrentArticle})(HomeAPI)
-
 
 export default HomeContainer;

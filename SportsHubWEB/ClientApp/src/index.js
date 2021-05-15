@@ -4,6 +4,7 @@ import {BrowserRouter} from 'react-router-dom';
 import store from './redux/store';
 import {Provider} from "react-redux";
 import AppContainer from "./containers/App/App";
+import './style.css'
 //import registerServiceWorker from './registerServiceWorker';
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');

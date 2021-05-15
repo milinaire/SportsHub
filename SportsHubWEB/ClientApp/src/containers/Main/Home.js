@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import "./home.css"
+
 
 
 export class Home extends Component {

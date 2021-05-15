@@ -1,0 +1,131 @@
+.grayBox {
+    position: fixed;
+    z-index: -10;
+    background: rgba(0, 0, 0, 0.0);
+    width: 100%;
+    height: 100%;
+    transition: background 400ms;
+}
+
+.grayBoxActive {
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+
+.categories {
+    padding-top: 40px;
+    height: calc(100vh - 200px);
+    width: 250px;
+    position: fixed;
+    top: 100px;
+    background: white;
+    transition: all 400ms;
+    z-index: 10;
+
+}
+
+.categoriesItem {
+    font-weight: 500;
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    color: black;
+}
+.categoriesItem:hover{
+    text-decoration: none;
+    color: black;
+}
+.categoriesItemActive{
+    color: red!important;
+}
+
+.hoveredCategory {
+    border-right: 5px solid #d72130;
+}
+
+.conferences {
+    padding-top: 40px;
+    height: calc(100vh - 200px);
+    width: 250px;
+    transition: all 400ms;
+    position: fixed;
+    top: 100px;
+    background: white;
+    z-index: 10;
+}
+
+.conferencesItem {
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    color: black;
+}
+.conferencesItem:hover{
+    text-decoration: none;
+    color: black;
+
+}
+.conferencesItemActive{
+    color: red!important;
+}
+
+.hoveredConference {
+    background-color: #fdd;
+    color: red;
+}
+
+.teams {
+    padding-top: 40px;
+    height: calc(100vh - 200px);
+    width: 200px;
+    transition: all 400ms;
+    position: fixed;
+    top: 100px;
+    background: white;
+    z-index: 10;
+}
+
+.teamsItem {
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    color: black;
+}
+.teamsItem:hover{
+    text-decoration: none;
+    color: black;
+}
+.teamsItemActive{
+    color: red!important;
+}
+.teamsItem:hover{
+    background-color: #fdd;
+    color: red;
+}
+
+.coverFooter {
+    height: calc(100vh - 100px);
+}
+
+.defaultPosition {
+    margin-left: 0;
+}
+
+.firstPosition {
+    margin-left: 250px;
+}
+
+.secondPosition {
+    margin-left: 300px;
+}
+
+.thirdPosition {
+    margin-left: 500px;
+}

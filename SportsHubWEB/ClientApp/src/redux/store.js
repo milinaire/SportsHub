@@ -1,9 +1,13 @@
 import {combineReducers, createStore} from "redux";
-import navigationReducer from "./reducers/navigationReducer";
+import navigationReducer from "./navigation/navigationReducer";
+import languageReducer from "./languages/languagesReducer";
+import mainArticleReducer from "./mainArticles/mainArticlesReducer";
 
 let reducers = combineReducers(
   {
-    navigationReducer
+    navigationReducer,
+    languageReducer,
+    mainArticleReducer
   }
 )
 let store = createStore(reducers);

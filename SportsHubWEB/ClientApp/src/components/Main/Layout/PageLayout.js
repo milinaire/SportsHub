@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react";
 import "./Layout.css";
-import {NavMenu} from "../NavBar/NavMenu";
+import NavMenu from "../NavBar/NavMenu";
 import Sidebar from "../SideBar/Sidebar";
 import {Route, Switch, withRouter} from "react-router-dom";
 import {NotFound} from "./NotFound";
@@ -14,53 +14,35 @@ import MainArticle from "../../../containers/Article/MainArticle";
 import {ApplicationPaths} from "../../api-authorization/ApiAuthorizationConstants";
 import ApiAuthorizationRoutes from "../../api-authorization/ApiAuthorizationRoutes";
 
-class PageLayout extends Component {
-  state = {
-    MainArticles: [],
-    ShowCategory: false,
-    Link: undefined
+const PageLayout =(props)=> {
+
+  let setMainArticles = (articles, showCategory, link) =>{
+
   }
-
-  setMainArticles(articles, showCategory, link) {
-    this.setState({
-      MainArticles: articles,
-      ShowCategory: showCategory,
-      Link: link
-    })
-  }
-
-  constructor(props) {
-    super(props);
-    this.setMainArticles = this.setMainArticles.bind(this);
-  }
-
-  render() {
-
     return (
       <Fragment>
-        <NavMenu/>
+        <NavMenu navigation={props.navigation}/>
         <div className="main-part">
-          {this.state.MainArticles && <MainArticles articles={this.state.MainArticles} showCategory={this.state.ShowCategory} link={this.state.Link}/>}
           <div className="main-content">
             <div className="content">
               <Switch>
                 <Route exact path={`/`}>
-                  <Home setMainArticles={this.setMainArticles}/>
+                  <Home setMainArticles={setMainArticles}/>
                 </Route>
                 <Route exact path={`/main-article/:article`}>
-                  <MainArticle setMainArticles={this.setMainArticles}/>
+                  <MainArticle setMainArticles={setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category`}>
-                  <CategoryArticles setMainArticles={this.setMainArticles}/>
+                  <CategoryArticles setMainArticles={setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category/:subcategory`}>
-                  <SubCategoryArticles setMainArticles={this.setMainArticles}/>
+                  <SubCategoryArticles setMainArticles={setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category/:subcategory/:team`}>
-                  <TeamArticles setMainArticles={this.setMainArticles}/>
+                  <TeamArticles setMainArticles={setMainArticles}/>
                 </Route>
                 <Route exact path={`/nav/:category/:subcategory/:team/:article`}>
-                  <SportArticle setMainArticles={this.setMainArticles}/>
+                  <SportArticle setMainArticles={setMainArticles}/>
                 </Route>
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
               </Switch>
@@ -72,7 +54,7 @@ class PageLayout extends Component {
         </div>
       </Fragment>
     );
-  }
+
 }
 
 export default withRouter(PageLayout)

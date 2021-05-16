@@ -25,15 +25,31 @@ namespace SportsHubWEB.Controllers
         {
             _imageService = imageService;
         }
+        [HttpGet("{id:int}")]
+        public IActionResult GetImageById(int id)
+        {
+            try
+            {
+                var result = _imageService.GetImageById(id);
+                if(result == null)
+                    return NotFound("Image is not found");
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        
         [HttpPost]
-        public async Task<IActionResult> UploadSingleFile([FromForm(Name = "file")] IFormFile file)
+        public async Task<IActionResult> UploadAnImage([FromForm(Name = "file")] IFormFile file)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             try
             {
-                await _imageService.AddImage(file);
-                var imageName = file.FileName;
+                var imageName = (DateTime.Now + file.FileName).Replace(' ','-');
+                await _imageService.AddImage(file, imageName);
                 var res = _imageService.AddImageToDb(imageName);
                 return Content(JsonSerializer.Serialize(res), "application/json");
             }
@@ -43,7 +59,7 @@ namespace SportsHubWEB.Controllers
             }
         }
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateTeamFromModel([FromForm(Name = "file")] IFormFile file, int id)
+        public async Task<IActionResult> UpdateImageById([FromForm(Name = "file")] IFormFile file, int id)
         {
             try
             {
@@ -51,9 +67,23 @@ namespace SportsHubWEB.Controllers
                 {
                     throw new Exception("File was null");
                 }
-                await _imageService.AddImage(file);
+                var imageName = (DateTime.Now + file.FileName).Replace(' ','-');
+                await _imageService.AddImage(file,imageName);
                 var res = _imageService.UpdateImageById(id, file.FileName);
                 return Content(JsonSerializer.Serialize(res), "application/json");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteTeamById([FromRoute]int id)
+        {
+            try
+            {
+                _imageService.DeleteImageById(id);
+                return Ok($"Image {id} successfully deleted");
             }
             catch (Exception e)
             {

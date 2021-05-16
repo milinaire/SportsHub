@@ -13,7 +13,7 @@ namespace SportsHubBL.Interfaces
     {
         public Image GetImageById(int id);
 
-        public void DeleteTeamById(int id);
+        public void DeleteImageById(int id);
         
         public Image GetImage(string uri);
         
@@ -21,7 +21,7 @@ namespace SportsHubBL.Interfaces
         
         public ImageModel UpdateImageById(int id, string uri);
         
-        public Task AddImage(IFormFile imageFile);
+        public Task AddImage(IFormFile imageFile, string imageName);
         
         public ImageModel AddImageToDb(string uri);
         

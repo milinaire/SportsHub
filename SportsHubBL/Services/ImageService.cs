@@ -17,10 +17,11 @@ namespace SportsHubBL.Services
 {
     public class ImageService : IImageService
     {
-        
+        private const string ContainerName = "imagecontainer";  
         private readonly IRepository<Image> _imageRepository;
         private readonly CloudStorageAccount _cloudStorageAccount = CloudStorageAccount
             .Parse("DefaultEndpointsProtocol=https;AccountName=sporthubblob;AccountKey=wH931b1Kj5i+4k6zCupv8B4kO4s4D5+BYcl+6qbnekPvx9FITssC3cr6B89bvYadwHMUHiSm13DxQy3KVvJsmg==;EndpointSuffix=core.windows.net");
+        private CloudBlobContainer _blobContainer;
 
         /*private readonly CloudStorageAccount _cloudStorageAccount = CloudStorageAccount
             .Parse(Configuration["Images:ConnectionString"]);*/
@@ -32,23 +33,34 @@ namespace SportsHubBL.Services
 
         
 
-        public async Task AddImage(IFormFile imageFile)
+        public async Task AddImage(IFormFile imageFile, string imageName)
         {
             var cloudBlobClient = _cloudStorageAccount.CreateCloudBlobClient();
-            var cloudBlobContainer = cloudBlobClient.GetContainerReference("imagecontainer");
+            var cloudBlobContainer = cloudBlobClient.GetContainerReference(ContainerName);
             if (await cloudBlobContainer.CreateIfNotExistsAsync())
             {
                 await cloudBlobContainer.SetPermissionsAsync(new BlobContainerPermissions
                     {PublicAccess = BlobContainerPublicAccessType.Off});
             }
 
-            var cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(imageFile.FileName);
+            var cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(imageName);
             cloudBlockBlob.Properties.ContentType = imageFile.ContentType;
 
             await cloudBlockBlob.UploadFromStreamAsync(imageFile.OpenReadStream());
             
         }
 
+
+        private void DeleteBlob(string fileName)   
+        {   
+            var blobClient = _cloudStorageAccount.CreateCloudBlobClient();  
+            var cloudBlobContainer = blobClient.GetContainerReference(ContainerName);
+            var fileName1 = fileName.Split(new [] {"container/"}, StringSplitOptions.None)[1];
+            var blockBlob = cloudBlobContainer.GetBlockBlobReference(fileName1);  
+            //delete blob from container    
+            blockBlob.Delete();  
+        } 
+        
         public ImageModel AddImageToDb(string uri)
         {
             var image = GetImage("https://sporthubblob.blob.core.windows.net/imagecontainer/" + uri);
@@ -58,9 +70,15 @@ namespace SportsHubBL.Services
             return GetModel(image);
         }
 
-        public void DeleteTeamById(int id)
+        public void DeleteImageById(int id)
         {
-            throw new NotImplementedException();
+            var image = GetImageById(id);
+            if (image == null)
+            {
+                throw new Exception($"Image with id {id} is not found");
+            }
+            DeleteBlob(image.Uri);
+            _imageRepository.Delete(image);
         }
         
         public ImageModel UpdateImageById(int id, string uri)

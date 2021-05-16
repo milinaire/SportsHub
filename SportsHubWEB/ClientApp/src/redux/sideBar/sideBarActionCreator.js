@@ -1,22 +1,40 @@
 import {
   SET_BANNERS,
   ADD_NEW_BANNER,
-  UPDATE_NEW_BANNER, GET_BANNERS, ADD_NEW_BANNER_IMG
+  UPDATE_NEW_BANNER,
+  GET_BANNERS,
+  ADD_NEW_BANNER_IMG,
+  SELECT_BANNER,
+  UPDATE_BANNER_LOCALIZATION,
+  ADD_BANNER_LOCALIZATION,
+  UPDATE_BANNER_LOCALIZATION_HEADLINE,
+  SET_BANNERS_STATUS,
+  CLOSE_NEW_BANNER,
+  SET_NEW_BANNER_CATEGORY,
+  DELETE_BANNER_LOCALIZATION
 } from "./sideBarActions";
 import axios from "axios";
 
 export const setBanners = (banners) => ({type: SET_BANNERS, banners})
+export const closeNewBanner = () => ({type: CLOSE_NEW_BANNER})
+export const setNewBannerCategory = (category) => ({type: SET_NEW_BANNER_CATEGORY, category})
+export const setBannersStatus = (status) => ({type: SET_BANNERS_STATUS, status})
+export const updateBannerLocalization = (index, languageId) => ({type: UPDATE_BANNER_LOCALIZATION, index, languageId})
+export const deleteBannerLocalization = (index) => ({type: DELETE_BANNER_LOCALIZATION, index})
+export const updateBannerLocalizationHeadline = (index, headline) => ({type: UPDATE_BANNER_LOCALIZATION_HEADLINE, index, headline})
+export const addBannerLocalization = (id) => ({type: ADD_BANNER_LOCALIZATION, id })
 export const addNewBanner = (category, language) => ({type: ADD_NEW_BANNER, category, language})
+export const selectBanner = (banner) => ({type: SELECT_BANNER, banner})
 export const addNewBannerImg = (file, imagePreviewUrl) => ({type: ADD_NEW_BANNER_IMG, file, imagePreviewUrl})
 export const updateNewBanner = (newBanner) => ({type: SET_BANNERS, newBanner})
-export const getBanners = () => {
+export const getBanners = (language) => {
   return async dispatch => {
-    const response = await fetch('/banner')
+    const response = await fetch(`/banner?languageId=${language}`)
     const json = await response.json()
     dispatch({type: GET_BANNERS, payload: json})
   }
 }
-export const publishBanner = (banner) => {
+export const publishBanner = (banner, language) => {
   return async dispatch => {
     const publishBanner = {
       method: 'PUT',
@@ -28,12 +46,43 @@ export const publishBanner = (banner) => {
     };
 
     await fetch(`/banner/${banner.bannerId}`, publishBanner)
-    const response = await fetch('/banner')
+    const response = await fetch(`/banner?languageId=${language}`)
     const json = await response.json()
     dispatch({type: GET_BANNERS, payload: json})
   }
 }
-export const closeBanner = (banner) => {
+export const deleteBanner = (banner, language) => {
+  return async dispatch => {
+    const deleteBanner = {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'},
+    };
+
+    await fetch(`/banner/${banner.bannerId}`, deleteBanner)
+    const response = await fetch(`/banner?languageId=${language}`)
+    const json = await response.json()
+    dispatch({type: GET_BANNERS, payload: json})
+  }
+}
+export const changeBannerCategory = (banner, language, category) => {
+  return async dispatch => {
+    const publishBanner = {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        isPublished: banner.isPublished,
+        isClosed: banner.isClosed,
+        categoryId:category
+      })
+    };
+
+    await fetch(`/banner/${banner.bannerId}`, publishBanner)
+    const response = await fetch(`/banner?languageId=${language}`)
+    const json = await response.json()
+    dispatch({type: GET_BANNERS, payload: json})
+  }
+}
+export const closeBanner = (banner, language) => {
   return async dispatch => {
     const closeBanner = {
       method: 'PUT',
@@ -44,12 +93,12 @@ export const closeBanner = (banner) => {
     };
 
     await fetch(`/banner/${banner.bannerId}`, closeBanner)
-    const response = await fetch('/banner')
+    const response = await fetch(`/banner?languageId=${language}`)
     const json = await response.json()
     dispatch({type: GET_BANNERS, payload: json})
   }
 }
-export const postNewBanner = (newBanner) => {
+export const postNewBanner = (newBanner, language) => {
   return async dispatch => {
     let formData = new FormData();
     formData.append("file", newBanner.file);
@@ -94,7 +143,7 @@ export const postNewBanner = (newBanner) => {
       };
       await fetch(`/banner/localization`, localizationBanner)
 
-      const response = await fetch('/banner')
+      const response = await fetch(`/banner?languageId=${language}`)
       const json = await response.json()
       dispatch({type: GET_BANNERS, payload: json})
     }

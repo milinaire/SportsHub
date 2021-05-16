@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import "./Tab.css";
+
 class Tab extends Component {
   static propTypes = {
     activeTab: PropTypes.string.isRequired,
@@ -9,7 +10,7 @@ class Tab extends Component {
   };
 
   onClick = () => {
-    const { label, onClick } = this.props;
+    const {label, onClick} = this.props;
     onClick(label);
   }
 
@@ -27,13 +28,21 @@ class Tab extends Component {
     if (activeTab === label) {
       className += ' tab-list-active';
     }
-
+console.log(this.props.label)
     return (
       <li
         className={className}
         onClick={onClick}
       >
-        {label}
+        Local-{label + 1}
+        <button onClick={() => {
+          if (label) {
+
+            this.props.deleteBannerLocalization(label)
+            this.props.onClickTabItem(0)
+          }
+        }
+        } style={{border: "none",}}>{label?<>&#10006;</>:''}</button>
       </li>
     );
   }

@@ -63,14 +63,10 @@ export class AdminLayout extends Component {
   render() {
     return (
       <Fragment>
-        {this.state.showBox ? (
-          <div className="cancel-box">
-            {this.state.Box}
-          </div>
-        ) : null}
+
         <AdminHeader currentSection={this.state.currentSection} buttonElem={this.state.buttonElem}/>
         <AdminNavMenu/>
-        <div className={`wrap-shit ${this.state.showBox && "no-scroll"}`}>
+        <div style={{width:'calc(100vw - 120px)', height:'calc(100vh - 200px)', marginLeft:'100px', boxSizing: 'border-box'}}>
           <Switch>
             <Route path="/admin/surveys">
               <Surveys setCurrentSection={this.setCurrentSection}/>

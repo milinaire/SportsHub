@@ -1,17 +1,30 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-  addNewBanner, addNewBannerImg,
+  addBannerLocalization,
+  addNewBanner,
+  addNewBannerImg,
+  changeBannerCategory,
   closeBanner,
+  closeNewBanner,
+  deleteBanner, deleteBannerLocalization,
   getBanners,
   postNewBanner,
-  publishBanner
+  publishBanner,
+  selectBanner,
+  setBannersStatus,
+  setNewBannerCategory,
+  updateBannerLocalization,
+  updateBannerLocalizationHeadline
 } from "../../../redux/sideBar/sideBarActionCreator";
 import Banners from "../../../components/Admin/Banners/Banners";
+import {setCurrentAdminButtonPanel, setSelectedAdminCategory} from "../../../redux/navigation/navigationActionCreator";
 
 class BannerAPI extends React.Component {
   componentDidMount() {
-    this.props.getBanners()
+    this.props.getBanners(this.props.language.currentLanguage.id)
+    this.props.setSelectedAdminCategory('Banners')
+
   }
 
   componentWillUnmount() {
@@ -19,8 +32,9 @@ class BannerAPI extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
-      <Banners addNewBannerImg={this.props.addNewBannerImg} postNewBanner={this.props.postNewBanner} language={this.props.language} addNewBanner={this.props.addNewBanner} categories={this.props.categories} closeBanner={this.props.closeBanner} publishBanner={this.props.publishBanner} banners={this.props.banners}/>
+      <Banners  {...this.props}/>
     )
   }
 }
@@ -30,9 +44,25 @@ let mapStateToProps = (state) => {
     banners: state.sideBarReducer,
     categories: state.navigationReducer.categories,
     language: state.languageReducer,
+
   }
 }
 const BannersContainer = connect(mapStateToProps,
-  {getBanners, publishBanner, closeBanner, addNewBanner, postNewBanner, addNewBannerImg})(BannerAPI)
+  {
+    getBanners,
+    publishBanner,
+    closeBanner,
+    addNewBanner,
+    postNewBanner,
+    addNewBannerImg,
+    updateBannerLocalizationHeadline,
+    selectBanner,
+    setSelectedAdminCategory,
+    setCurrentAdminButtonPanel,
+    deleteBannerLocalization,
+    updateBannerLocalization,
+    addBannerLocalization, changeBannerCategory,
+    setBannersStatus, deleteBanner, closeNewBanner, setNewBannerCategory,
+  })(BannerAPI)
 
 export default BannersContainer;

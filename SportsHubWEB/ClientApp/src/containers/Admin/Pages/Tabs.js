@@ -8,6 +8,7 @@ class Tabs extends Component {
   }
 
   constructor(props) {
+
     super(props);
 
     this.state = {
@@ -16,6 +17,7 @@ class Tabs extends Component {
   }
 
   onClickTabItem = (tab) => {
+
     this.setState({ activeTab: tab });
   }
   render() {
@@ -38,7 +40,9 @@ class Tabs extends Component {
 
               return (
                 <Tab
+                  deleteBannerLocalization={this.props.deleteBannerLocalization}
                   activeTab={activeTab}
+                  onClickTabItem={onClickTabItem}
                   key={label}
                   label={label}
                   onClick={onClickTabItem}
@@ -47,9 +51,23 @@ class Tabs extends Component {
 
 
           })}
-          <button onClick={()=>this.props.addTab(children.length + 1)}>+</button>
+
+          { this.props.language.languages.length > this.props.banners.newBanner.localization.length?<button onClick={()=>{
+            if(this.props.language.languages.length > this.props.banners.newBanner.localization.length)
+            {return this.props.addBannerLocalization(this.props.language.languages.find(l=> {
+                for (let i = 0; i < this.props.banners.newBanner.localization.length; i++) {
+                  if(this.props.banners.newBanner.localization[i].languageId === l.id)
+                  {return false}
+                }
+                return true
+              }
+
+            ).id)
+            }
+          }}>
+            +</button>:null}
         </ol>
-        <div className="tab-content">
+        <div className="tab-content" style={{height:'200px'}}>
           {children.map((child) => {
             if (child){
               if (child.props.label !== activeTab) return undefined;

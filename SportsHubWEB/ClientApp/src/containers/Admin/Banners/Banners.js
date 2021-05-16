@@ -1,6 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {addNewBanner, closeBanner, getBanners, publishBanner} from "../../../redux/sideBar/sideBarActionCreator";
+import {
+  addNewBanner, addNewBannerImg,
+  closeBanner,
+  getBanners,
+  postNewBanner,
+  publishBanner
+} from "../../../redux/sideBar/sideBarActionCreator";
 import Banners from "../../../components/Admin/Banners/Banners";
 
 class BannerAPI extends React.Component {
@@ -14,7 +20,7 @@ class BannerAPI extends React.Component {
 
   render() {
     return (
-      <Banners language={this.props.language} addNewBanner={this.props.addNewBanner} categories={this.props.categories} closeBanner={this.props.closeBanner} publishBanner={this.props.publishBanner} banners={this.props.banners}/>
+      <Banners addNewBannerImg={this.props.addNewBannerImg} postNewBanner={this.props.postNewBanner} language={this.props.language} addNewBanner={this.props.addNewBanner} categories={this.props.categories} closeBanner={this.props.closeBanner} publishBanner={this.props.publishBanner} banners={this.props.banners}/>
     )
   }
 }
@@ -27,6 +33,6 @@ let mapStateToProps = (state) => {
   }
 }
 const BannersContainer = connect(mapStateToProps,
-  {getBanners, publishBanner, closeBanner, addNewBanner})(BannerAPI)
+  {getBanners, publishBanner, closeBanner, addNewBanner, postNewBanner, addNewBannerImg})(BannerAPI)
 
 export default BannersContainer;

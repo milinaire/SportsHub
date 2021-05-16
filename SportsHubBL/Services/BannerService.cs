@@ -134,9 +134,9 @@ namespace SportsHubBL.Services
             var bannerLocalization = banner.BannerLocalizations.FirstOrDefault(at => at.Language == language);
             if (bannerLocalization == null)
             {
-                throw new ArgumentException("can\'t find localization for banner");
+                bannerLocalization = banner.BannerLocalizations.FirstOrDefault(at => at.Language.Id == 1);
+                if (bannerLocalization == null) { throw new Exception($"Localization in language {language.Id} for banner {banner.Id} not found"); }
             }
-            
 
             return new BannerModel
             {

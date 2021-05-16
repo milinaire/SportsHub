@@ -4,12 +4,12 @@ import style from './MainArticle.module.css'
 
 const MainArticles = (props) => {
   let buttons = []
-  buttons.push(
-    <button key={0} onClick={() => {
-    }} className={style.arrowBtn}>
-      {"<"}
-    </button>
-  )
+  // buttons.push(
+  //   <button key={0} onClick={() => {
+  //   }} className={style.arrowBtn}>
+  //     {"<"}
+  //   </button>
+  // )
   for (let i = 0; i < props.mainArticles.mainArticles.length; i++) {
     if (props.mainArticles.mainArticles[i].articleId === props.mainArticles.currentArticle) {
       buttons.push(
@@ -26,12 +26,12 @@ const MainArticles = (props) => {
         </button>)
     }
   }
-  buttons.push(
-    <button key={1} className={style.arrowBtn} onClick={() => {
-    }}>
-      {">"}
-    </button>
-  )
+  // buttons.push(
+  //   <button key={1} className={style.arrowBtn} onClick={() => {
+  //   }}>
+  //     {">"}
+  //   </button>
+  // )
 
   return (
 

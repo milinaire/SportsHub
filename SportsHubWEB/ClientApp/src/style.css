@@ -8,7 +8,7 @@ html {
 
 body {
     margin: 0;
-
+background: white;
 }
 select, button{
     padding: 5px;
@@ -21,5 +21,6 @@ option{
 }
 
 *{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Tahoma, sans-serif;
+    font-weight: bolder;
 }

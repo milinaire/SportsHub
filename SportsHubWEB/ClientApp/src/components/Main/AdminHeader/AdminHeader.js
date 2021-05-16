@@ -4,6 +4,7 @@ import {Link, NavLink, withRouter} from "react-router-dom";
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import {Row} from "reactstrap";
 import {Image, NavDropdown} from "react-bootstrap";
+import Header from "../../User/Header/Header";
 
 const Arrow = ({text, className}) => <div className={className}>{text}</div>;
 const ArrowLeft = Arrow({text: '<', className: 'arrow-prev'});
@@ -69,55 +70,7 @@ class AdminHeader extends Component {
     return (
 
       <div className="head-wrap">
-        <div className="head-default">
-          <div className="admin-logo">
-            <Link to="/" className="brand-card">
-              {" "}
-              <Row className="brand-text">
-                <p>Sports Hub</p>
-              </Row>
-            </Link>
-          </div>
-          <div className="admin-user">
-            <div style={{borderRadius: "100%", height: "50px", width: "50px", background: "red", color: "white"}}>
-              <Link to={'/'}>
-                <div style={{
-                  borderRadius: "100%",
-                  height: "50px",
-                  width: "50px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                       className="bi bi-arrow-left-right" viewBox="0 0 16 16">
-                    <path fillRule="evenodd"
-                          d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
-                  </svg>
-                </div>
-              </Link>
-            </div>
-
-            <img
-              style={{width:'40px'}}
-              className="profile-section avatar-img"
-              src={this.state.User.image_url}
-            />
-            <NavDropdown
-              className="dropdown-header "
-              title={
-                this.state.User.name + " " + this.state.User.surname
-              }
-              id="dropdownMenu1"
-            >
-              {this.state.User.user_actions.map((action, key) => (
-                <NavDropdown.Item key={key} href={"#" + action + key}>
-                  {action}
-                </NavDropdown.Item>
-              ))}
-            </NavDropdown>
-          </div>
-        </div>
+        <Header language={this.props.language} setCurrentLanguage={this.props.setCurrentLanguage}/>
         <div className="head-title">
           <div className="hdt">
             <b style={{fontSize: "200%"}}>{this.props.currentSection}</b>
@@ -127,11 +80,11 @@ class AdminHeader extends Component {
           </div>
         </div>
         <div style={{display:'flex', justifyContent:'space-around', alignItems:'center', height:'60px'}}>
-          <span></span>
+          <span/>
           {this.state.Categories.map(c=>(
-            <span key={c.id}> <Link to={`/admin/${c.id}`}>{c.name}</Link></span>
+            <span key={c.id}> <Link style={{textDecoration:"none", color:'#666'}} to={`/admin/${c.id}`}>{c.name}</Link></span>
           ))}
-          <span></span>
+          <span/>
         </div>
         {/*<ScrollMenu*/}
         {/*  className="head-list"*/}

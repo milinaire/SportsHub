@@ -2,58 +2,77 @@ import React, {Fragment} from "react";
 import AdminHeader from "../../Main/AdminHeader/AdminHeader";
 import {AdminNavMenu} from "../../../containers/Admin/AdminNavbar";
 import {Route, Switch} from "react-router-dom";
-import {Surveys} from "../../../containers/Admin/Pages/Surveys";
+
 import BannersContainer from "../../../containers/Admin/Banners/Banners";
-import {Languages} from "../../../containers/Admin/Pages/Languages";
-import {Footer} from "../../../containers/Admin/Pages/Footer";
-import {SocialNetworks} from "../../../containers/Admin/Pages/SocialNetworks";
-import {Users} from "../../../containers/Admin/Pages/Users";
-import {InformationArchitecture} from "../../../containers/Admin/Pages/InformationArchitecture";
-import {Teams} from "../../../containers/Admin/Pages/Teams";
-import {NewsPartners} from "../../../containers/Admin/Pages/NewsPartners";
-import {Advertising} from "../../../containers/Admin/Pages/Advertising";
+
 import ArticleConstructor from "../ArticleConstructor/ArticleConstructor";
 import Category from "../Category/Category";
 import ArticleRedactor from "../ArticleRedactor/ArticleRedactor";
+import Surveys from "../Surveys/Surveys";
+import Languages from "../Languages/Languages";
+import Footer from "../Footer/Footer";
+import SocialNetworks from "../SocialNetworks/SocialNetworks";
+import Users from "../Users/Users";
+import InformationArchitecture from "../InformationArchitecture/InformationArchitecture";
+import Teams from "../Teams/Teams";
+import NewsPartners from "../NewsPartners/NewsPartners";
+import Advertising from "../Advertising/Advertising";
+import SurveysContainer from "../../../containers/Admin/Surveys/Surveys";
+import LanguagesContainer from "../../../containers/Admin/Languages/Languages";
+import AdvertisingContainer from "../../../containers/Admin/Advertising/Advertising";
+import NewsPartnersContainer from "../../../containers/Admin/NewsPartners/NewsPartners";
+import TeamsContainer from "../../../containers/Admin/Teams/Teams";
+import InformationArchitectureContainer
+  from "../../../containers/Admin/InformationArchitecture/InformationArchitecture";
+import UsersContainer from "../../../containers/Admin/Users/Users";
+import FooterContainer from "../../../containers/Admin/Footer/Footer";
+import SocialNetworksContainer from "../../../containers/Admin/SocialNetworks/SocialNetworks";
 
 
 let AdminLayout = (props) => {
   return (
     <Fragment>
-      <AdminHeader currentSection={props.navigation.selectedAdminCategory} buttonElem={props.navigation.currentButtonPanel}/>
+      <AdminHeader language={props.language} setCurrentLanguage={props.setCurrentLanguage}
+                   currentSection={props.navigation.selectedAdminCategory}
+                   buttonElem={props.navigation.currentButtonPanel}/>
       <AdminNavMenu/>
-      <div style={{width:'calc(100vw - 120px)', minHeight:'calc(100vh - 200px)', marginLeft:'100px', boxSizing: 'border-box'}}>
+      <div style={{
+        width: 'calc(100vw - 120px)',
+        minHeight: 'calc(100vh - 200px)',
+        marginLeft: '100px',
+        boxSizing: 'border-box'
+      }}>
         <Switch>
-          {/*<Route path="/admin/surveys">*/}
-          {/*  <Surveys />*/}
-          {/*</Route>*/}
-          <Route path="/admin/banners">
-            <BannersContainer />
+          <Route path="/admin/surveys">
+            <SurveysContainer/>
           </Route>
-          {/*<Route path="/admin/languages">*/}
-          {/*  <Languages setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
-          {/*<Route path="/admin/footer">*/}
-          {/*  <Footer setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
-          {/*<Route path="/admin/social_networks">*/}
-          {/*  <SocialNetworks setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
-          {/*<Route path="/admin/users">*/}
-          {/*  <Users setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
-          {/*<Route path="/admin/information_architecture">*/}
-          {/*  <InformationArchitecture setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
-          {/*<Route path="/admin/teams">*/}
-          {/*  <Teams setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
-          {/*<Route path="/admin/news_partners">*/}
-          {/*  <NewsPartners setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
-          {/*<Route path="/admin/advertising">*/}
-          {/*  <Advertising setCurrentSection={this.setCurrentSection}/>*/}
-          {/*</Route>*/}
+          <Route path="/admin/banners">
+            <BannersContainer/>
+          </Route>
+          <Route path="/admin/languages">
+            <LanguagesContainer />
+          </Route>
+          <Route path="/admin/footer">
+            <FooterContainer/>
+          </Route>
+          <Route path="/admin/social_networks">
+            <SocialNetworksContainer />
+          </Route>
+          <Route path="/admin/users">
+            <UsersContainer/>
+          </Route>
+          <Route path="/admin/information_architecture">
+            <InformationArchitectureContainer />
+          </Route>
+          <Route path="/admin/teams">
+            <TeamsContainer/>
+          </Route>
+          <Route path="/admin/news_partners">
+            <NewsPartnersContainer />
+          </Route>
+          <Route path="/admin/advertising">
+            <AdvertisingContainer/>
+          </Route>
           <Route path="/admin/:category/new_article">
             <ArticleConstructor
               {...props}

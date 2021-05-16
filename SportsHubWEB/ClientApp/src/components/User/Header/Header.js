@@ -5,6 +5,7 @@ import style from './Header.module.css'
 import {FaTwitter, FaGoogle, FaFacebookF} from "react-icons/fa"
 import {AiOutlineSwap} from 'react-icons/ai'
 import Select from "react-select";
+import {withRouter} from "react-router";
 
 const Header = (props) => {
   return (
@@ -36,7 +37,8 @@ const Header = (props) => {
         </div>
         <div className={style.navbar}>
           <div className={style.navbarAdmin}>
-            <Link className={style.navbarAdminButton} to={`/admin`}>
+            {console.log(props.match)}
+            <Link className={style.navbarAdminButton} to={props.match.url==='/'?`/admin`:'/'}>
               <AiOutlineSwap/>
             </Link>
           </div>
@@ -78,4 +80,4 @@ const Header = (props) => {
     </Fragment>
   )
 }
-export default Header;
+export default withRouter(Header);

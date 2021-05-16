@@ -41,7 +41,7 @@
 }
 
 .admin-nav-menu-item {
-    height: calc((100vh - 300px) * 0.1);
+    height: calc((100vh - 400px) * 0.1);
     width: 100%;
     background: #fff;
     display: flex;

@@ -13,7 +13,7 @@ const App = (props) => {
         <Route path="/admin">
 
           <div style={{width: '100%', minHeight: '100vh',}}>
-            <AdminLayoutContainer/>
+            <AdminLayoutContainer />
           </div>
         </Route>
         <Route path="/">

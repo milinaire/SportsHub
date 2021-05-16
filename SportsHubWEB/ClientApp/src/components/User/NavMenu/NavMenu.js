@@ -86,7 +86,7 @@ const NavMenu = (props) => {
             className={`${style.categoriesItem} ${props.navigation.hoveredCategory ===
             category.id ? style.hoveredCategory : ''}`}
             key={category.id}>
-            {category.name}
+            <h4>{category.name}</h4>
           </NavLink>
         ))}
       </div>

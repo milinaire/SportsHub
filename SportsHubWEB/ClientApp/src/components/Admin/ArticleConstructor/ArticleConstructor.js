@@ -1,7 +1,7 @@
-import React, {Component, Fragment, useState} from "react";
+import React, {Component, Fragment,} from "react";
 
 import Select from 'react-select';
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {Alert} from "react-bootstrap";
 
 
@@ -9,8 +9,8 @@ class ArticleConstructor extends Component {
   state = {
 
     showAlert: false,
-    AlertVariant:'',
-    AlertHeader:'',
+    AlertVariant: '',
+    AlertHeader: '',
     AlertText: '',
     Conferences: [],
     Teams: [],
@@ -29,7 +29,8 @@ class ArticleConstructor extends Component {
     this.props.setCurrentAdminButtonPanel(
       <Fragment>
         <button className="cancel-btn" onClick={this.props.showBox}><b>Cancel</b></button>
-        <button form='new-article-form' className="save-btn" type="submit"><>Save</></button>
+        <button form='new-article-form' className="save-btn" type="submit"><>Save</>
+        </button>
       </Fragment>
     )
     // this.props.setBox(
@@ -119,7 +120,7 @@ class ArticleConstructor extends Component {
       SelectedConference: selectedOption,
       Teams: options,
       SelectedTeam: {},
-      showAlert:false
+      showAlert: false
     });
   };
   teamChange = selectedOption => {
@@ -140,7 +141,7 @@ class ArticleConstructor extends Component {
       SelectedTeam: selectedOption,
       SelectedConference: option,
       Teams: options,
-      showAlert:false
+      showAlert: false
     })
   };
 
@@ -151,7 +152,7 @@ class ArticleConstructor extends Component {
     clearTimeout(this.timeout)
     this.setState({
       [name]: value,
-      showAlert:false
+      showAlert: false
     });
   }
 
@@ -160,33 +161,63 @@ class ArticleConstructor extends Component {
     event.preventDefault();
     if (!this.state.SelectedConference.value) {
       console.log("alert")
-      this.setState({showAlert: true, AlertHeader: "You got an error!", AlertText: "Make sure you correctly choose conference!", AlertVariant: "danger"})
+      this.setState({
+        showAlert: true,
+        AlertHeader: "You got an error!",
+        AlertText: "Make sure you correctly choose conference!",
+        AlertVariant: "danger"
+      })
 
       return;
     }
     if (!this.state.SelectedTeam.value) {
       console.log("alert")
-      this.setState({showAlert: true, AlertHeader: "You got an error!", AlertText: "Make sure you correctly choose team!", AlertVariant: "danger"})
+      this.setState({
+        showAlert: true,
+        AlertHeader: "You got an error!",
+        AlertText: "Make sure you correctly choose team!",
+        AlertVariant: "danger"
+      })
       return;
     }
     if (!this.state.Alt) {
       console.log("alert")
-      this.setState({showAlert: true, AlertHeader: "You got an error!", AlertText: "Make sure you correctly print alt!", AlertVariant: "danger"})
+      this.setState({
+        showAlert: true,
+        AlertHeader: "You got an error!",
+        AlertText: "Make sure you correctly print alt!",
+        AlertVariant: "danger"
+      })
       return;
     }
     if (!this.state.HeadLine) {
       console.log("alert")
-      this.setState({showAlert: true, AlertHeader: "You got an error!", AlertText: "Make sure you correctly print headline!", AlertVariant: "danger"})
+      this.setState({
+        showAlert: true,
+        AlertHeader: "You got an error!",
+        AlertText: "Make sure you correctly print headline!",
+        AlertVariant: "danger"
+      })
       return;
     }
     if (!this.state.Caption) {
       console.log("alert")
-      this.setState({showAlert: true, AlertHeader: "You got an error!", AlertText: "Make sure you correctly print caption!", AlertVariant: "danger"})
+      this.setState({
+        showAlert: true,
+        AlertHeader: "You got an error!",
+        AlertText: "Make sure you correctly print caption!",
+        AlertVariant: "danger"
+      })
       return;
     }
     if (!this.state.Content) {
       console.log("alert")
-      this.setState({showAlert: true, AlertHeader: "You got an error!", AlertText: "Make sure you correctly print content!", AlertVariant: "danger"})
+      this.setState({
+        showAlert: true,
+        AlertHeader: "You got an error!",
+        AlertText: "Make sure you correctly print content!",
+        AlertVariant: "danger"
+      })
       return;
     }
     console.log("return not")
@@ -222,17 +253,17 @@ class ArticleConstructor extends Component {
           .then(response => response.json())
           .then(data => console.log(data),
             data.ArticleId && this.setState({
-            showAlert: true,
-            AlertHeader: "Success!",
-            AlertText: "New article successfully added!",
-            AlertVariant: "success",
-            SelectedTeam:{},
-            SelectedConference:{},
-            Alt: '',
-            HeadLine: '',
-            Caption: '',
-            Content: '',
-          }));
+              showAlert: true,
+              AlertHeader: "Success!",
+              AlertText: "New article successfully added!",
+              AlertVariant: "success",
+              SelectedTeam: {},
+              SelectedConference: {},
+              Alt: '',
+              HeadLine: '',
+              Caption: '',
+              Content: '',
+            }));
       });
 
   }
@@ -279,12 +310,15 @@ class ArticleConstructor extends Component {
 
       <Fragment>
         {this.state.showAlert ? (
-            clearTimeout(this.timeout),
-          this.timeout = setTimeout(() => {
-            this.setState({showAlert: false})
-          }, 10000),
+          clearTimeout(this.timeout),
+            this.timeout = setTimeout(() => {
+              this.setState({showAlert: false})
+            }, 10000),
             <div style={{position: "fixed", bottom: 0, right: 0}}>
-              <Alert variant={this.state.AlertVariant} onClose={() =>{clearTimeout(this.timeout); this.setState({showAlert: false})}} dismissible>
+              <Alert variant={this.state.AlertVariant} onClose={() => {
+                clearTimeout(this.timeout);
+                this.setState({showAlert: false})
+              }} dismissible>
                 <Alert.Heading>{this.state.AlertHeader}</Alert.Heading>
                 <p>
                   {this.state.AlertText}
@@ -312,7 +346,7 @@ class ArticleConstructor extends Component {
             {/*    }*/}
             {/*  </form>*/}
             {/*</div>*/}
-            <form id='new-article-form'  onSubmit={this.handleSubmit} className="textForm">
+            <form id='new-article-form' onSubmit={this.handleSubmit} className="textForm">
               <div className="small-select">
                 <p className="txt-const">CONFERENCE</p>
                 <Select

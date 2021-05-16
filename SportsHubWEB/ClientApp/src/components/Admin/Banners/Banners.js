@@ -1,5 +1,4 @@
 import React from "react";
-import {addNewBanner, selectBanner} from "../../../redux/sideBar/sideBarActionCreator";
 import style from "./Banner.module.css"
 import Tabs from "../../../containers/Admin/Pages/Tabs";
 
@@ -29,7 +28,7 @@ const OpenedBanner = (props) => {
           onChange={e => props.changeBannerCategory(props.banner, props.language.currentLanguage.id, e.target.value)}
           value={props.banner.categoryId}>
           {props.categories.map(c => (
-            <option value={c.id}>{c.name}</option>
+            <option key={c.id} value={c.id}>{c.name}</option>
           ))}
         </select>
       </div>
@@ -67,7 +66,7 @@ let Banners = (props) => {
   )
   let _handleImageChange = (e) => {
     e.preventDefault();
-    console.log('handle work')
+
     let reader = new FileReader();
     if (!e.target.files) {
       return
@@ -107,7 +106,7 @@ let Banners = (props) => {
         </div>
         {props.banners.isOpened ? <div>{props.banners.newBanner ? <div onClick={() => props.selectBanner(props.banners.newBanner)} className={style.eachBanner}>
             <div className={style.bannerName}>
-              {props.banners.newBanner.localization.map((l, idx)=><span>{l.headline}{props.banners.newBanner.localization.length-1>idx?' / ':''}  </span>)}
+              {props.banners.newBanner.localization.map((l, idx)=><span key={l.languageId}>{l.headline}{props.banners.newBanner.localization.length-1>idx?' / ':''}  </span>)}
             </div>
             <div className={style.bannerStatus}>
               CREATING...
@@ -118,7 +117,7 @@ let Banners = (props) => {
                 onChange={e => props.setNewBannerCategory(e.target.value)}
                 value={props.banners.newBanner.categoryId}>
                 {props.categories.map(c => (
-                  <option value={c.id}>{c.name}</option>
+                  <option key={c.id} value={c.id}>{c.name}</option>
                 ))}
               </select>
               {/* TODO <button onClick={()=>props.closeNewBanner()}>delete</button>*/}
@@ -168,13 +167,13 @@ let Banners = (props) => {
             <div>
               <Tabs {...props} addTab={props.addBannerLocalization}>
                 {props.banners.newBanner.localization.map((localization, index) => (
-                  <div label={index}>
+                  <div key={localization.languageId} label={index}>
                     <div className={style.bannerLocal}>
                       <select value={!index?1:props.banners.newBanner.localization[index].languageId} disabled={!index}
                               onChange={(e) => props.updateBannerLocalization(index, Number(e.target.value))
                               }>
                         {props.language.languages.map(language => (
-                          <option style={{display:props.banners.newBanner.localization.find(l=>l.languageId===language.id)?'none':''}} value={language.id}>{language.languageName}</option>
+                          <option key={language.id} style={{display:props.banners.newBanner.localization.find(l=>l.languageId===language.id)?'none':''}} value={language.id}>{language.languageName}</option>
                         ))}
                       </select>
                       <input type="text" value={localization.headline} onChange={(e) => {

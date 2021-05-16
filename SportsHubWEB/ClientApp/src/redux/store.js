@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import navigationReducer from "./navigation/navigationReducer";
 import languageReducer from "./languages/languagesReducer";
 import mainArticleReducer from "./mainArticles/mainArticlesReducer";

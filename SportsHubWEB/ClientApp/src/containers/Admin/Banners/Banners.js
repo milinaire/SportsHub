@@ -32,7 +32,6 @@ class BannerAPI extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <Banners  {...this.props}/>
     )
@@ -61,8 +60,12 @@ const BannersContainer = connect(mapStateToProps,
     setCurrentAdminButtonPanel,
     deleteBannerLocalization,
     updateBannerLocalization,
-    addBannerLocalization, changeBannerCategory,
-    setBannersStatus, deleteBanner, closeNewBanner, setNewBannerCategory,
+    addBannerLocalization,
+    changeBannerCategory,
+    setBannersStatus,
+    deleteBanner,
+    closeNewBanner,
+    setNewBannerCategory,
   })(BannerAPI)
 
 export default BannersContainer;

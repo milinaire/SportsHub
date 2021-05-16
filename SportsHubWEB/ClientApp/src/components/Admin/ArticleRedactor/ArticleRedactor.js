@@ -1,7 +1,7 @@
-import React, {Component, Fragment, useState} from "react";
+import React, {Component, Fragment, } from "react";
 
 import Select from 'react-select';
-import {Link, withRouter} from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import {Alert} from "react-bootstrap";
 
 class ArticleRedactor extends Component {

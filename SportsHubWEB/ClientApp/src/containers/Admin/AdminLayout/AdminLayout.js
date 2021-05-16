@@ -7,13 +7,13 @@ import {
   postNewBanner,
   publishBanner, selectBanner
 } from "../../../redux/sideBar/sideBarActionCreator";
-import Banners from "../../../components/Admin/Banners/Banners";
 import {setCurrentAdminButtonPanel, setSelectedAdminCategory} from "../../../redux/navigation/navigationActionCreator";
 import AdminLayout from "../../../components/Admin/AdminLayout/AdminLayout";
 
 class AdminLayoutAPI extends React.Component {
   componentDidMount() {
-
+    this.props.setSelectedAdminCategory('');
+    this.props.setCurrentAdminButtonPanel(null);
   }
 
   componentWillUnmount() {

@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from "react";
+import React, { Fragment} from "react";
 import Switch from "react-switch";
 import {FaTrash} from "react-icons/fa";
 import "./Languages.css"
@@ -21,16 +21,16 @@ const Languages = (props) => {
                 <Switch className="custom-switch"
                         onChange={() => {
                         }}
-                        checked={1}
+                        checked={true}
                         height={20} width={40}
                         handleDiameter={15}
                         boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
                         uncheckedIcon={false}
                         checkedIcon={false}
-                        offColor='grey'
-                        onColor='grey'
-                        offHandleColor='#F0F0F0'
-                        onHandleColor='#FF0000'/>
+                        offColor='#999'
+                        onColor='#999'
+                        offHandleColor='#f0f0f0'
+                        onHandleColor='#f00'/>
               </label>
 
               <FaTrash/>
@@ -45,16 +45,16 @@ const Languages = (props) => {
                 <Switch className="custom-switch"
                         onChange={() => {
                         }}
-                        checked={1}
+                        checked={true}
                         height={20} width={40}
                         handleDiameter={15}
                         boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
                         uncheckedIcon={false}
                         checkedIcon={false}
-                        offColor='grey'
-                        onColor='grey'
-                        offHandleColor='#F0F0F0'
-                        onHandleColor='#FF0000'/>
+                        offColor='#999'
+                        onColor='#999'
+                        offHandleColor='#f0f0f0'
+                        onHandleColor='#f00'/>
               </label>
               <FaTrash/>
             </div>
@@ -68,16 +68,16 @@ const Languages = (props) => {
                 <Switch className="custom-switch"
                         onChange={() => {
                         }}
-                        checked={1}
+                        checked={true}
                         height={20} width={40}
                         handleDiameter={15}
                         boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
                         uncheckedIcon={false}
                         checkedIcon={false}
-                        offColor='grey'
-                        onColor='grey'
-                        offHandleColor='#F0F0F0'
-                        onHandleColor='#FF0000'/>
+                        offColor='#999'
+                        onColor='#999'
+                        offHandleColor='#f0f0f0'
+                        onHandleColor='#f00'/>
               </label>
               <FaTrash/>
             </div>
@@ -91,16 +91,16 @@ const Languages = (props) => {
                 <Switch className="custom-switch"
                         onChange={() => {
                         }}
-                        checked={1}
+                        checked={true}
                         height={20} width={40}
                         handleDiameter={15}
                         boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
                         uncheckedIcon={false}
                         checkedIcon={false}
-                        offColor='grey'
-                        onColor='grey'
-                        offHandleColor='#F0F0F0'
-                        onHandleColor='#FF0000'/>
+                        offColor='#999'
+                        onColor='#999'
+                        offHandleColor='#f0f0f0'
+                        onHandleColor='#f00'/>
               </label>
               <FaTrash/>
             </div>

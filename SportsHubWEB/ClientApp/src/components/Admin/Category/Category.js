@@ -123,7 +123,7 @@ class Category extends Component {
                 options.push({value: c.conferenceId, label: c.name})
               }
             })
-            console.log(result)
+
             this.setState({
               Conferences: [{value: 0, label: "All Conferences"}].concat(options),
               SelectedConference: {value: 0, label: "All Conferences"},
@@ -172,7 +172,7 @@ class Category extends Component {
       Teams: [{value: 0, label: "All Teams"}].concat(options),
       SelectedTeam: {value: 0, label: "All Teams"}
     });
-    console.log(`Option selected:`, selectedOption);
+
   };
   publishedOptionChange = selectedOption => {
     this.setState({SelectedPublishedOption: selectedOption});
@@ -186,7 +186,7 @@ class Category extends Component {
       }
     })
 
-    console.log(option)
+
     if (option.value) {
       this.state.AllTeams.map(t => {
         if (t.conferenceId === option.value) {
@@ -201,7 +201,7 @@ class Category extends Component {
     } else {
       this.setState({SelectedTeam: selectedOption});
     }
-    console.log(`Option selected:`, selectedOption);
+
   };
 
   render() {

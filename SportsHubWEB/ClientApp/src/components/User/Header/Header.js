@@ -37,7 +37,6 @@ const Header = (props) => {
         </div>
         <div className={style.navbar}>
           <div className={style.navbarAdmin}>
-            {console.log(props.match)}
             <Link className={style.navbarAdminButton} to={props.match.url==='/'?`/admin`:'/'}>
               <AiOutlineSwap/>
             </Link>

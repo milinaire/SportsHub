@@ -2,21 +2,10 @@ import React, {Fragment} from "react";
 import AdminHeader from "../../Main/AdminHeader/AdminHeader";
 import {AdminNavMenu} from "../../../containers/Admin/AdminNavbar";
 import {Route, Switch} from "react-router-dom";
-
 import BannersContainer from "../../../containers/Admin/Banners/Banners";
-
 import ArticleConstructor from "../ArticleConstructor/ArticleConstructor";
 import Category from "../Category/Category";
 import ArticleRedactor from "../ArticleRedactor/ArticleRedactor";
-import Surveys from "../Surveys/Surveys";
-import Languages from "../Languages/Languages";
-import Footer from "../Footer/Footer";
-import SocialNetworks from "../SocialNetworks/SocialNetworks";
-import Users from "../Users/Users";
-import InformationArchitecture from "../InformationArchitecture/InformationArchitecture";
-import Teams from "../Teams/Teams";
-import NewsPartners from "../NewsPartners/NewsPartners";
-import Advertising from "../Advertising/Advertising";
 import SurveysContainer from "../../../containers/Admin/Surveys/Surveys";
 import LanguagesContainer from "../../../containers/Admin/Languages/Languages";
 import AdvertisingContainer from "../../../containers/Admin/Advertising/Advertising";

@@ -4,8 +4,7 @@ import "./Tab.css";
 
 class Tab extends Component {
   static propTypes = {
-    activeTab: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+
     onClick: PropTypes.func.isRequired,
   };
 
@@ -28,7 +27,7 @@ class Tab extends Component {
     if (activeTab === label) {
       className += ' tab-list-active';
     }
-console.log(this.props.label)
+
     return (
       <li
         className={className}

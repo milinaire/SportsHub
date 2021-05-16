@@ -1,5 +1,4 @@
 import React from "react";
-import axios from 'axios'
 import ArticlesList from "../../../components/User/ArticlesList/ArticlesList";
 import {getBanners} from "../SideBar/getBunners";
 import {getArticles} from "./getArticles";

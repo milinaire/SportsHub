@@ -21,7 +21,7 @@ namespace SportsHubWEB.Controllers
             _bannerService = bannerService;
         }
         [HttpPost]
-        public ActionResult AddBanner([FromBody] BannerModel model)
+        public ActionResult<BannerModel> AddBanner([FromBody] BannerModel model)
         {
 
             if (model == null)
@@ -30,14 +30,14 @@ namespace SportsHubWEB.Controllers
             }
             try
             {
-                _bannerService.AddBannerFromModel(model);
-                _bannerService.AddNewBannerLocalizationFromModel(model);
+                var res = _bannerService.AddBannerFromModel(model);
+                return _bannerService.GetBaseBannerModel(res);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            return StatusCode(201);
+            
         }
 
 

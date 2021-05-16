@@ -10,7 +10,7 @@ namespace SportsHubBL.Interfaces
 {
     public interface IBannerService
     {
-        public void AddBannerFromModel(BannerModel model);
+        public Banner AddBannerFromModel(BannerModel model);
         public void DeleteBannerById(int BannerId);
         public void UpdateBannerById(int id, BannerModel model);
         public void AddNewBannerLocalizationFromModel(BannerModel model);
@@ -20,6 +20,7 @@ namespace SportsHubBL.Interfaces
         public BannerModel GenerateBannerModel(Banner banner, int languageId);
         public BannerModel GetBannerModel(Banner banner, Language language);
         public IEnumerable<Banner> GetBanners(int? categoryId, int? bannerId, bool? IsClosed);
+        public BannerModel GetBaseBannerModel(Banner banner);
 
     }
 }

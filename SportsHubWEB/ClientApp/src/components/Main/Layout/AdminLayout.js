@@ -17,6 +17,7 @@ import {NewsPartners} from "../../../containers/Admin/Pages/NewsPartners";
 import {Advertising} from "../../../containers/Admin/Pages/Advertising";
 import Category from "../../../containers/Admin/Pages/Category/Category";
 import ArticleRedactor from "../../../containers/Admin/Pages/Category/ArticleRedactor";
+import BannersContainer from "../../../containers/Admin/Banners/Banners";
 
 export class AdminLayout extends Component {
   state = {
@@ -75,7 +76,7 @@ export class AdminLayout extends Component {
               <Surveys setCurrentSection={this.setCurrentSection}/>
             </Route>
             <Route path="/admin/banners">
-              <Banners setCurrentSection={this.setCurrentSection}/>
+              <BannersContainer />
             </Route>
             <Route path="/admin/languages">
               <Languages setCurrentSection={this.setCurrentSection}/>

@@ -4,7 +4,7 @@ import {setMainArticles, setCurrentArticle} from "../../../redux/mainArticles/ma
 import {withRouter} from "react-router-dom";
 import ArticlesListAPI from "../ArticlesListAPI/ArticlesListAPI";
 import {setArticlesList} from "../../../redux/articlesList/articlesListActionCreator";
-import {setBanners} from "../../../redux/sideBar/sideBarActionCreator";
+import {getBanners, setBanners} from "../../../redux/sideBar/sideBarActionCreator";
 
 
 const CategoryArticles = (props) => {
@@ -13,6 +13,8 @@ const CategoryArticles = (props) => {
                      setMainArticles={props.setMainArticles} language={props.language}
                      category={props.match.params.category}
                      setBanners={props.setBanners}
+                     getBanners={props.getBanners}
+
                      link={props.match.params.category}
                      url={`categoryId=${props.match.params.category}`}/>
   )
@@ -29,7 +31,8 @@ const CategoryArticlesContainer = connect(mapStateToProps, {
   setMainArticles,
   setCurrentArticle,
   setArticlesList,
-  setBanners
+  setBanners,
+  getBanners
 
 })(withRouter(CategoryArticles))
 

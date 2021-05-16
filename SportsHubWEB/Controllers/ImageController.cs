@@ -25,6 +25,25 @@ namespace SportsHubWEB.Controllers
         {
             _imageService = imageService;
         }
+        [HttpGet("{id:int}")]
+        public IActionResult GetImageById(int id)
+        {
+            try
+            {
+                var result = _imageService.GetImageById(id);
+                if(result==null)
+                    return NotFound("Img is not found");
+                return Ok(result);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest("Teams are not found");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> UploadSingleFile([FromForm(Name = "file")] IFormFile file)
         {

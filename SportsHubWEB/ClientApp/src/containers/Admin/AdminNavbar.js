@@ -8,6 +8,9 @@ import { FaUserFriends } from "react-icons/fa";
 import { CgMenuBoxed } from "react-icons/cg";
 import { RiDashboardLine } from "react-icons/ri";
 import { RiTeamLine } from "react-icons/ri";
+import { BiBriefcase } from "react-icons/bi";
+import { RiAdvertisementLine } from "react-icons/ri";
+
 import  "./AdminNavbar.css";
 
 export class AdminNavMenu extends Component {
@@ -57,12 +60,12 @@ export class AdminNavMenu extends Component {
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/news_partners">
             <div className="admin-nav-menu-item">
-              <b>News Partners</b>
+              <BiBriefcase  className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/advertising">
             <div className="admin-nav-menu-item">
-              <b>Advertising</b>
+              <RiAdvertisementLine className="navIcon"/>
             </div>
           </NavLink>
         </div>

@@ -45,7 +45,7 @@ class ArticleConstructor extends Component {
       });
     }
 
-    reader.readAsDataURL(file)
+    file?reader.readAsDataURL(file):this.setState({file:'', imagePreviewUrl:''})
   }
 
   componentDidMount() {

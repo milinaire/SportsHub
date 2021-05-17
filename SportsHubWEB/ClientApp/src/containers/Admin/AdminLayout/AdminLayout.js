@@ -9,15 +9,17 @@ import {
 } from "../../../redux/sideBar/sideBarActionCreator";
 import {setCurrentAdminButtonPanel, setSelectedAdminCategory} from "../../../redux/navigation/navigationActionCreator";
 import AdminLayout from "../../../components/Admin/AdminLayout/AdminLayout";
+import {setCurrentLanguage} from "../../../redux/languages/languageActionCreator";
 
 class AdminLayoutAPI extends React.Component {
   componentDidMount() {
-    this.props.setSelectedAdminCategory('');
-    this.props.setCurrentAdminButtonPanel(null);
+    // this.props.setSelectedAdminCategory('');
+    // this.props.setCurrentAdminButtonPanel(null);
   }
 
   componentWillUnmount() {
-
+    this.props.setSelectedAdminCategory('');
+    this.props.setCurrentAdminButtonPanel(null);
   }
 
   render() {
@@ -38,7 +40,7 @@ let mapStateToProps = (state) => {
 const AdminLayoutContainer = connect(mapStateToProps,
   {
     getBanners, publishBanner, closeBanner, addNewBanner, postNewBanner, addNewBannerImg,
-    selectBanner, setSelectedAdminCategory, setCurrentAdminButtonPanel
+    selectBanner, setSelectedAdminCategory, setCurrentAdminButtonPanel, setCurrentLanguage
   })(AdminLayoutAPI)
 
 export default AdminLayoutContainer;

@@ -12,7 +12,7 @@ const ArrowRight = Arrow({text: '>', className: 'arrow-next'});
 
 class AdminHeader extends Component {
   componentDidMount() {
-    fetch("/category?languageId=1")
+    fetch(`/category?languageId=${this.props.language.currentLanguage.id}`)
       .then(res => res.json())
       .then(
         (result) => {

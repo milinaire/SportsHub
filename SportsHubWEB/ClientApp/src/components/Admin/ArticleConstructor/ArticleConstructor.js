@@ -3,6 +3,9 @@ import React, {Component, Fragment,} from "react";
 import Select from 'react-select';
 import {withRouter} from "react-router-dom";
 import {Alert} from "react-bootstrap";
+import Tabs from "./Tabs";
+import axios from "axios";
+import {GET_BANNERS} from "../../../redux/sideBar/sideBarActions";
 
 
 class ArticleConstructor extends Component {
@@ -19,10 +22,30 @@ class ArticleConstructor extends Component {
     SelectedTeam: {},
     SelectedConference: {},
     SelectedLocation: {},
-    Alt: '',
-    HeadLine: '',
-    Caption: '',
-    Content: '',
+    Localization: [{
+      languageId: {value: 1, label: 'en'},
+      Alt: '',
+      HeadLine: '',
+      Caption: '',
+      Content: '',
+    }], file: '', imagePreviewUrl: ''
+
+  }
+
+  _handleImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
   }
 
   componentDidMount() {
@@ -145,20 +168,52 @@ class ArticleConstructor extends Component {
     })
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event, index) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
     clearTimeout(this.timeout)
     this.setState({
-      [name]: value,
-      showAlert: false
+      Localization: this.state.Localization.map((l, i) => {
+        if (i === index) {
+          return ({...this.state.Localization[i], [name]: value,})
+        } else {
+          return ({...this.state.Localization[i]})
+        }
+      })
+
+    });
+  }
+  handleLanguageChange = (event, index, selectedOption) => {
+
+
+    clearTimeout(this.timeout)
+    console.log(selectedOption)
+    this.setState({
+      Localization: this.state.Localization.map((l, i) => {
+        if (i === index) {
+          return ({...this.state.Localization[i], languageId: selectedOption,})
+        } else {
+          return ({...this.state.Localization[i]})
+        }
+      })
+
     });
   }
 
-  handleSubmit = event => {
+  async handleSubmit(event) {
     console.log("constructor")
     event.preventDefault();
+    if (!this.state.file) {
+      console.log("alert")
+      this.setState({
+        showAlert: true,
+        AlertHeader: "You got an error!",
+        AlertText: `Make sure you upload photo.`,
+        AlertVariant: "danger"
+      })
+      return;
+    }
     if (!this.state.SelectedConference.value) {
       console.log("alert")
       this.setState({
@@ -167,7 +222,6 @@ class ArticleConstructor extends Component {
         AlertText: "Make sure you correctly choose conference!",
         AlertVariant: "danger"
       })
-
       return;
     }
     if (!this.state.SelectedTeam.value) {
@@ -180,97 +234,111 @@ class ArticleConstructor extends Component {
       })
       return;
     }
-    if (!this.state.Alt) {
-      console.log("alert")
-      this.setState({
-        showAlert: true,
-        AlertHeader: "You got an error!",
-        AlertText: "Make sure you correctly print alt!",
-        AlertVariant: "danger"
-      })
-      return;
+    for (let i = 0; i < this.state.Localization.length; i++) {
+      if (!this.state.Localization[i].Alt) {
+        console.log("alert")
+        this.setState({
+          showAlert: true,
+          AlertHeader: "You got an error!",
+          AlertText: `Make sure you correctly print alt! (Localization ${i + 1})`,
+          AlertVariant: "danger"
+        })
+        return;
+      }
+      if (!this.state.Localization[i].HeadLine) {
+        console.log("alert")
+        this.setState({
+          showAlert: true,
+          AlertHeader: "You got an error!",
+          AlertText: `Make sure you correctly print headline! (Localization ${i + 1})`,
+          AlertVariant: "danger"
+        })
+        return;
+      }
+      if (!this.state.Localization[i].Caption) {
+        console.log("alert")
+        this.setState({
+          showAlert: true,
+          AlertHeader: "You got an error!",
+          AlertText: `Make sure you correctly print caption! (Localization ${i + 1})`,
+          AlertVariant: "danger"
+        })
+        return;
+      }
+      if (!this.state.Localization[i].Content) {
+        console.log("alert")
+        this.setState({
+          showAlert: true,
+          AlertHeader: "You got an error!",
+          AlertText: `Make sure you correctly print content! (Localization ${i + 1})`,
+          AlertVariant: "danger"
+        })
+        return;
+      }
     }
-    if (!this.state.HeadLine) {
-      console.log("alert")
-      this.setState({
-        showAlert: true,
-        AlertHeader: "You got an error!",
-        AlertText: "Make sure you correctly print headline!",
-        AlertVariant: "danger"
-      })
-      return;
-    }
-    if (!this.state.Caption) {
-      console.log("alert")
-      this.setState({
-        showAlert: true,
-        AlertHeader: "You got an error!",
-        AlertText: "Make sure you correctly print caption!",
-        AlertVariant: "danger"
-      })
-      return;
-    }
-    if (!this.state.Content) {
-      console.log("alert")
-      this.setState({
-        showAlert: true,
-        AlertHeader: "You got an error!",
-        AlertText: "Make sure you correctly print content!",
-        AlertVariant: "danger"
-      })
-      return;
-    }
-    console.log("return not")
+    let formData = new FormData();
+    formData.append("file", this.state.file);
+    let imgResponse
+    const img = await axios.post("/image", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then(response => imgResponse = response.data);
+    console.log('img', imgResponse)
     const sportArticle = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         teamId: this.state.SelectedTeam.value,
-        imageId: 11,
+        imageId: imgResponse.ImageId,
         categoryId: this.props.match.params.category,
-        isPublished: true,
+        isPublished: false,
         datePublished: new Date().toISOString(),
         showComments: true
       })
     };
-
-    fetch('/sportarticle', sportArticle)
-      .then(response => response.json())
-      .then(data => {
-        const articleLocalization = {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            articleId: data.ArticleId,
-            languageId: 1,
-            headline: this.state.HeadLine,
-            text: this.state.Content,
-            caption: this.state.Caption,
-            alt: this.state.Alt
-          })
-        };
-        fetch(`/article/${data.ArticleId}/localization`, articleLocalization)
-          .then(response => response.json())
-          .then(data => console.log(data),
-            data.ArticleId && this.setState({
-              showAlert: true,
-              AlertHeader: "Success!",
-              AlertText: "New article successfully added!",
-              AlertVariant: "success",
-              SelectedTeam: {},
-              SelectedConference: {},
-              Alt: '',
-              HeadLine: '',
-              Caption: '',
-              Content: '',
-            }));
-      });
-
+    const response = await fetch('/sportarticle', sportArticle)
+    const json = await response.json()
+    const id = json.ArticleId
+    for (let i = 0; i < this.state.Localization.length; i++) {
+      const localization = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          articleId: id,
+          languageId: this.state.Localization[i].languageId.value,
+          headline: this.state.Localization[i].HeadLine,
+          text: this.state.Localization[i].Content,
+          caption: this.state.Localization[i].Caption,
+          alt: this.state.Localization[i].Alt
+        })
+      };
+      const response = await fetch(`/article/${id}/localization`, localization)
+      if(response.status === 200){
+        this.setState({
+          showAlert: true,
+          AlertHeader: "Success!",
+          AlertText: `New article was successfully added.`,
+          AlertVariant: "success",
+          SelectedTeam: {},
+          SelectedConference: {},
+          Localization: [{
+            languageId: {value: 1, label: 'en'},
+            Alt: '',
+            HeadLine: '',
+            Caption: '',
+            Content: '',
+          }], file: '', imagePreviewUrl: ''
+        })
+      }
+    }
   }
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {file: '', imagePreviewUrl: ''};
-  // }
+
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   //
   // _handleSubmit(e) {
   //   e.preventDefault();
@@ -296,15 +364,15 @@ class ArticleConstructor extends Component {
 
   render() {
 
-    // let {imagePreviewUrl} = this.state;
-    // let $imagePreview = null;
-    // if (imagePreviewUrl) {
-    //   $imagePreview = (<img alt="" className="imgPreview" src={imagePreviewUrl}/>);
-    // } else {
-    //   $imagePreview = (
-    //     <div className="previewText"><p><span style={{color: "red"}}>+Add picture </span>or drop it right here</p><p>You
-    //       can add next formats: png. jpg. jpeg. tif</p></div>);
-    // }
+    let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<img alt="" className="imgPreview" src={imagePreviewUrl}/>);
+    } else {
+      $imagePreview = (
+        <div className="previewText"><p><span style={{color: "red"}}>+Add picture </span>or drop it right here</p><p>You
+          can add next formats: png. jpg. jpeg. tif</p></div>);
+    }
 
     return (
 
@@ -314,7 +382,7 @@ class ArticleConstructor extends Component {
             this.timeout = setTimeout(() => {
               this.setState({showAlert: false})
             }, 10000),
-            <div style={{position: "fixed", bottom: 0, right: 0}}>
+            <div style={{position: "fixed", bottom: 0, right: 0, background: this.state.AlertVariant==='danger'?'red':"green"}}>
               <Alert variant={this.state.AlertVariant} onClose={() => {
                 clearTimeout(this.timeout);
                 this.setState({showAlert: false})
@@ -347,24 +415,38 @@ class ArticleConstructor extends Component {
             {/*  </form>*/}
             {/*</div>*/}
             <form id='new-article-form' onSubmit={this.handleSubmit} className="textForm">
-              <div className="small-select">
-                <p className="txt-const">CONFERENCE</p>
-                <Select
-                  single
-                  options={this.state.Conferences}
-                  onChange={this.conferenceChange}
-                  value={this.state.SelectedConference}
-                />
+              <p className="txt-const">PICTURE*</p>
+              <div className='picture'>
+                <label className="customPhotoupload">
+                  <div className="imgPreview">
+                    {$imagePreview}
+                  </div>
+                  <input className="fileInput"
+                         type="file"
+                         onChange={(e) => this._handleImageChange(e)}/>
+                </label>
               </div>
-              <div className="small-select">
-                <p className="txt-const">TEAM</p>
-                <Select
-                  single
-                  options={this.state.Teams}
-                  onChange={this.teamChange}
-                  value={this.state.SelectedTeam}
-                />
+              <div className={'formSelect'}>
+                <div className="small-select">
+                  <p className="txt-const">CONFERENCE</p>
+                  <Select
+                    single
+                    options={this.state.Conferences}
+                    onChange={this.conferenceChange}
+                    value={this.state.SelectedConference}
+                  />
+                </div>
+                <div className="small-select">
+                  <p className="txt-const">TEAM</p>
+                  <Select
+                    single
+                    options={this.state.Teams}
+                    onChange={this.teamChange}
+                    value={this.state.SelectedTeam}
+                  />
+                </div>
               </div>
+
 
               {/*<div className="small-select">*/}
               {/*  <p className="txt-const">LOCATION</p>*/}
@@ -374,44 +456,73 @@ class ArticleConstructor extends Component {
               {/*    //onChange={(values) => this.onChange(values)}*/}
               {/*  />*/}
               {/*</div>*/}
+              <Tabs {...this.props} Localization={this.state.Localization}
+                    addTab={() => this.setState({
+                      Localization: [...this.state.Localization, {
+                        languageId: 1,
+                        Alt: '',
+                        HeadLine: '',
+                        Caption: '',
+                        Content: '',
+                      }]
+                    })} deleteTab={(index) => this.setState(
+                {Localization: [...this.state.Localization.slice(0, index), ...this.state.Localization.slice(index + 1)]})}>
+                {this.state.Localization.map((localization, index) => (
+                  <div key={localization.languageId} label={index}>
+                    <div className="small-select">
+                      <p className="txt-const">LANGUAGE</p>
+                      <Select
+                        isDisabled={!index}
+                        single
+                        name="languageId"
+                        options={this.props.language.languages.map(l => ({value: l.id, label: l.languageName}))}
+                        onChange={(selectedOption, e) => this.handleLanguageChange(e, index, selectedOption)}
+                        value={
+                          this.state.Localization[index].languageId
+                        }
+                      />
+                    </div>
+                    <label className="textLabel">
+                      <p className="txt-const">ALT*</p>
+                      <input
+                        type="text"
+                        name="Alt"
+                        className="textInput"
+                        value={this.state.Localization[index].Alt}
+                        onChange={(e) => this.handleInputChange(e, index)}/>
+                    </label>
+                    <label className="textLabel">
+                      <p className="txt-const">ARTICLE HEADLINE*</p>
+                      <input
+                        type="text"
+                        name="HeadLine"
+                        className="textInput"
+                        value={this.state.Localization[index].HeadLine}
+                        onChange={(e) => this.handleInputChange(e, index)}/>
+                    </label>
+                    <label className="textLabel">
+                      <p className="txt-const">CAPTION*</p>
+                      <input
+                        type="text"
+                        name="Caption"
+                        className="textInput"
+                        value={this.state.Localization[index].Caption}
+                        onChange={(e) => this.handleInputChange(e, index)}/>
+                    </label>
+                    <label className="textLabel">
+                      <p className="txt-const">CONTENT*</p>
+                      <input
+                        type="text"
+                        name="Content"
+                        className="textInput"
+                        value={this.state.Localization[index].Content}
+                        onChange={(e) => this.handleInputChange(e, index)}/>
+                    </label>
+                  </div>
+                ))}
+              </Tabs>
 
 
-              <label className="textLabel">
-                <p className="txt-const">ALT*</p>
-                <input
-                  type="text"
-                  name="Alt"
-                  className="textInput"
-                  value={this.state.Alt}
-                  onChange={this.handleInputChange}/>
-              </label>
-              <label className="textLabel">
-                <p className="txt-const">ARTICLE HEADLINE*</p>
-                <input
-                  type="text"
-                  name="HeadLine"
-                  className="textInput"
-                  value={this.state.HeadLine}
-                  onChange={this.handleInputChange}/>
-              </label>
-              <label className="textLabel">
-                <p className="txt-const">CAPTION*</p>
-                <input
-                  type="text"
-                  name="Caption"
-                  className="textInput"
-                  value={this.state.Caption}
-                  onChange={this.handleInputChange}/>
-              </label>
-              <label className="textLabel">
-                <p className="txt-const">CONTENT*</p>
-                <input
-                  type="text"
-                  name="Content"
-                  className="textInput"
-                  value={this.state.Content}
-                  onChange={this.handleInputChange}/>
-              </label>
             </form>
           </div>
         </div>

@@ -26,7 +26,7 @@ const Languages = (props) => {
 
                 </label>
                 <AiFillEdit onClick={() => props.addChangeLanguage(l.id)}/>
-                <FaTrash onClick={() => props.deleteLanguage(l.id)}/>
+                {l.id!==1?<FaTrash onClick={() => props.deleteLanguage(l.id)}/>:<FaTrash style={{color:'#ccc'}}/>}
               </div>
             </div>
           </div>)

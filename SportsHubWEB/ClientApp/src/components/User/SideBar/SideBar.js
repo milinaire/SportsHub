@@ -7,9 +7,9 @@ const SideBar = (props) => {
     <Fragment>
       <div className={style.sideBarWrapper}>
       {props.banners.banners&&props.banners.banners.map(banner=>(
-        <Banner headline={banner.headline}
+        banner.isPublished?<Banner headline={banner.headline}
                 category={''}
-                image={banner.imageUri} key={banner.bannerId}/>
+                image={banner.imageUri} key={banner.bannerId}/>:null
         )
       )}
     </div>

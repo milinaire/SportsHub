@@ -16,7 +16,7 @@ let initialState = {
   isLoading: false,
   currentLanguage: {id: 1, languageName: 'en'},
   languages: [
-    {id: 1, languageName: 'en'},
+    
   ],
   newLanguage: null,
   changingLanguage: null,

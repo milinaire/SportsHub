@@ -1,114 +1,83 @@
-import React, { Fragment} from "react";
+import React, {Fragment} from "react";
 import Switch from "react-switch";
-import {FaTrash} from "react-icons/fa";
+import {FaTrash,} from "react-icons/fa";
+import {AiFillEdit} from "react-icons/ai";
 import "./Languages.css"
+import {addNewLanguage} from "../../../redux/languages/languageActionCreator";
+import {BiSave} from "react-icons/bi";
 
 const Languages = (props) => {
 
 
   return (
+
     <Fragment>
       <div className="languages-block">
         <div className="language-head">
           <div className="sub-language-head"><p>LANGUAGES</p></div>
           <div className="sub-language-head"><p>STATUS</p></div>
         </div>
-        <div className="sub-language-block">
-          <div className="sub-sub-language-block"><p>English</p></div>
-          <div className="sub-sub-language-block">
-            <div className="switch-icon-language-block">
-              <label>
-                <Switch className="custom-switch"
-                        onChange={() => {
-                        }}
-                        checked={true}
-                        height={20} width={40}
-                        handleDiameter={15}
-                        boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        offColor='#999'
-                        onColor='#999'
-                        offHandleColor='#f0f0f0'
-                        onHandleColor='#f00'/>
-              </label>
+        {props.language.languages.map(l =>
+          (<div key={l.id} className="sub-language-block">
+            <div className="sub-sub-language-block"><p>{l.languageName}</p></div>
+            <div className="sub-sub-language-block">
+              <div className="switch-icon-language-block">
+                <label>
 
-              <FaTrash/>
+                </label>
+                <AiFillEdit onClick={() => props.addChangeLanguage(l.id)}/>
+                <FaTrash onClick={() => props.deleteLanguage(l.id)}/>
+              </div>
+            </div>
+          </div>)
+        )}
+
+        {props.language.newLanguage ? <div>
+            <div className="new-language">
+              <input type="text" value={props.language.newLanguage.languageName} onChange={(e) => {
+                props.changeNewLanguage(e.target.value)
+              }}/>
+              <BiSave onClick={() => {
+                if (props.language.newLanguage.languageName) {
+                  props.postNewLanguage(props.language.newLanguage)
+                } else {
+                  alert('Enter name!')
+                }
+
+              }
+              }/>
+              <FaTrash onClick={props.deleteNewLanguage}/>
+
             </div>
           </div>
-        </div>
-        <div className="sub-language-block">
-          <div className="sub-sub-language-block"><p>German</p></div>
-          <div className="sub-sub-language-block">
-            <div className="switch-icon-language-block">
-              <label>
-                <Switch className="custom-switch"
-                        onChange={() => {
-                        }}
-                        checked={true}
-                        height={20} width={40}
-                        handleDiameter={15}
-                        boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        offColor='#999'
-                        onColor='#999'
-                        offHandleColor='#f0f0f0'
-                        onHandleColor='#f00'/>
-              </label>
-              <FaTrash/>
+
+          : <button onClick={props.addNewLanguage}>ADD new language</button>}
+        {props.language.changingLanguage ? <div>
+            <div className="new-language">
+              <input type="text" value={props.language.changingLanguage.languageName} onChange={(e) => {
+                props.changeLanguage(e.target.value)
+              }}/>
+              <BiSave onClick={() => {
+                if (props.language.changingLanguage.languageName) {
+                  props.putLanguage(props.language.changingLanguage)
+                } else {
+                  alert('Enter name!')
+                }
+
+              }
+              }/>
+              <FaTrash onClick={props.deleteNewLanguage}/>
+
             </div>
           </div>
-        </div>
-        <div className="sub-language-block">
-          <div className="sub-sub-language-block"><p>Spanish</p></div>
-          <div className="sub-sub-language-block">
-            <div className="switch-icon-language-block">
-              <label>
-                <Switch className="custom-switch"
-                        onChange={() => {
-                        }}
-                        checked={true}
-                        height={20} width={40}
-                        handleDiameter={15}
-                        boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        offColor='#999'
-                        onColor='#999'
-                        offHandleColor='#f0f0f0'
-                        onHandleColor='#f00'/>
-              </label>
-              <FaTrash/>
-            </div>
-          </div>
-        </div>
-        <div className="sub-language-block">
-          <div className="sub-sub-language-block"><p>French</p></div>
-          <div className="sub-sub-language-block">
-            <div className="switch-icon-language-block">
-              <label>
-                <Switch className="custom-switch"
-                        onChange={() => {
-                        }}
-                        checked={true}
-                        height={20} width={40}
-                        handleDiameter={15}
-                        boxShadow='0 0 8px 0 rgba(0, 0, 0, 0.3)'
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        offColor='#999'
-                        onColor='#999'
-                        offHandleColor='#f0f0f0'
-                        onHandleColor='#f00'/>
-              </label>
-              <FaTrash/>
-            </div>
-          </div>
-        </div>
+
+          : null}
       </div>
+
+      {console.log(props)}
     </Fragment>
   );
 
 }
 export default Languages;
+

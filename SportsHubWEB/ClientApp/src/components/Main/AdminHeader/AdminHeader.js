@@ -82,7 +82,7 @@ class AdminHeader extends Component {
         <div style={{display:'flex', justifyContent:'space-around', alignItems:'center', height:'60px'}}>
           <span/>
           {this.state.Categories.map(c=>(
-            <span key={c.id}> <Link style={{textDecoration:"none", color:'#666'}} to={`/admin/${c.id}`}>{c.name}</Link></span>
+            <span key={c.id}> <NavLink activeStyle={{textDecoration:"none", color:'#F44'} }style={{textDecoration:"none", color:'#666'}} to={`/admin/${c.id}`}>{c.name}</NavLink></span>
           ))}
           <span/>
         </div>

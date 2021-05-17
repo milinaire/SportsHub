@@ -3,7 +3,13 @@ import {
   SET_CURRENT_LANGUAGE,
   ADD_NEW_LANGUAGE,
   CHANGE_NEW_LANGUAGE,
-  POST_NEW_LANGUAGE, DELETE_LANGUAGE, ADD_CHANGE_LANGUAGE, CHANGE_LANGUAGE, PUT_LANGUAGE, GET_LANGUAGES,
+  POST_NEW_LANGUAGE,
+  DELETE_LANGUAGE,
+  ADD_CHANGE_LANGUAGE,
+  CHANGE_LANGUAGE,
+  PUT_LANGUAGE,
+  GET_LANGUAGES,
+  DELETE_NEW_LANGUAGE,
 } from './languageActions'
 
 let initialState = {
@@ -34,10 +40,15 @@ const languageReducer = (state = initialState, action) => {
         ...state,
         newLanguage: {languageName: action.name}
       };
+    case DELETE_NEW_LANGUAGE:
+      return {
+        ...state,
+        newLanguage: null
+      };
     case CHANGE_LANGUAGE:
       return {
         ...state,
-        changingLanguage: {name: action.name}
+        changingLanguage: {...state.changingLanguage, languageName: action.name}
       };
     case ADD_CHANGE_LANGUAGE:
       return {
@@ -54,7 +65,7 @@ const languageReducer = (state = initialState, action) => {
     case DELETE_LANGUAGE:
       return {...state, languages: action.payload};
     case PUT_LANGUAGE:
-      return {...state, languages: action.payload};
+      return {...state, languages: action.payload, changingLanguage: null};
     case GET_LANGUAGES:
       return {...state, languages: action.payload};
     default:

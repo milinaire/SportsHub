@@ -300,6 +300,8 @@ class ArticleConstructor extends Component {
     const response = await fetch('/sportarticle', sportArticle)
     const json = await response.json()
     const id = json.ArticleId
+    let responseLang
+    console.log(this.state.Localization)
     for (let i = 0; i < this.state.Localization.length; i++) {
       const localization = {
         method: 'POST',
@@ -313,24 +315,25 @@ class ArticleConstructor extends Component {
           alt: this.state.Localization[i].Alt
         })
       };
-      const response = await fetch(`/article/${id}/localization`, localization)
-      if(response.status === 200){
-        this.setState({
-          showAlert: true,
-          AlertHeader: "Success!",
-          AlertText: `New article was successfully added.`,
-          AlertVariant: "success",
-          SelectedTeam: {},
-          SelectedConference: {},
-          Localization: [{
-            languageId: {value: 1, label: 'en'},
-            Alt: '',
-            HeadLine: '',
-            Caption: '',
-            Content: '',
-          }], file: '', imagePreviewUrl: ''
-        })
+      responseLang = await fetch(`/article/${id}/localization`, localization)
+
       }
+    if(responseLang.status === 200){
+      this.setState({
+        showAlert: true,
+        AlertHeader: "Success!",
+        AlertText: `New article was successfully added.`,
+        AlertVariant: "success",
+        SelectedTeam: {},
+        SelectedConference: {},
+        Localization: [{
+          languageId: {value: 1, label: 'en'},
+          Alt: '',
+          HeadLine: '',
+          Caption: '',
+          Content: '',
+        }], file: '', imagePreviewUrl: ''
+      })
     }
   }
 

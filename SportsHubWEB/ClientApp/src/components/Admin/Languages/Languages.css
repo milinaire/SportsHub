@@ -2,15 +2,27 @@
 .languages-block {
     height: 330px;
     width: 400px;
+    margin:10%;
 
 }
+.new-language{
+    width: 400px;
+    background-color: rgba(242, 242, 242,1);
+    height: 60px;
+    padding: 0 25px 0 60px;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: #c8c7c7 solid 1px;
+}
 .language-head {
     background-color: rgba(242, 242, 242,1);
     height: 20%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: #c8c7c7 solid 1px;
 }
 
 .sub-language-head {

@@ -7,43 +7,21 @@ import {
   setConferences,
   setTeams,
   setHoveredCategory,
-  setHoveredConference
+  setHoveredConference, getNavigation
 } from "../../redux/navigation/navigationActionCreator";
-import axios from "axios";
+
+import {navigationAPI} from "../../api/navigationAPI";
 
 
 class AppContainer extends React.Component {
   componentDidMount() {
     this.props.getLanguages()
-
-    axios.get(`/category?languageId=${this.props.languageReducer.currentLanguage.id}`)
-      .then(response => {
-        this.props.setCategories(response.data)
-      })
-    axios.get(`/conference?languageId=${this.props.languageReducer.currentLanguage.id}`)
-      .then(response => {
-        this.props.setConferences(response.data)
-      })
-    axios.get(`/team?languageId=${this.props.languageReducer.currentLanguage.id}`)
-      .then(response => {
-        this.props.setTeams(response.data)
-      })
+    this.props.getNavigation(this.props.languageReducer.currentLanguage.id)
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.languageReducer.currentLanguage.id !== this.props.languageReducer.currentLanguage.id) {
-      axios.get(`/category?languageId=${this.props.languageReducer.currentLanguage.id}`)
-        .then(response => {
-          this.props.setCategories(response.data)
-        })
-      axios.get(`/conference?languageId=${this.props.languageReducer.currentLanguage.id}`)
-        .then(response => {
-          this.props.setConferences(response.data)
-        })
-      axios.get(`/team?languageId=${this.props.languageReducer.currentLanguage.id}`)
-        .then(response => {
-          this.props.setTeams(response.data)
-        })
+      this.props.getNavigation(this.props.languageReducer.currentLanguage.id)
     }
   }
 
@@ -68,7 +46,8 @@ export default connect(mapStateToProps, {
   setTeams,
   setHoveredCategory,
   setHoveredConference,
-  getLanguages
+  getLanguages,
+  getNavigation
 })(AppContainer)
 
 

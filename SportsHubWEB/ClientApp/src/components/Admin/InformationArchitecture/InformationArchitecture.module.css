@@ -1,0 +1,41 @@
+.InformationArchitectureWrapper {
+    padding-top: 40px;
+    padding-left: 5%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.CategoriesWrapper {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Redactor {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Category {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 40px;
+    border: 1px solid #aaaaaa;
+    margin-top: 20px;
+    color: #aaaaaa;
+}
+.ModalWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}

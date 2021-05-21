@@ -1,5 +1,4 @@
 import React, {Fragment} from "react";
-import AdminHeader from "../../Main/AdminHeader/AdminHeader";
 import {AdminNavMenu} from "../../../containers/Admin/AdminNavbar";
 import {Route, Switch} from "react-router-dom";
 import BannersContainer from "../../../containers/Admin/Banners/Banners";
@@ -17,21 +16,20 @@ import UsersContainer from "../../../containers/Admin/Users/Users";
 import FooterContainer from "../../../containers/Admin/Footer/Footer";
 import SocialNetworksContainer from "../../../containers/Admin/SocialNetworks/SocialNetworks";
 import NavMenu from "../NavMenu/NavMenu";
+import AdminHeaderContainer from "../../../containers/Admin/AdminHeader/AdminHeader";
 
 
 let AdminLayout = (props) => {
   return (
     <Fragment>
-      <AdminHeader language={props.language} setCurrentLanguage={props.setCurrentLanguage}
-                   currentSection={props.navigation.selectedAdminCategory}
-                   buttonElem={props.navigation.currentButtonPanel}/>
+      <AdminHeaderContainer/>
       <NavMenu/>
       <div style={{
         width: 'calc(100vw - 120px)',
         minHeight: 'calc(100vh - 200px)',
         marginLeft: '100px',
         boxSizing: 'border-box',
-        zIndex:0
+        zIndex: 0
       }}>
         <Switch>
           <Route path="/admin/surveys">
@@ -41,25 +39,25 @@ let AdminLayout = (props) => {
             <BannersContainer/>
           </Route>
           <Route path="/admin/languages">
-            <LanguagesContainer />
+            <LanguagesContainer/>
           </Route>
           <Route path="/admin/footer">
             <FooterContainer/>
           </Route>
           <Route path="/admin/social_networks">
-            <SocialNetworksContainer />
+            <SocialNetworksContainer/>
           </Route>
           <Route path="/admin/users">
             <UsersContainer/>
           </Route>
           <Route path="/admin/information_architecture">
-            <InformationArchitectureContainer />
+            <InformationArchitectureContainer/>
           </Route>
           <Route path="/admin/teams">
             <TeamsContainer/>
           </Route>
           <Route path="/admin/news_partners">
-            <NewsPartnersContainer />
+            <NewsPartnersContainer/>
           </Route>
           <Route path="/admin/advertising">
             <AdvertisingContainer/>

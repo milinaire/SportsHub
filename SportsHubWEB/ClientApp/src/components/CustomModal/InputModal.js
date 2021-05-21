@@ -12,8 +12,8 @@ const InputModal = (props) => {
     props.closeModal()
   }
   const confirmModal = () => {
-    props.closeModal()
     props.confirmModal()
+    props.closeModal()
     props.link && props.history.push(props.link)
   }
   return (

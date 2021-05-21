@@ -18,14 +18,8 @@ let reducer = combineReducers(
     breakdownReducer
   }
 )
-// let store = createStore(reducers, composeWithDevTools(
-//   applyMiddleware(thunk),)
-// //   compose(applyMiddleware(
-// //   thunk
-// // ),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-// );
-const composeEnhancers = composeWithDevTools({
 
+const composeEnhancers = composeWithDevTools({
   trace: true,
   traceLimit: 25
 });

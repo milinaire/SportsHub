@@ -7,10 +7,11 @@ import {AiOutlineSwap} from 'react-icons/ai'
 import Select from "react-select";
 import {withRouter} from "react-router";
 import '../../../i18n.js'
-import i18next from "i18next";
 import {withAlert} from 'react-alert'
+import {useTranslation} from "react-i18next";
 
 const Header = (props) => {
+  const {t} = useTranslation();
   return (
     <Fragment>
       <header className={style.stickyTopHeader}>
@@ -22,12 +23,12 @@ const Header = (props) => {
         <div className={style.search}>
           <FormControl
             type="text"
-            placeholder="Search By"
+            placeholder={t("Header/Search")}
             className={style.searchField}
           />
         </div>
         <div className={style.share}>
-          <p className={style.shareText}>Share</p>
+          <p className={style.shareText}>{t("Header/Share")}</p>
           <button>
             <FaFacebookF/>
           </button>
@@ -51,43 +52,19 @@ const Header = (props) => {
             </div>
             <div className={style.navbarUserInfo}>
               <p className={style.navbarUserInfoName}>Ivan Baloh</p>
-              <p className={style.navbarUserInfoRole}>Administrator</p>
-            </div>
-            <div className={style.navbarUserDropdown}>
-              <NavDropdown id="userDropdown" title={''}>
-                <div className={style.navbarUserDropdownInfo}>
-                  <p className={style.navbarUserDropdownInfoName}>Ivan Baloh</p>
-                  <p className={style.navbarUserDropdownInfoEmail}>ivanbaloh@gmail.com</p>
-                </div>
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
-                <NavDropdown.Divider/>
-                <NavDropdown.Item href="#action5">Something else here</NavDropdown.Item>
-              </NavDropdown>
+              <p className={style.navbarUserInfoRole}>{t("Header/Administrator")}</p>
             </div>
           </div>
           <div className={style.navbarLanguage}>
-            <Select
-              styles={{width: '100%'}}
-              single
-              options={props.language.languages.map(language => ({value: language.id, label: language.languageName}))}
-              onChange={(language) => props.setCurrentLanguage(language.value)}
-              value={{value: props.language.currentLanguage.id, label: props.language.currentLanguage.languageName}}
-            />
-            <button onClick={() => i18next.changeLanguage('en')}>en</button>
-            <button onClick={() => i18next.changeLanguage('uk')}>uk</button>
-            <button
-              onClick={() => {
-                props.alert.show({
-                  header: 'Testing!',
-                  content: 'The comment is successfully deleted.'
-                }, {type: 'success'})
-              }}
-            >
-              Show Alert
-            </button>
+            {props.languageReducer.isLoading
+              ? 'Loading...'
+              : <Select
+                styles={{width: '100%'}}
+                single
+                options={props.languageReducer.languages}
+                onChange={({value}) => props.setCurrentLanguage(value)}
+                value={props.languageReducer.currentLanguage}
+              />}
           </div>
         </div>
       </header>

@@ -70,7 +70,7 @@ class AdminHeader extends Component {
     return (
 
       <div className="head-wrap">
-        <Header language={this.props.language} setCurrentLanguage={this.props.setCurrentLanguage}/>
+        <Header languageReducer={this.props.language} setCurrentLanguage={this.props.setCurrentLanguage}/>
         <div className="head-title">
           <div className="hdt">
             <b style={{fontSize: "200%"}}>{this.props.currentSection}</b>

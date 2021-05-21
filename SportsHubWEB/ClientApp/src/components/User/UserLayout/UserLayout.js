@@ -17,7 +17,7 @@ import {Contributors} from "../Footer/Contributors";
 const UserLayout = (props) => {
   return (
     <Fragment>
-      <Header language={props.language} setCurrentLanguage={props.setCurrentLanguage}/>
+      <Header languageReducer={props.languageReducer} setCurrentLanguage={props.setCurrentLanguage}/>
       <div className={styles.allPageWrapper}>
         <Switch>
           <Route exact path="/about">
@@ -55,7 +55,7 @@ const UserLayout = (props) => {
               <PageLayout
                 setHoveredCategory={props.setHoveredCategory}
                 setHoveredConference={props.setHoveredConference}
-                navigation={props.navigation}/>
+                navigation={props.navigationReducer}/>
             </ScrollToTop>
           </Route>
         </Switch>

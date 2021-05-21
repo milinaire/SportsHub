@@ -16,6 +16,7 @@ import InformationArchitectureContainer
 import UsersContainer from "../../../containers/Admin/Users/Users";
 import FooterContainer from "../../../containers/Admin/Footer/Footer";
 import SocialNetworksContainer from "../../../containers/Admin/SocialNetworks/SocialNetworks";
+import NavMenu from "../NavMenu/NavMenu";
 
 
 let AdminLayout = (props) => {
@@ -24,7 +25,7 @@ let AdminLayout = (props) => {
       <AdminHeader language={props.language} setCurrentLanguage={props.setCurrentLanguage}
                    currentSection={props.navigation.selectedAdminCategory}
                    buttonElem={props.navigation.currentButtonPanel}/>
-      <AdminNavMenu/>
+      <NavMenu/>
       <div style={{
         width: 'calc(100vw - 120px)',
         minHeight: 'calc(100vh - 200px)',

@@ -1,72 +1,74 @@
 import {
-  ADD_CHANGE_LANGUAGE,
-  ADD_NEW_LANGUAGE, CHANGE_LANGUAGE,
-  CHANGE_NEW_LANGUAGE, DELETE_LANGUAGE, DELETE_NEW_LANGUAGE, GET_LANGUAGES,
-  POST_NEW_LANGUAGE, PUT_LANGUAGE,
-  SET_CURRENT_LANGUAGE,
-  SET_LANGUAGES
+  SET_CURRENT_LANGUAGE, SET_IS_LOADING, SET_IS_MODAL_OPEN,
+  SET_LANGUAGES, SET_NEW_LANGUAGES
 } from "./languageActions";
+import {languageAPI} from "../../api/languageAPI";
+import i18next from "i18next";
+import React from "react";
 
 
-export const setCurrentLanguage = (id) => ({type: SET_CURRENT_LANGUAGE, id})
-export const addChangeLanguage = (id) => ({type: ADD_CHANGE_LANGUAGE, id})
-export const addNewLanguage = () => ({type: ADD_NEW_LANGUAGE})
-export const deleteNewLanguage = () => ({type: DELETE_NEW_LANGUAGE})
-export const changeNewLanguage = (name) => ({type: CHANGE_NEW_LANGUAGE, name})
-export const changeLanguage = (name) => ({type: CHANGE_LANGUAGE, name})
-export const setLanguages = (languages) => ({type: SET_LANGUAGES, languages})
-
-
-export const postNewLanguage = (newLanguage) => {
+export const setIsLoading = (payload) => ({type: SET_IS_LOADING, payload})
+export const setLanguages = (payload) => ({type: SET_LANGUAGES, payload})
+export const getLanguages = () => async dispatch => {
+  dispatch(setIsLoading(true))
+  await languageAPI.getLanguages().then(data => {
+    dispatch(setLanguages(data))
+  })
+  dispatch(setIsLoading(false))
+}
+export const setCurrentLanguage = (payload) => async dispatch => {
+  dispatch(setIsLoading(true))
+  await i18next.changeLanguage(payload)
+  dispatch({type: SET_CURRENT_LANGUAGE, payload})
+  dispatch(setIsLoading(false))
+}
+export const addLanguages = (payload) => async dispatch => {
+  dispatch(setIsLoading(true))
+  for (let i = 0; i < payload.languages.length; i++) {
+    await languageAPI.addLanguage(payload.languages[i].value).then(response => response.status === 201
+      ?
+      payload.alert.show({
+        header: 'Success!',
+        content: `${payload.languages[i].label} language is successfully added.`
+      }, {type: 'success'})
+      :
+      payload.alert.show({
+        header: 'Error!',
+        content: 'Something got wrong.'
+      }, {type: 'error'})
+    )
+  }
+  await languageAPI.getLanguages().then(data => {
+    dispatch(setLanguages(data))
+  })
+  dispatch(setIsLoading(false))
+}
+export const setIsModalOpen = (payload) => ({type: SET_IS_MODAL_OPEN, payload})
+export const setNewLanguages = (payload) => ({type: SET_NEW_LANGUAGES, payload})
+export const deleteLanguage = (payload) => {
   return async dispatch => {
-
-    const Language = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        languageName: newLanguage.languageName
-      })
-    };
-
-
-    await fetch(`/language`, Language)
-    dispatch({type: POST_NEW_LANGUAGE})
-    const response = await fetch(`/language`)
-    const json = await response.json()
-    dispatch({type: GET_LANGUAGES, payload: json})
+    dispatch(setIsLoading(true))
+    await languageAPI.deleteLanguage(payload.language.id).then(response => response.status === 200
+      ?
+      payload.alert.show({
+        header: 'Success!',
+        content: `${payload.language.label} language is successfully deleted.`
+      }, {type: 'success'})
+      :
+      payload.alert.show({
+        header: 'Error!',
+        content: 'Something got wrong.'
+      }, {type: 'error'})
+    )
+    await languageAPI.getLanguages().then(data => {
+      dispatch(setLanguages(data))
+    })
+    dispatch(setIsLoading(false))
   }
 }
-export const deleteLanguage = (id) => {
-  return async dispatch => {
-    const deleteLanguage = {
-      method: 'DELETE',
 
-    };
-    await fetch(`/language/${id}`, deleteLanguage)
-    const response = await fetch(`/language`)
-    const json = await response.json()
-    dispatch({type: DELETE_LANGUAGE, payload: json})
-  }
-}
-export const putLanguage = (changingLanguage) => {
-  return async dispatch => {
-    const changedLanguage = {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        languageName: changingLanguage.languageName
-      })
-    };
-    await fetch(`/language/${changingLanguage.id}`, changedLanguage)
-    const response = await fetch(`/language`)
-    const json = await response.json()
-    dispatch({type: PUT_LANGUAGE, payload: json})
-  }
-}
-export const getLanguages = () => {
-  return async dispatch => {
-    const response = await fetch(`/language`)
-    const json = await response.json()
-    dispatch({type: GET_LANGUAGES, payload: json})
-  }
-}
+
+
+
+
+

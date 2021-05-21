@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import store from './redux/store';
 import {Provider} from "react-redux";
 import AppContainer from "./containers/App/App";
 import './style.css'
+import './i18n.js';
+import CustomAlertProvider from "./components/CustomAlerts/Alert";
 //import registerServiceWorker from './registerServiceWorker';
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
 
+// TODO add custom loader
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>
     <Provider store={store}>
-      <AppContainer/>
+      <Suspense fallback={'Loading...'}>
+        <CustomAlertProvider>
+          <AppContainer/>
+        </CustomAlertProvider>
+      </Suspense>
     </Provider>
   </BrowserRouter>,
   rootElement);

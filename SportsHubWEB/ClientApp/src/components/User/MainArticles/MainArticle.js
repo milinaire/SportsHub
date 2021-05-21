@@ -1,9 +1,11 @@
 import React, {Fragment} from "react";
 import style from './MainArticle.module.css'
 import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+
 
 const MainArticle = (props) => {
-
+  const {t}=useTranslation();
   return (
     <Fragment>
       <div className={style.mainArticleWrapper}>
@@ -25,7 +27,7 @@ const MainArticle = (props) => {
                 <div className={style.mainArticleInfoCaption}>{props.article.caption}</div>
               </div>
               {props.link
-                ?<Link className={style.mainArticleInfoMore} to={`${props.link}/${props.article.articleId}`}>More</Link>
+                ?<Link className={style.mainArticleInfoMore} to={`${props.link}/${props.article.articleId}`}>{t('User/MainArticles/MainArticle/More')}</Link>
                 :<div className={style.mainArticleInfoShare}>Share</div>
               }
             </div>

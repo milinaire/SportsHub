@@ -29,7 +29,8 @@ let AdminLayout = (props) => {
         width: 'calc(100vw - 120px)',
         minHeight: 'calc(100vh - 200px)',
         marginLeft: '100px',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        zIndex:0
       }}>
         <Switch>
           <Route path="/admin/surveys">

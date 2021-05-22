@@ -2,9 +2,17 @@ import React from "react";
 import {connect} from "react-redux";
 import {
   addCategory,
+  changeNewCategoryLocalizationLanguage, changeNewCategoryLocalizationName,
+  changeSelectedIACategoryName, deleteCategory,
+  deleteSelectedIACategoryLocalization, postSelectedIACategoryLocalization,
+  saveSelectedIACategoryName,
   setCurrentAdminButtonPanel,
-  setIsCategoryModalOpen, setNewCategoryName,
-  setSelectedAdminCategory
+  setIsCategoryLocalizationModalOpen,
+  setIsCategoryModalOpen,
+  setNewCategoryName,
+  setSelectedAdminCategory,
+  setSelectedIACategory,
+  setSelectedLocalizationTab
 } from "../../../redux/navigation/navigationActionCreator";
 import InformationArchitecture from "../../../components/Admin/InformationArchitecture/InformationArchitecture";
 import {useTranslation} from "react-i18next";
@@ -53,5 +61,15 @@ export default connect(mapStateToProps, {
   setCurrentAdminButtonPanel,
   setIsCategoryModalOpen,
   setNewCategoryName,
-  addCategory
+  addCategory,
+  setSelectedIACategory,
+  setSelectedLocalizationTab,
+  changeSelectedIACategoryName,
+  saveSelectedIACategoryName,
+  deleteSelectedIACategoryLocalization,
+  setIsCategoryLocalizationModalOpen,
+  changeNewCategoryLocalizationLanguage,
+  changeNewCategoryLocalizationName,
+  postSelectedIACategoryLocalization,
+  deleteCategory
 })(InformationArchitectureAPI)

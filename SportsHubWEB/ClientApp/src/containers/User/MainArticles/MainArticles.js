@@ -20,6 +20,5 @@ let mapStateToProps = (state) => {
     navigation: state.navigationReducer
   }
 }
-const MainArticlesContainer = connect(mapStateToProps, {setCurrentArticle})(MainArticlesAPI)
 
-export default MainArticlesContainer;
+export default connect(mapStateToProps, {setCurrentArticle})(MainArticlesAPI)

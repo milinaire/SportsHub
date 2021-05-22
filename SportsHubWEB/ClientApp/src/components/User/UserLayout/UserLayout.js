@@ -1,7 +1,6 @@
 import React, {Fragment} from "react";
 import styles from "./UserLayout.module.css";
 import {Route, Switch} from "react-router-dom";
-import ScrollToTop from "../../Main/Layout/ScrollToTop";
 import {UpFooterPart} from "../Footer/UpFooterPart";
 import {DownFooterPart} from "../Footer/DownFooterPart";
 import Header from "../Header/Header";
@@ -21,42 +20,29 @@ const UserLayout = (props) => {
       <div className={styles.allPageWrapper}>
         <Switch>
           <Route exact path="/about">
-            <ScrollToTop>
-              <AboutSportHub/>
-            </ScrollToTop>
+            <AboutSportHub/>
           </Route>
           <Route exact path="/terms">
-            <ScrollToTop>
-              <Terms/>
-            </ScrollToTop>
+            <Terms/>
           </Route>
           <Route exact path="/privacy">
-            <ScrollToTop>
-              <Privacy/>
-            </ScrollToTop>
+            <Privacy/>
           </Route>
           <Route exact path="/contact">
-            <ScrollToTop>
-              <ContactUs/>
-            </ScrollToTop>
+            <ContactUs/>
           </Route>
           <Route exact path="/company-info/:name">
-            <ScrollToTop>
-              <CompanyInfo/>
-            </ScrollToTop>
+            <CompanyInfo/>
           </Route>
           <Route exact path="/contributors/:name">
-            <ScrollToTop>
-              <Contributors/>
-            </ScrollToTop>
+            <Contributors/>
           </Route>
           <Route path={`/`}>
-            <ScrollToTop>
-              <PageLayout
-                setHoveredCategory={props.setHoveredCategory}
-                setHoveredConference={props.setHoveredConference}
-                navigation={props.navigationReducer}/>
-            </ScrollToTop>
+            <PageLayout
+              languageReducer={props.languageReducer}
+              setHoveredCategory={props.setHoveredCategory}
+              setHoveredConference={props.setHoveredConference}
+              navigation={props.navigationReducer}/>
           </Route>
         </Switch>
         <UpFooterPart/>
@@ -65,6 +51,5 @@ const UserLayout = (props) => {
     </Fragment>
   );
 }
-
 
 export default UserLayout;

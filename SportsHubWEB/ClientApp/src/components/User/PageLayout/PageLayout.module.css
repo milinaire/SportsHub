@@ -1,5 +1,7 @@
 .pageWrapper{
     width: calc(100% - 250px);
+    padding-top: 100px;
+    height: 100%;
     margin-left: 250px;
     overflow: hidden;
     z-index: 0;
@@ -18,6 +20,7 @@
 .contentWrapper{
     grid-area: content;
 margin: 5px;
+    height: 100%;
 
 }
 .sideBarWrapper{

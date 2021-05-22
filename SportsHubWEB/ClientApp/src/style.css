@@ -3,24 +3,29 @@ div {
 }
 
 html {
-
+    height: 100%;
 }
 
 body {
     margin: 0;
-background: white;
+    background: white;
+    height: 100%;
 }
-select, button{
+
+select, button {
     padding: 5px;
     border-radius: 0;
     border: 1px solid #aaaaaa;
-
-}
-option{
- height: 30px;
 }
 
-*{
+option {
+    height: 30px;
+}
+
+* {
     font-family: Tahoma, sans-serif;
     font-weight: bolder;
+}
+#root{
+    height: 100%;
 }

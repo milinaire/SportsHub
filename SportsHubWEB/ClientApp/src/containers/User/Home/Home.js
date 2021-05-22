@@ -6,7 +6,6 @@ import {setMainArticles, setCurrentArticle} from "../../../redux/mainArticles/ma
 import {getBanners} from "../SideBar/getBunners";
 import {setBanners} from "../../../redux/sideBar/sideBarActionCreator";
 import {clearBreakdown, setBreakdown} from "../../../redux/breakdown/breakdownActionCreator";
-import breakdownReducer from "../../../redux/breakdown/breakdownReducer";
 
 class HomeAPI extends React.Component {
   componentDidMount() {
@@ -16,8 +15,8 @@ class HomeAPI extends React.Component {
       });
     axios.get(`breakdown`)
       .then(response => {
+        this.props.clearBreakdown()
         response.data.map(breakdown => {
-          console.log(breakdown)
           let url
           let name
           if (breakdown.teamId) {
@@ -41,6 +40,40 @@ class HomeAPI extends React.Component {
     getBanners('', this.props.language.currentLanguage.id, this.props.setBanners)
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.language.currentLanguage.id !== this.props.language.currentLanguage.id) {
+      axios.get(`/article/main/display?languageId=${this.props.language.currentLanguage.id}`)
+        .then(response => {
+          this.props.setMainArticles(response.data, '/main-article')
+        });
+      axios.get(`breakdown`)
+        .then(response => {
+          this.props.clearBreakdown()
+          response.data.map(breakdown => {
+            let url
+            let name
+            if (breakdown.teamId) {
+              url = `teamId=${breakdown.teamId}&`
+              name = breakdown.teamName
+            } else if (breakdown.conferenceId) {
+              url = `conferenceId=${breakdown.conferenceId}&`
+              name = breakdown.conferenceName
+            } else if (breakdown.categoryId) {
+              url = `categoryId=${breakdown.categoryId}&`
+              name = breakdown.categoryName
+            }
+            axios.get(`/sportarticle?${url}count=4&languageId=${this.props.language.currentLanguage.id}`)
+              .then(response => {
+                this.props.setBreakdown(response.data, name)
+              })
+
+
+          })
+        });
+      getBanners('', this.props.language.currentLanguage.id, this.props.setBanners)
+    }
+  }
+
   componentWillUnmount() {
     this.props.setMainArticles([])
     this.props.setBanners([])
@@ -48,9 +81,8 @@ class HomeAPI extends React.Component {
   }
 
   render() {
-    console.log(this.props.breakdown)
     return (
-      <Home breakdown={this.props.breakdown}/>
+      <Home {...this.props}/>
     )
   }
 }

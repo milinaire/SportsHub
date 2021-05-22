@@ -1,5 +1,5 @@
 import {
-  SET_CURRENT_LANGUAGE, SET_IS_LOADING, SET_IS_MODAL_OPEN,
+  SET_CURRENT_LANGUAGE, SET_IS_INITIALIZING, SET_IS_LOADING, SET_IS_MODAL_OPEN,
   SET_LANGUAGES, SET_NEW_LANGUAGES
 } from "./languageActions";
 import {languageAPI} from "../../api/languageAPI";
@@ -8,15 +8,20 @@ import React from "react";
 
 
 export const setIsLoading = (payload) => ({type: SET_IS_LOADING, payload})
+export const setIsInitializing = (payload) => ({type: SET_IS_INITIALIZING, payload})
 export const setLanguages = (payload) => ({type: SET_LANGUAGES, payload})
 export const getLanguages = () => async dispatch => {
   dispatch(setIsLoading(true))
   await languageAPI.getLanguages().then(data => {
     dispatch(setLanguages(data))
   })
+  dispatch({type: SET_CURRENT_LANGUAGE, payload:localStorage.i18nextLng})
+
   dispatch(setIsLoading(false))
 }
 export const setCurrentLanguage = (payload) => async dispatch => {
+
+  console.log('log')
   dispatch(setIsLoading(true))
   await i18next.changeLanguage(payload)
   dispatch({type: SET_CURRENT_LANGUAGE, payload})

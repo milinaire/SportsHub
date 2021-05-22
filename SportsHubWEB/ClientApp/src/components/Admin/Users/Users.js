@@ -1,8 +1,8 @@
 import React, {Fragment} from "react";
 import style from './Users.module.css'
 import {withRouter} from "react-router-dom";
-import InputModal from "../../CustomModal/InputModal";
-import AlertModal from "../../CustomModal/AlertModal";
+import InputModal from "../../../CustomModal/InputModal";
+import AlertModal from "../../../CustomModal/AlertModal";
 
 const Users = (props) => {
   const [modalIsOpen, setIsOpen] = React.useState(false);

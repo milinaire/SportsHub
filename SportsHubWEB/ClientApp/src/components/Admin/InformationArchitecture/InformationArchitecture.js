@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 import s from './InformationArchitecture.module.css'
 import Select from "react-select";
-import InputModal from "../../CustomModal/InputModal";
+import InputModal from "../../../CustomModal/InputModal";
 import {withAlert} from "react-alert";
 import LocalizationTabs from "./LocalizationTabs";
 import {useTranslation} from "react-i18next";

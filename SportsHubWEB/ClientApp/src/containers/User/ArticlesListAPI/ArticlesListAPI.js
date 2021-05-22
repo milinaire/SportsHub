@@ -22,6 +22,11 @@ class ArticlesListAPI extends React.Component {
     if (prevProps.category !== this.props.category) {
       getBanners(`categoryId=${this.props.category}&`, this.props.language.currentLanguage.id, this.props.setBanners)
     }
+    if (prevProps.language.currentLanguage.id !== this.props.language.currentLanguage.id) {
+      getArticles(this.props.url, this.props.language.currentLanguage.id,
+        this.props.setMainArticles, this.props.setArticlesList)
+      getBanners(`categoryId=${this.props.category}&`, this.props.language.currentLanguage.id, this.props.setBanners)
+    }
   }
 
   componentWillUnmount() {

@@ -46,11 +46,13 @@
     width: 100%;
     height: 90%;
 }
+
 .AlertContent {
     width: 100%;
     height: calc(100% - 35px);
     padding: 50px;
 }
+
 .Buttons {
     width: 100%;
     height: 35px;

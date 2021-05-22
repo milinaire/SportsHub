@@ -4,7 +4,7 @@ import {AiFillEdit} from "react-icons/ai";
 import "./Languages.css"
 import s from './Languages.module.css'
 import {BiSave} from "react-icons/bi";
-import InputModal from "../../CustomModal/InputModal";
+import InputModal from "../../../CustomModal/InputModal";
 import Select from "react-select";
 import {withAlert} from "react-alert";
 import {useTranslation} from "react-i18next";

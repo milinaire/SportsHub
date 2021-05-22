@@ -1,5 +1,4 @@
 import React, {Fragment} from "react";
-import {AdminNavMenu} from "../../../containers/Admin/AdminNavbar";
 import {Route, Switch} from "react-router-dom";
 import BannersContainer from "../../../containers/Admin/Banners/Banners";
 import ArticleConstructor from "../ArticleConstructor/ArticleConstructor";
@@ -17,65 +16,63 @@ import FooterContainer from "../../../containers/Admin/Footer/Footer";
 import SocialNetworksContainer from "../../../containers/Admin/SocialNetworks/SocialNetworks";
 import NavMenu from "../NavMenu/NavMenu";
 import AdminHeaderContainer from "../../../containers/Admin/AdminHeader/AdminHeader";
-
+import s from './Adminlayout.module.css'
 
 let AdminLayout = (props) => {
   return (
     <Fragment>
       <AdminHeaderContainer/>
-      <NavMenu/>
-      <div style={{
-        width: 'calc(100vw - 120px)',
-        minHeight: 'calc(100vh - 200px)',
-        marginLeft: '100px',
-        boxSizing: 'border-box',
-        zIndex: 0
-      }}>
-        <Switch>
-          <Route path="/admin/surveys">
-            <SurveysContainer/>
-          </Route>
-          <Route path="/admin/banners">
-            <BannersContainer/>
-          </Route>
-          <Route path="/admin/languages">
-            <LanguagesContainer/>
-          </Route>
-          <Route path="/admin/footer">
-            <FooterContainer/>
-          </Route>
-          <Route path="/admin/social_networks">
-            <SocialNetworksContainer/>
-          </Route>
-          <Route path="/admin/users">
-            <UsersContainer/>
-          </Route>
-          <Route path="/admin/information_architecture">
-            <InformationArchitectureContainer/>
-          </Route>
-          <Route path="/admin/teams">
-            <TeamsContainer/>
-          </Route>
-          <Route path="/admin/news_partners">
-            <NewsPartnersContainer/>
-          </Route>
-          <Route path="/admin/advertising">
-            <AdvertisingContainer/>
-          </Route>
-          <Route path="/admin/:category/new_article">
-            <ArticleConstructor
-              {...props}
-            />
-          </Route>
-          <Route path="/admin/:category/:article">
-            <ArticleRedactor
-              {...props}
-            />
-          </Route>
-          <Route path="/admin/:category">
-            <Category {...props}/>
-          </Route>
-        </Switch>
+      <div className={s.allPageWrapper}>
+        <NavMenu/>
+        <div className={s.contentWrapper}>
+          <div className={s.content}>
+          <Switch>
+            <Route path="/admin/surveys">
+              <SurveysContainer/>
+            </Route>
+            <Route path="/admin/banners">
+              <BannersContainer/>
+            </Route>
+            <Route path="/admin/languages">
+              <LanguagesContainer/>
+            </Route>
+            <Route path="/admin/footer">
+              <FooterContainer/>
+            </Route>
+            <Route path="/admin/social_networks">
+              <SocialNetworksContainer/>
+            </Route>
+            <Route path="/admin/users">
+              <UsersContainer/>
+            </Route>
+            <Route path="/admin/information_architecture">
+              <InformationArchitectureContainer/>
+            </Route>
+            <Route path="/admin/teams">
+              <TeamsContainer/>
+            </Route>
+            <Route path="/admin/news_partners">
+              <NewsPartnersContainer/>
+            </Route>
+            <Route path="/admin/advertising">
+              <AdvertisingContainer/>
+            </Route>
+            <Route path="/admin/:category/new_article">
+              <ArticleConstructor
+                {...props}
+              />
+            </Route>
+            <Route path="/admin/:category/:article">
+              <ArticleRedactor
+                {...props}
+              />
+            </Route>
+            <Route path="/admin/:category">
+              <Category {...props}/>
+            </Route>
+          </Switch>
+          </div>
+        </div>
       </div>
     </Fragment>
   )

@@ -1,6 +1,6 @@
 import {
   SET_LANGUAGES, SET_CURRENT_LANGUAGE,
-  SET_IS_LOADING, SET_IS_MODAL_OPEN, SET_NEW_LANGUAGES,
+  SET_IS_LOADING, SET_IS_MODAL_OPEN, SET_NEW_LANGUAGES, SET_IS_INITIALIZING,
 } from './languageActions'
 import {supportedLngs} from "../../supportedLngs";
 
@@ -8,9 +8,9 @@ let initialState = {
   supportedLngs,
   languages: [],
   isLoading: false,
-  currentLanguage: {id: 1, value: 'en', label: 'English'},
+  currentLanguage: {},
   isModalOpen: false,
-
+  isInitializing: true,
   newLanguages: null,
   changingLanguage: null,
 }
@@ -28,7 +28,10 @@ const languageReducer = (state = initialState, action) => {
       };
     case SET_IS_LOADING:
       return {...state, isLoading: action.payload};
+    case SET_IS_INITIALIZING:
+      return {...state, isInitializing: action.payload};
     case SET_CURRENT_LANGUAGE:
+
       return {
         ...state,
         currentLanguage: state.languages.find(l => l.value === action.payload)

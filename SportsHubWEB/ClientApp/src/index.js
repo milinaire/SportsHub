@@ -3,23 +3,23 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import store from './redux/store';
 import {Provider} from "react-redux";
-import AppContainer from "./containers/App/App";
+import App from "./App";
 import './style.css'
 import './i18n.js';
-import CustomAlertProvider from "./components/CustomAlerts/Alert";
+import CustomAlertProvider from "./CustomAlerts/Alert";
+import Loader from "./CustomLoader/Loader";
 //import registerServiceWorker from './registerServiceWorker';
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
-
 // TODO add custom loader
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>
     <Provider store={store}>
-      <Suspense fallback={'Loading...'}>
+      <Suspense fallback={<Loader/>}>
         <CustomAlertProvider>
-          <AppContainer/>
+          <App/>
         </CustomAlertProvider>
       </Suspense>
     </Provider>

@@ -1,16 +1,24 @@
 import React from "react";
 import {connect} from "react-redux";
 import axios from 'axios'
-import {setMainArticles, setCurrentArticle} from "../../../redux/mainArticles/mainArticlesActionCreator";
+import {
+  setMainArticles,
+  setCurrentArticle,
+  getMainArticle
+} from "../../../redux/mainArticles/mainArticlesActionCreator";
 import {withRouter} from "react-router-dom";
 import Article from "../../../components/User/Article/Article";
+import {articleAPI} from "../../../api/articleAPI";
 
 class ArticleAPI extends React.Component {
   componentDidMount() {
-    axios.get(`/article/${this.props.match.params.article}?languageId=${this.props.language.currentLanguage.id}`)
-      .then(response => {
-        this.props.setMainArticles([response.data], '')
-      })
+    this.props.getMainArticle(this.props.match.params.article, this.props.language.currentLanguage.id)
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.language.currentLanguage.id !== this.props.language.currentLanguage.id) {
+      this.props.getMainArticle(this.props.match.params.article, this.props.language.currentLanguage.id)
+    }
   }
 
   componentWillUnmount() {
@@ -31,6 +39,6 @@ let mapStateToProps = (state) => {
   }
 }
 const ArticleContainer = connect(mapStateToProps,
-  {setMainArticles, setCurrentArticle})(withRouter(ArticleAPI))
+  {setMainArticles, setCurrentArticle, getMainArticle})(withRouter(ArticleAPI))
 
 export default ArticleContainer;

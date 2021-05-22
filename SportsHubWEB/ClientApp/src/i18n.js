@@ -13,10 +13,10 @@ i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: "en",
+    fallbackLng: localStorage.i18nextLng || 'en',
     debug: true,
     detection: {
-      order: ["querystring", "cookie"],
+      order: ["cookie"],
       cache: ["cookie"]
     },
     ns: ["default"],

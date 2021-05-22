@@ -10,13 +10,12 @@ import TeamArticlesContainer from "../../../containers/User/TeamArticles/TeamArt
 import ArticleContainer from "../../../containers/User/Article/Article";
 import SideBarContainer from "../../../containers/User/SideBar/SideBar";
 
+
 const PageLayout = (props) => {
 
   return (
     <Fragment>
-      <NavMenu
-        setHoveredCategory={props.setHoveredCategory}
-        setHoveredConference={props.setHoveredConference} navigation={props.navigation}/>
+      <NavMenu {...props}/>
       <div className={style.pageWrapper}>
         <div className={style.mainArticleWrapper}>
           <MainArticlesContainer/>
@@ -30,10 +29,10 @@ const PageLayout = (props) => {
               <ArticleContainer/>
             </Route>
             <Route exact path={`/nav/:category`}>
-              <CategoryArticlesContainer />
+              <CategoryArticlesContainer/>
             </Route>
             <Route exact path={`/nav/:category/:conference`}>
-              <ConferenceArticlesContainer />
+              <ConferenceArticlesContainer/>
             </Route>
             <Route exact path={`/nav/:category/:conference/:team`}>
               <TeamArticlesContainer/>
@@ -41,20 +40,14 @@ const PageLayout = (props) => {
             <Route exact path={`/nav/:category/:conference/:team/:article`}>
               <ArticleContainer/>
             </Route>
-            {/*<Route exact path={`/nav/:category/:subcategory/:team/:article`}>*/}
-            {/*  <SportArticle setMainArticles={setMainArticles}/>*/}
-            {/*</Route>*/}
-            {/*<Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>*/}
           </Switch>
         </div>
         <div className={style.sideBarWrapper}>
           <SideBarContainer/>
         </div>
-
       </div>
     </Fragment>
   );
-
 }
 
 export default withRouter(PageLayout)

@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using System.Web;
 using SportsHubBL.Models;
 using SportsHubDAL.Entities;
 
@@ -25,6 +22,9 @@ namespace SportsHubBL.Interfaces
         
         public ImageModel AddImageToDb(string uri);
         
-        
+        public string GuidGeneration();
+
+
+
     }
 }

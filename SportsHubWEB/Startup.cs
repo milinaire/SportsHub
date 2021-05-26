@@ -23,7 +23,7 @@ namespace SportsHubWEB
         {
             Configuration = configuration;
         }
-
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -33,7 +33,7 @@ namespace SportsHubWEB
                 options.UseLazyLoadingProxies()
                 .UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("SportsHubDAL")));
-
+            
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>c20f6964-d594-4be3-a43a-b85aca57804a</UserSecretsId>
+    <UserSecretsId>E1D9DF4A-3CB6-4201-A086-6DE12880BBED</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,5 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SportsHubDAL\SportsHubDAL.csproj" />
   </ItemGroup>
+  
 
 </Project>

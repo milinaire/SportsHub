@@ -1,37 +1,39 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using SportsHubBL.Interfaces;
 using SportsHubDAL.Entities;
 using SportsHubDAL.Interfaces;
-using Microsoft.Azure;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using SportsHubBL.Models;
+using Microsoft.Extensions.Configuration;
+
 
 
 namespace SportsHubBL.Services
 {
     public class ImageService : IImageService
     {
+        
         private const string ContainerName = "imagecontainer";  
         private readonly IRepository<Image> _imageRepository;
         private readonly CloudStorageAccount _cloudStorageAccount = CloudStorageAccount
-            .Parse("DefaultEndpointsProtocol=https;AccountName=sporthubblob;AccountKey=wH931b1Kj5i+4k6zCupv8B4kO4s4D5+BYcl+6qbnekPvx9FITssC3cr6B89bvYadwHMUHiSm13DxQy3KVvJsmg==;EndpointSuffix=core.windows.net");
-        private CloudBlobContainer _blobContainer;
+            .Parse("DefaultEndpointsProtocol=https;AccountName=sporthubblob;AccountKey=Verb4f2R0CWvZ42zFq8hIQNlrs4s8ObTOs1GqAX+apKW+4PLSQsKaFsUoDT4zgROuVCSixtyhAZLVNtdREK2XQ==;EndpointSuffix=core.windows.net");
 
-        /*private readonly CloudStorageAccount _cloudStorageAccount = CloudStorageAccount
-            .Parse(Configuration["Images:ConnectionString"]);*/
+        /*private readonly CloudStorageAccount _cloudStorageAccount1 = CloudStorageAccount
+            .Parse(_config["Images:ConnectionString"]);*/
+
         public ImageService(IRepository<Image> imageRepository)
         {
             _imageRepository = imageRepository;
         }
-
-
-        
+        public string GuidGeneration()
+        {
+            var imageGuid = Guid.NewGuid();
+            return imageGuid.ToString();
+        }
 
         public async Task AddImage(IFormFile imageFile, string imageName)
         {

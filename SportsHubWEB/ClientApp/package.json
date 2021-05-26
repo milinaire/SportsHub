@@ -37,6 +37,7 @@
     "rimraf": "^2.6.2"
   },
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.14.3",
     "@reduxjs/toolkit": "^1.5.1",
     "ajv": "^6.9.1",
     "cross-env": "^5.2.0",
@@ -75,6 +76,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
     ]
   }
 }

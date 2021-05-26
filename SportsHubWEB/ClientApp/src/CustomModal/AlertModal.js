@@ -3,7 +3,7 @@ import React from "react";
 import style from './CustomModal.module.css';
 import PropTypes from 'prop-types';
 import {withRouter} from "react-router-dom";
-import {RiDeleteBin5Line, IoWarning} from "react-icons/all";
+//import {RiDeleteBin5Line, IoWarning} from "react-icons/all";
 
 ReactModal.setAppElement(document.getElementById('root'));
 
@@ -31,8 +31,8 @@ const AlertModal = (props) => {
     >
       <div className={style.AlertTypeCircle}>
         {props.type === 'delete'
-          ? <RiDeleteBin5Line/>
-          : <IoWarning/>
+          ? '<RiDeleteBin5Line/>'
+          : '<IoWarning/>'
         }
       </div>
       <div className={style.AlertContent}>

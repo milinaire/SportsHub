@@ -1,9 +1,9 @@
 import React, {Fragment} from "react";
-import {FaTrash,} from "react-icons/fa";
-import {AiFillEdit} from "react-icons/ai";
+//import {FaTrash,} from "react-icons/fa";
+//import {AiFillEdit} from "react-icons/ai";
 import "./Languages.css"
 import s from './Languages.module.css'
-import {BiSave} from "react-icons/bi";
+//import {BiSave} from "react-icons/bi";
 import InputModal from "../../../CustomModal/InputModal";
 import Select from "react-select";
 import {withAlert} from "react-alert";
@@ -71,12 +71,12 @@ const Languages = (props) => {
                 {/*<AiFillEdit onClick={() => {*/}
                 {/*  //props.addChangeLanguage(l.id)*/}
                 {/*}}/>*/}
-                {l.value !== 'en' ? <FaTrash onClick={() => props.deleteLanguage({
+                {l.value !== 'en' ? <div onClick={() => props.deleteLanguage({
                     language: l,
                     alert: props.alert
                   })}
-                /> :
-                  <FaTrash style={{color: '#ccc'}}/>}
+                  >Delete</div> :
+                  <div style={{color: '#ccc'}}>Delete</div>}
               </div>
             </div>
           </div>)

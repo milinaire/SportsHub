@@ -1,7 +1,7 @@
 import React from "react";
 import {transitions, positions, Provider as AlertProvider} from 'react-alert'
 import s from './Alert.module.css'
-import {CgClose, IoClose, IoIosWarning, TiTick} from "react-icons/all";
+//import {CgClose, IoClose, IoIosWarning, TiTick} from "react-icons/all";
 
 
 const options = {
@@ -23,9 +23,9 @@ const AlertTemplate = ({style, options, message, close}) => {
     <div style={style}>
       <div className={s.Alert}>
         <div className={`${s.AlertCircle} ${type}`}>
-          {options.type === 'success' && <TiTick/>}
-          {options.type === 'info' && <IoIosWarning style={{marginBottom: '5px'}}/>}
-          {options.type === 'error' && <CgClose/>}
+          {options.type === 'success' && <div>Success!</div>}
+          {options.type === 'info' && <div>Warning!</div>}
+          {options.type === 'error' && <div>Error!</div>}
         </div>
         <div className={s.AlertContent}>
           <div>

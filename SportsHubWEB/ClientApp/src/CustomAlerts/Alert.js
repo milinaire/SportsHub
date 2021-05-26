@@ -1,7 +1,7 @@
 import React from "react";
 import {transitions, positions, Provider as AlertProvider} from 'react-alert'
 import s from './Alert.module.css'
-//import {CgClose, IoClose, IoIosWarning, TiTick} from "react-icons/all";
+import {CgClose, IoClose, IoIosWarning, TiTick} from "react-icons/all";
 
 
 const options = {

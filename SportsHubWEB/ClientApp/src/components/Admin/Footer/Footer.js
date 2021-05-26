@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react";
 import Switch from "react-switch";
 
-import { FaTrash } from "react-icons/fa";
+// import { FaTrash } from "react-icons/fa";
 
 import "./Footer.css";
 
@@ -120,7 +120,7 @@ class Footer extends Component {
                              onHandleColor='#FF0000'/>
                   </label>
 
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -142,7 +142,7 @@ class Footer extends Component {
                              offHandleColor='#F0F0F0'
                              onHandleColor='#FF0000'/>
                   </label>
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -164,7 +164,7 @@ class Footer extends Component {
                              offHandleColor='#F0F0F0'
                              onHandleColor='#FF0000'/>
                   </label>
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -186,7 +186,7 @@ class Footer extends Component {
                              offHandleColor='#F0F0F0'
                              onHandleColor='#FF0000'/>
                   </label>
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -208,7 +208,7 @@ class Footer extends Component {
                              offHandleColor='#F0F0F0'
                              onHandleColor='#FF0000'/>
                   </label>
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -341,7 +341,7 @@ class Footer extends Component {
                              onHandleColor='#FF0000'/>
                   </label>
 
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -363,7 +363,7 @@ class Footer extends Component {
                              offHandleColor='#F0F0F0'
                              onHandleColor='#FF0000'/>
                   </label>
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -385,7 +385,7 @@ class Footer extends Component {
                              offHandleColor='#F0F0F0'
                              onHandleColor='#FF0000'/>
                   </label>
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>
@@ -421,7 +421,7 @@ class Footer extends Component {
                              onHandleColor='#FF0000'/>
                   </label>
 
-                  <FaTrash/>
+                  FaTrash/>
 
                 </div>
               </div>

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsHubBL", "SportsHubBL\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsHubDAL", "SportsHubDAL\SportsHubDAL.csproj", "{3947FB2F-B28B-4DDE-A5D1-7BD4BB9142ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsHubWEB", "SportsHubWEB\SportsHubWEB.csproj", "{5C088DC9-201E-4636-B213-B2EF0F073AAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsHubWEB", "SportsHubWEB\SportsHubWEB.csproj", "{5C088DC9-201E-4636-B213-B2EF0F073AAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

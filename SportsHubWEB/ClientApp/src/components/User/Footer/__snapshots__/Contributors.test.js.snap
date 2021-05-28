@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainFooterContributors test MainFooterContributors should match snapshot 1`] = `
+<div
+  className="main-part-footer"
+>
+  <h1>
+    some headline from db
+  </h1>
+  <p>
+    text from db
+  </p>
+</div>
+`;

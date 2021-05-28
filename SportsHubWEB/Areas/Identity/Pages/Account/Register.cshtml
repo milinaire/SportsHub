@@ -1,0 +1,48 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+
+<div style="display:flex; align-items:center; justify-content:center; width:100%; height:100%;" >
+    <div class="col-md-4">
+    <h1>Create Account</h1>
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <br/>
+                <input asp-for="Input.Email" class="form-control" style="height:40px; width: 400px; border-radius:0" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <br/>
+                <input asp-for="Input.Password" class="form-control" style="height:40px; width: 400px; border-radius:0"/>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <br/>
+                <input asp-for="Input.ConfirmPassword" class="form-control" style="height:40px; width: 400px; border-radius:0"/>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-primary" style="background:red;height:40px; width: 410px; border-radius:0" >Register</button>
+            <div class="form-group">
+
+                                <p>
+                                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
+                                </p>
+
+                            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

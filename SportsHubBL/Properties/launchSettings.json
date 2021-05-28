@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SportsHubBL": {
+      "commandName": "Project",
+      "workingDirectory": "E:\\SoftServe\\SportsHub\\SportsHubWEB"
+    }
+  }
+}

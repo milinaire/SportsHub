@@ -1,3 +1,0 @@
-export const SET_BREAKDOWN = 'SET_BREAKDOWN';
-export const CLEAR_BREAKDOWN = 'CLEAR_BREAKDOWN';
-

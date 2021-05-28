@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 
-
 namespace SportsHubWEB.Controllers
 {
     [ApiController]
@@ -21,6 +20,33 @@ namespace SportsHubWEB.Controllers
         {
             this.advertisingService = advertisingService;
         }
+        [HttpGet("{id}")]
+        public ActionResult<AdvertisingModel> GetAdvertisingById([FromRoute] int id)
+        {
+            int? languageId = 1;
+            try
+            {
+                return advertisingService.GenerateAdvertisingModel(advertisingService.GetAdvertisingById(id), languageId ?? 1);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest($"Advertising with id {id} not found");
+            }
+        }
+        [HttpGet("categoryad/{id}")]
+        public IEnumerable<AdvertisingModel> GetAllAdvertisingByCategory([FromRoute] int id)
+        {
+            int? languageId = 1;
+            
+                return advertisingService.GetAdvertisingByCategory(id).Select(sa => advertisingService.GenerateAdvertisingModel(sa, languageId ?? 1)); 
+        }
+        [HttpGet]
+        public IEnumerable<AdvertisingModel> GetAdvertising()
+        {
+            int? languageId = 1;
+            return advertisingService.GetAllAdvertising().Select(sa => advertisingService.GenerateAdvertisingModel(sa, languageId ?? 1));
+
+        }
         [HttpPost]
         public IActionResult AddAdvertising([FromBody]AdvertisingModel model) {
            
@@ -28,7 +54,6 @@ namespace SportsHubWEB.Controllers
             {
                 return BadRequest("model was null");
             }
-
             try
             {
                  advertisingService.AddAdvertisingFromModel(model);
@@ -78,13 +103,9 @@ namespace SportsHubWEB.Controllers
             {
                 return BadRequest(e.Message);
             }
-
             return Ok();
-
-            
         }
 
-       
 
         [HttpPost("categoryad")]
         public IActionResult AddNewCategoryAdFromModel([FromBody] AdvertisingModel model)
@@ -135,7 +156,7 @@ namespace SportsHubWEB.Controllers
             }
             catch (ArgumentException)
             {
-                return BadRequest($"Localization in language {model.LanguageId} for team {model.AdvertisingId} already exists");
+                return BadRequest($"Localization in language {model.LanguageId} for advertising {model.AdvertisingId} already exists");
             }
         }
 

@@ -1,0 +1,10 @@
+.ModalWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+.ModalSelect{
+    width: 100%;
+}

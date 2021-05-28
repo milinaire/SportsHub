@@ -14,7 +14,7 @@ namespace SportsHubBL.Services
         private readonly IRepository<Team> _teamRepository;
         private readonly IRepository<Language> _languageRepository;
         private readonly IRepository<Conference> _conferenceRepository;
-        private readonly INoIdRepository<Category> _categoryRepository;
+        private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Location> _locationRepository;
         private readonly IRepository<Image> _imageRepository;
         private readonly INoIdRepository<TeamLocalization> _teamLocalizationRepository;
@@ -24,7 +24,7 @@ namespace SportsHubBL.Services
             IRepository<Team> teamRepository,
             IRepository<Language> languageRepository,
             IRepository<Conference> conferenceRepository,
-            INoIdRepository<Category> categoryRepository,
+            IRepository<Category> categoryRepository,
             IRepository<Location> locationRepository,
             IRepository<Image> imageRepository,
             INoIdRepository<TeamLocalization> teamLocalizationRepository
@@ -55,12 +55,38 @@ namespace SportsHubBL.Services
             return query.ToList();
         }
 
-        public void AddTeamFromModel(TeamModel model)
+        public Team AddTeamFromModel(TeamModel model)
         {
             var team = GetTeamFromModel(model);
             _teamRepository.Insert(team);
+            return team;    
         }
-        
+
+        public TeamModel GetModel(Team team)
+        {
+            return new()
+            {
+                TeamId = team.Id,
+                ConferenceId = team.Conference.Id,
+                CategoryId = team.Conference.Category.Id,
+                LocationId = team.Location.Id,
+                LocationUri =  team.Location.Uri,
+                Show = team.Show,
+                ImageId = team.Image.Id,
+                ImageUri = team.Image.Uri,
+                DateCreated = team.DateCreated
+            };
+        }
+
+        public TeamModel GetModelLocalization(TeamLocalization team)
+        {
+            return new()
+            {
+                TeamId = team.TeamId,
+                Name = team.Name,
+                Description = team.Description
+            };
+        }
         private TeamLocalization GetTeamLocalizationFromModel(Team team, TeamModel model)
         {
             var language = _languageRepository.Set().FirstOrDefault(l => l.Id == model.LanguageId);
@@ -80,11 +106,10 @@ namespace SportsHubBL.Services
         }
 
         
-        public void AddNewTeamLocalizationFromModel(TeamModel model)
+        public TeamLocalization AddNewTeamLocalizationFromModel(TeamModel model)
         {
             var team = GetTeamFromModel(model);
             
-
             var teamLocalization = GetTeamLocalizationFromModel(team, model);
 
             if (_teamLocalizationRepository.Set()
@@ -92,8 +117,8 @@ namespace SportsHubBL.Services
             {
                 throw new ArgumentException($"localization in language {model.LanguageId} for team {model.TeamId} already exists", nameof(model));
             }
-
             _teamLocalizationRepository.Insert(teamLocalization);
+            return teamLocalization;
         }
 
         public TeamModel GetTeamModel(Team team, Language language)
@@ -152,9 +177,8 @@ namespace SportsHubBL.Services
 
             if (_teamRepository.Set().Any(a => a.Id == model.TeamId))
             {
-                throw new ArgumentException($"team id {model.TeamId} is already taken", nameof(model));
+                throw new ArgumentException($"Team id {model.TeamId} is already taken", nameof(model));
             }
-
             var conference = _conferenceRepository.Set().FirstOrDefault(c => c.Id == model.ConferenceId);
             
             var category = _categoryRepository.Set().FirstOrDefault(c => c.Id == model.CategoryId);
@@ -162,28 +186,19 @@ namespace SportsHubBL.Services
             
             if (conference == null && category != null)
             {
-                conference = new Conference
-                {
-                    Category = category
-                };
+                throw new ArgumentException($"Category with id{model.CategoryId} is not found", nameof(model));
             }
             
             var image = _imageRepository.Set().FirstOrDefault(i => i.Id == model.ImageId);
 
             if (image == null && model.ImageUri != default)
             {
-                image = new Image
-                {
-                    Uri = model.ImageUri
-                };
+                throw new ArgumentException($"Image with id{model.ImageId} is not found", nameof(model));
             }
             var location = _locationRepository.Set().FirstOrDefault(c => c.Id == model.LocationId);
             if (location == null && model.LocationUri != default)
             {
-                location = new Location
-                {
-                    Uri = model.LocationUri
-                };
+                throw new ArgumentException($"Location with id{model.LocationId} is not found", nameof(model));
             }
 
             
@@ -193,12 +208,28 @@ namespace SportsHubBL.Services
                 Conference = conference,
                 Location = location,
                 DateCreated = model.DateCreated ?? default,
-                Show = model.Show ?? default,
-                
+                Show = model.Show ?? default
             };
             
         }
-                
+        public TeamLocalization GetTeamLocalization(int teamId, int languageId)
+        {
+            var team = _teamRepository.Set().FirstOrDefault(a => a.Id == teamId);
+
+            if (team == null)
+            {
+                throw new Exception("team was null");
+            }
+
+            var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
+
+            if (language == null)
+            {
+                throw new Exception("language was null");
+            }
+
+            return _teamLocalizationRepository.Set().FirstOrDefault(al => al.Team == team && al.Language == language);
+        }
         private TeamModel LocalizeTeamModel(TeamModel model, Team team, int languageId)
         {
             if (team?.Conference == null)
@@ -216,7 +247,9 @@ namespace SportsHubBL.Services
                 model.LocationId = team.Location.Id;
                 model.LocationUri = team.Location.Uri;
                 if (team.Conference != null) model.ConferenceId = team.Conference.Id;
+                
                 //TODO: English language default id in call
+                
                 model.TeamId = team.Id;
                 model.Name = team.TeamLocalizations
                                  .FirstOrDefault(tl => tl.LanguageId == languageId)?.Name ??
@@ -291,78 +324,43 @@ namespace SportsHubBL.Services
             _teamLocalizationRepository.Update(originalTeamLocalization);
         }
 
-        public void UpdateTeamFromModel(int teamId, TeamModel model)
+        public Team UpdateTeamFromModel(int teamId, TeamModel model)
         {
-            //TODO Add language and id changing
             var team = _teamRepository.Set()
+                .Include(t => t.Conference).ThenInclude(t=>t.Category)
+                .Include(t => t.TeamLocalizations)
+                .Include(t => t.Image)
+                .Include(t => t.Conference)
+                .Include(t => t.Location)
                 .FirstOrDefault(sa => sa.Id == teamId);
-            
-            var teamLocalization = _teamLocalizationRepository.Set()
-                .FirstOrDefault(sa => sa.LanguageId == team.Location.Id);
-            
-            /*var teamConference = _conferenceRepository.Set()
-                .FirstOrDefault(sa => sa.Id == team.Conference.Id);
-            
-            var teamCategory = _categoryRepository.Set()
-                .FirstOrDefault(sa => sa.Id == team.Conference.Category.Id);*/
-            var teamImage = _imageRepository.Set()
-                .FirstOrDefault(sa => sa.Id == team.Image.Id);
-
-            var teamLocation = _locationRepository.Set()
-                .FirstOrDefault(sa => sa.Id == team.Location.Id);
-
             
             if (team == null)
             {
                 throw new ArgumentException($"team {teamId} not found", nameof(teamId));
             }
-
             var newTeam = GetTeamFromModel(model);
-            if (model.LanguageId == null)
-            {
-                throw new ArgumentNullException($"You cant edit field Description and Name without parameter LanguageId",
-                    nameof(model.LanguageId));
-            }
-            var newTeamLocalization = GetTeamLocalizationFromModel(team, model);
             team.Show = model.Show != null ? newTeam.Show : team.Show;
             team.DateCreated = model.DateCreated != null ? newTeam.DateCreated : team.DateCreated;
-            if (teamLocalization != null)
+            if (model.ImageId != null)
             {
-                /*teamLocalization.LanguageId = model.LanguageId != null
-                    ? newTeamLocalization.LanguageId
-                    : teamLocalization.LanguageId;*/
-                teamLocalization.Name = model.Name != null ? newTeamLocalization.Name : teamLocalization.Name;
-                teamLocalization.Description = model.Description != null 
-                    ? newTeamLocalization.Description
-                    : teamLocalization.Description;
-            }
-            if (teamImage != null)
+                team.Image = _imageRepository.Set().FirstOrDefault(image => image.Id == model.ImageId) ?? 
+                             throw new Exception($"Image {model.ImageId} not found");
+            } 
+            if (model.LocationId != null)
             {
-                //teamImage.Id = model.ImageId != null ? newTeam.Image.Id : teamImage.Id ;
-                teamImage.Uri = model.ImageUri != null ? newTeam.Image.Uri : teamImage.Uri;
+                team.Location = _locationRepository.Set().FirstOrDefault(location => location.Id == model.LocationId) ?? 
+                                throw new Exception($"Location {model.LocationId} not found");
             }
-            if (teamLocation != null)
+            if (model.ConferenceId != null)
             {
-                //teamLocation.Id = model.LocationId != null ? newTeam.Location.Id : teamLocation.Id ;
-                teamLocation.Uri = model.LocationUri != null ? newTeam.Location.Uri : teamLocation.Uri;
+                team.Conference =
+                    _conferenceRepository.Set().FirstOrDefault(conference => conference.Id == model.ConferenceId) ?? 
+                    throw new Exception($"Conference {model.ConferenceId} not found");
+                
             }
-            //TODO Check code below and upper, I don't know how to change id, so...
-            /*if (teamConference != null)
-            {
-                teamConference.Id = model.ConferenceId != null ? newTeam.Conference.Id : teamConference.Id ;
-            }
-            if (teamCategory != null)
-            {
-                teamCategory.Id = model.CategoryId != null ? newTeam.Conference.Id : teamCategory.Id ;
-            }
-            _categoryRepository.Update(teamCategory);
-            _conferenceRepository.Update(teamConference);
-           
-            _locationRepository.Update(teamLocation);*/
             _teamRepository.Update(team);
-            _imageRepository.Update(teamImage);
-            _locationRepository.Update(teamLocation);
-            _teamLocalizationRepository.Update(teamLocalization);
+
+            return team;
         }
     }
 }

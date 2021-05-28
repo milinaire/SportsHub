@@ -10,23 +10,25 @@ namespace SportsHubBL.Interfaces
 {
     public interface IArticleService
     {
-        public IEnumerable<MainArticleModel> GetMainPageArticles();
-
         public ArticleLocalization GetArticleLocalization(int articleId, int languageId);
+
+        public IEnumerable<ArticleLocalization> GetArticleLocalizations(int articleId);
 
         public Article GetArticleById(int id);
 
-        public void AddArticleFromModel(ArticleModel model);
+        public IEnumerable<Article> GetAllArticles();
 
-        public void AddNewArticleLocalizationFromModel(ArticleModel model);
+        public Article AddArticleFromModel(ArticleModel model);
+
+        public ArticleLocalization AddNewArticleLocalizationFromModel(ArticleModel model);
 
         public void DeleteArticleById(int id);
 
         public void DeleteArticleLocalizationById(int articleId, int languageId);
 
-        public void UpdateArticleById(int id, ArticleModel model);
+        public Article UpdateArticleById(int id, ArticleModel model);
 
-        public void UpdateArticleLocalizationFromModel(ArticleModel model);
+        public ArticleLocalization UpdateArticleLocalizationFromModel(ArticleModel model);
 
         public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan);
 

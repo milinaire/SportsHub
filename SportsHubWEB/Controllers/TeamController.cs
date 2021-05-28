@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportsHubBL.Interfaces;
 using SportsHubBL.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using SportsHubDAL.Entities;
+using System.Text.Json;
 
 namespace SportsHubWEB.Controllers
 {
@@ -16,10 +14,11 @@ namespace SportsHubWEB.Controllers
     public class TeamController : ControllerBase
     {
         private readonly ITeamService _teamService;
-
-        public TeamController(ITeamService teamService)
+        private readonly ILanguageService _languageService;
+        public TeamController(ITeamService teamService, ILanguageService languageService)
         {
             _teamService = teamService;
+            _languageService = languageService;
         }
         
         
@@ -35,7 +34,8 @@ namespace SportsHubWEB.Controllers
         {
             try
             {
-                var result = _teamService.GetTeams(conferenceId,categoryId,teamId,locationId).Select(sa => _teamService.GenerateTeamModel(sa, locationId ?? 1));
+                var result = _teamService.GetTeams(conferenceId,categoryId,teamId,locationId)
+                    .Select(sa => _teamService.GenerateTeamModel(sa, locationId ?? 1));
                 if(result.IsNullOrEmpty())
                     return NotFound("Teams are not found");
                 return Ok(result);
@@ -44,14 +44,18 @@ namespace SportsHubWEB.Controllers
             {
                 return BadRequest("Teams are not found");
             }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         [HttpPost]
         public IActionResult AddTeamFromModel([FromBody] TeamModel model)
         {
             try
             {
-                _teamService.AddTeamFromModel(model);
-                return Ok($"Team {model.TeamId} successfully added");
+                var res = _teamService.AddTeamFromModel(model);
+                return Content(JsonSerializer.Serialize(_teamService.GetModel(res)), "application/json");
             }
             catch (ArgumentNullException)
             {
@@ -64,43 +68,6 @@ namespace SportsHubWEB.Controllers
 
         }
         
-        
-        [HttpPost("localization")]
-        public IActionResult AddNewTeamLocalizationFromModel([FromBody] TeamModel model)
-        {
-            try
-            {
-                _teamService.AddNewTeamLocalizationFromModel(model);
-                return Ok($"Team {model.TeamId} successfully added");
-            }
-            catch (ArgumentNullException)
-            {
-                return BadRequest($"Team {model.TeamId} was null");
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
-            }
-        }
-
-        [HttpPut]
-        public IActionResult UpdateTeamLocalizationFromModel([FromBody] TeamModel model)
-        {
-            try
-            {
-                _teamService.UpdateTeamLocalizationFromModel(model);
-                return Ok($"Team  {model.TeamId} successfully updated");
-            }
-            catch (ArgumentNullException)
-            {
-                return BadRequest($"Team {model.TeamId} was null");
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest($"Localization in language {model.LanguageId} for team {model.TeamId} already exists");
-            }
-        }
-        
         [HttpPut("{id:int}")]
         public IActionResult UpdateTeamFromModel([FromRoute] int id, [FromBody] TeamModel teamModel)
         {
@@ -110,8 +77,8 @@ namespace SportsHubWEB.Controllers
                 {
                     return BadRequest("Model was null");
                 }
-                _teamService.UpdateTeamFromModel(id, teamModel);
-                return Ok($"Team {id} successfully Updated");
+                var res = _teamService.UpdateTeamFromModel(id, teamModel);
+                return Content(JsonSerializer.Serialize(_teamService.GetModel(res)), "application/json");
             }
             catch (Exception e)
             {
@@ -131,25 +98,74 @@ namespace SportsHubWEB.Controllers
             {
                 return NotFound($"Team with id {id} is not found");
             }
-            
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         
-        [HttpDelete]
-        public IActionResult DeleteTeamLocalizationById([FromQuery] int teamId, int languageId)
+        [HttpGet("{id:int}/localization/{languageId:int}")]
+        public ActionResult<TeamLocalization> GetTeamLocalization([FromRoute] int id, [FromRoute] int languageId)
         {
             try
             {
-                _teamService.DeleteTeamLocalizationById(teamId,  languageId);
-                return Ok($"Team  {teamId} successfully deleted");
+                var teamLocalization = _teamService.GetTeamLocalization(id, languageId);
+                
+                return Content(JsonSerializer.Serialize(teamLocalization), "application/json");
             }
-            catch (ArgumentNullException)
+            catch (Exception e)
             {
-                return BadRequest($"Team {teamId} was null");
+                return BadRequest(e.Message);
             }
-            catch (ArgumentException)
+        }
+        
+        [HttpPost("{id:int}/localization/{languageId:int}")]
+        public ActionResult AddNewTeamLocalizationFromModel([FromRoute] int id, [FromRoute] int languageId, [FromBody] TeamModel model)
+        {
+            try
             {
-                return BadRequest($"Localization in language {languageId} for team {teamId} already exists");
+                var res  = _teamService.AddNewTeamLocalizationFromModel(model);
+                return  Content(JsonSerializer.Serialize(_teamService.GetModelLocalization(res)), "application/json");
             }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        
+        [HttpPut("{id:int}/localization/{languageId:int}")]
+        public ActionResult UpdateTeamLocalization([FromRoute] int id, [FromRoute] int languageId, [FromBody] TeamModel model)
+        {
+            if (model.LanguageId != languageId || model.TeamId != id)
+            {
+                return BadRequest("id\'s in the model and in the route have to be identical");
+            }
+
+            try
+            {
+                _teamService.UpdateTeamLocalizationFromModel(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}/localization/{languageId:int}")]
+        public ActionResult DeleteTeamLocalization([FromRoute] int id, [FromRoute] int languageId)
+        {
+            try
+            {
+                _teamService.DeleteTeamLocalizationById(id, languageId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
+            return Ok();
         }
         
     }

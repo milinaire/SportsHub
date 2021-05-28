@@ -17,28 +17,27 @@ namespace SportsHubBL.Services
         private readonly INoIdRepository<Language> _languageRepository;
         private readonly INoIdRepository<ArticleLocalization> _articleLocalizationRepository;
         private readonly IArticleModelService _articleModelService;
-        private readonly IRepository<MainArticle> _mainArticlesRepository;
 
         public ArticleService(
             INoIdRepository<Article> articleRepository,
             INoIdRepository<Language> languageRepository,
             INoIdRepository<ArticleLocalization> articleLocalizationRepository,
-            IArticleModelService articleModelService,
-            IRepository<MainArticle> mainArticlesRepository
+            IArticleModelService articleModelService
             )
         {
             _articleModelService = articleModelService;
             _articleRepository = articleRepository;
             _languageRepository = languageRepository;
             _articleLocalizationRepository = articleLocalizationRepository;
-            _mainArticlesRepository = mainArticlesRepository;
         }
 
-        public void AddArticleFromModel(ArticleModel model)
+        public Article AddArticleFromModel(ArticleModel model)
         {
             var article = _articleModelService.GetArticleFromModel(model);
 
             _articleRepository.Insert(article);
+
+            return article;
         }
 
         public void DeleteArticleById(int id)
@@ -47,19 +46,19 @@ namespace SportsHubBL.Services
 
             if (article == null)
             {
-                throw new ArgumentException($"Article {id} not found", nameof(id));
+                throw new Exception($"Article {id} not found");
             }
 
             _articleRepository.Delete(article);
         }
 
-        public void UpdateArticleById(int id, ArticleModel model)
+        public Article UpdateArticleById(int id, ArticleModel model)
         {
             var originalArticle = _articleRepository.Set().FirstOrDefault(a => a.Id == id);
 
             if (originalArticle == null)
             {
-                throw new ArgumentException($"can\'t find article {id}", nameof(id));
+                throw new Exception($"can\'t find article {id}");
             }
 
             var article = _articleModelService.GetArticleFromModel(model);
@@ -70,6 +69,8 @@ namespace SportsHubBL.Services
             originalArticle.Content = article.Content;
 
             _articleRepository.Update(originalArticle);
+
+            return originalArticle;
         }
 
         public Article GetArticleById(int id)
@@ -77,11 +78,6 @@ namespace SportsHubBL.Services
             var article = _articleRepository.Set().FirstOrDefault(a => a.Id == id);
 
             return article;
-        }
-
-        public IEnumerable<MainArticleModel> GetMainPageArticles()
-        {
-            return _mainArticlesRepository.Set().Select(ma => _articleModelService.GenerateMainArticleModel(ma));
         }
 
         public IEnumerable<Article> GetMostCommentedArticles(TimeSpan timeSpan)
@@ -100,44 +96,46 @@ namespace SportsHubBL.Services
 
             if (article == null)
             {
-                throw new ArgumentException("article was null", nameof(articleId));
+                throw new Exception("article was null");
             }
 
             var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
             if (language == null)
             {
-                throw new ArgumentException("language was null", nameof(languageId));
+                throw new Exception("language was null");
             }
 
             return _articleLocalizationRepository.Set().FirstOrDefault(al => al.Article == article && al.Language == language);
         }
 
-        public void AddNewArticleLocalizationFromModel(ArticleModel model)
+        public ArticleLocalization AddNewArticleLocalizationFromModel(ArticleModel model)
         {
-            var article = _articleModelService.GetArticleFromModel(model);
+            var article = GetArticleById(model.ArticleId);
 
             var articleLocalization = _articleModelService.GetArticleLocalizationFromModel(article, model);
 
             if (_articleLocalizationRepository.Set()
                 .Any(al => al.ArticleId == model.ArticleId && al.LanguageId == model.LanguageId))
             {
-                throw new ArgumentException($"localization in language {model.LanguageId} for article {model.ArticleId} already exists", nameof(model));
+                throw new Exception($"localization in language {model.LanguageId} for article {model.ArticleId} already exists");
             }
 
             _articleLocalizationRepository.Insert(articleLocalization);
+
+            return articleLocalization;
         }
 
-        public void UpdateArticleLocalizationFromModel(ArticleModel model)
+        public ArticleLocalization UpdateArticleLocalizationFromModel(ArticleModel model)
         {
-            var article = _articleModelService.GetArticleFromModel(model);
+            var article = GetArticleById(model.ArticleId);
 
             var originalArticleLocalization = _articleLocalizationRepository.Set()
                 .FirstOrDefault(al => al.ArticleId == article.Id && al.LanguageId == model.LanguageId);
 
             if (originalArticleLocalization == null)
             {
-                throw new ArgumentException($"no previous localization in language {model.LanguageId} of article {model.ArticleId}", nameof(model));
+                throw new Exception($"no previous localization in language {model.LanguageId} of article {model.ArticleId}");
             }
 
             var newArticleLocalization = _articleModelService.GetArticleLocalizationFromModel(article, model);
@@ -148,6 +146,8 @@ namespace SportsHubBL.Services
             originalArticleLocalization.Alt = newArticleLocalization.Alt;
 
             _articleLocalizationRepository.Update(originalArticleLocalization);
+
+            return originalArticleLocalization;
         }
 
         public void DeleteArticleLocalizationById(int articleId, int languageId)
@@ -157,10 +157,20 @@ namespace SportsHubBL.Services
 
             if (articleLocalization == null)
             {
-                throw new ArgumentException($"localization for article {articleId} in language {languageId} not found");
+                throw new Exception($"localization for article {articleId} in language {languageId} not found");
             }
 
             _articleLocalizationRepository.Delete(articleLocalization);
+        }
+
+        public IEnumerable<ArticleLocalization> GetArticleLocalizations(int articleId)
+        {
+            return _articleLocalizationRepository.Set().Where(al => al.ArticleId == articleId);
+        }
+
+        public IEnumerable<Article> GetAllArticles()
+        {
+            return _articleRepository.Set().ToList();
         }
     }
 }

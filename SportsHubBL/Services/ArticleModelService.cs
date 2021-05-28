@@ -13,21 +13,22 @@ namespace SportsHubBL.Services
 {
     public class ArticleModelService : IArticleModelService
     {
-        private readonly INoIdRepository<Article> _articleRepository;
-        private readonly INoIdRepository<Language> _languageRepository;
+        private readonly IRepository<Article> _articleRepository;
+        private readonly IRepository<Language> _languageRepository;
         private readonly INoIdRepository<Content> _contentRepository;
         private readonly INoIdRepository<Category> _categoryRepository;
         private readonly INoIdRepository<Image> _imageRepository;
-        private readonly IRepository<MainArticle> _mainArticleRepository;
+        private readonly ILanguageService _languageService;
+        private readonly INoIdRepository<MainArticle> _mainArticleRepository;
 
         public ArticleModelService(
-            INoIdRepository<Language> languageRepository,
+            IRepository<Language> languageRepository,
             INoIdRepository<Content> contentRepository,
             INoIdRepository<Category> categoryRepository,
             INoIdRepository<Image> imageRepository,
-            INoIdRepository<Article> articleRepository, 
-            IRepository<MainArticle> mainArticleRepository
-            )
+            IRepository<Article> articleRepository,
+            INoIdRepository<MainArticle> mainArticleRepository
+, ILanguageService languageService)
         {
             _languageRepository = languageRepository;
             _contentRepository = contentRepository;
@@ -35,6 +36,7 @@ namespace SportsHubBL.Services
             _imageRepository = imageRepository;
             _articleRepository = articleRepository;
             _mainArticleRepository = mainArticleRepository;
+            _languageService = languageService;
         }
 
         public Article GetArticleFromModel(ArticleModel model)
@@ -42,11 +44,6 @@ namespace SportsHubBL.Services
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
-            }
-
-            if (_articleRepository.Set().Any(a => a.Id == model.ArticleId))
-            {
-                throw new ArgumentException($"article id {model.ArticleId} is already taken", nameof(model));
             }
 
             var category = _categoryRepository.Set().FirstOrDefault(c => c.Id == model.CategoryId);
@@ -75,6 +72,7 @@ namespace SportsHubBL.Services
 
             return new Article
             {
+                Id = model.ArticleId,
                 Image = image,
                 Category = category,
                 Content = content
@@ -87,7 +85,7 @@ namespace SportsHubBL.Services
 
             if (language == null)
             {
-                throw new ArgumentException($"can\'t find language {model.LanguageId}", nameof(model));
+                throw new Exception($"can\'t find language {model.LanguageId}");
             }
 
             return new ArticleLocalization
@@ -101,7 +99,7 @@ namespace SportsHubBL.Services
             };
         }
 
-        public ArticleModel GetArticleModel(Article article, Language language)
+        public ArticleModel GetLocalizedArticleModel(Article article, Language language)
         {
             if (article == null)
             {
@@ -111,6 +109,59 @@ namespace SportsHubBL.Services
             if (language == null)
             {
                 throw new ArgumentNullException(nameof(language));
+            }
+
+            var model = FormBaseArticleModel(article);
+            try
+            {
+                model = LocalizeArticleModel(model, article, language);
+            }
+            catch (Exception)
+            {
+                model = LocalizeArticleModel(model, article, _languageService.DefaultSiteLanguage);
+            }
+
+            return model;
+        }
+
+        private ArticleModel LocalizeArticleModel(ArticleModel model, Article article, Language language)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
+            }
+
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
+
+            if (article.ArticleLocalizations == null)
+            {
+                article = _articleRepository.Set().Include(a => a.ArticleLocalizations).FirstOrDefault(a => a == article);
+            }
+
+            model.LanguageId = language.Id;
+
+            var articleLocalization = article.ArticleLocalizations.FirstOrDefault(at => at.Language == language);
+
+            if (articleLocalization == null)
+            {
+                throw new Exception($"Localization in language {language.Id} for article {article.Id} not found");
+            }
+            model.Headline = articleLocalization.Headline;
+            model.Text = articleLocalization.Text;
+            model.Caption = articleLocalization.Caption;
+            model.Alt = articleLocalization.Alt;
+
+            return model;
+        }
+
+        private ArticleModel FormBaseArticleModel(Article article)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
             }
 
             if (article.Content == null
@@ -131,41 +182,41 @@ namespace SportsHubBL.Services
                 }
             }
 
-            var articleLocalization = article.ArticleLocalizations.FirstOrDefault(at => at.Language == language);
-
-            if (articleLocalization == null)
-            {
-                throw new ArgumentException("can\'t find localization for article");
-            }
-
             return new ArticleModel
             {
                 ArticleId = article.Id,
-                LanguageId = language.Id,
-                ImageId = article.Image.Id,
-                ImageUri = article.Image.Uri,
-                CategoryId = article.Category.Id,
-                ContentId = article.Content.Id,
-                IsPublished = article.Content.IsPublished,
-                DatePublished = article.Content.Datetime,
-                ShowComments = article.Content.ShowComments,
-                Headline = articleLocalization.Headline,
-                Text = articleLocalization.Text,
-                Caption = articleLocalization.Caption,
-                Alt = articleLocalization.Alt
+                ImageId = article.Image?.Id,
+                ImageUri = article.Image?.Uri,
+                CategoryId = article.Category?.Id,
+                ContentId = article.Content?.Id,
+                IsPublished = article.Content?.IsPublished,
+                DatePublished = article.Content?.Datetime,
+                ShowComments = article.Content?.ShowComments,
             };
         }
 
-        public ArticleModel GenerateArticleModel(Article article, int languageId)
+        public ArticleModel GetLocalizedArticleModel(Article article, int languageId)
         {
             var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
 
             if (language == null)
             {
-                throw new ArgumentException($"language {languageId} not found", nameof(language));
+                throw new Exception($"language {languageId} not found");
             }
 
-            return this.GetArticleModel(article, language);
+            return this.GetLocalizedArticleModel(article, language);
+        }
+
+        public ArticleModel GetLocalizedArticleModel(int articleId, int languageId)
+        {
+            var article = _articleRepository.GetById(articleId);
+
+            if (article == null)
+            {
+                throw new Exception($"article {articleId} not found");
+            }
+
+            return this.GetLocalizedArticleModel(article, languageId);
         }
 
         public MainArticleModel GenerateMainArticleModel(MainArticle mainArticle)
@@ -175,21 +226,23 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(mainArticle));
             }
 
-            if (mainArticle.Article == null)
-            {
-                mainArticle = _mainArticleRepository.Set().Include(ma => ma.Article).FirstOrDefault(ma => ma == mainArticle);
-                if (mainArticle.Article == null)
-                {
-                    throw new ArgumentException($"main article {mainArticle.Id} does not contain an article");
-                }
-            }
-
             return new MainArticleModel
             {
-                Id = mainArticle.Id,
-                ArticleId = mainArticle.Article.Id,
+                ArticleId = mainArticle.ArticleId,
                 Show = mainArticle.Show
             };
+        }
+
+        public ArticleModel GetBaseArticleModel(Article article)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
+            }
+
+            var model = FormBaseArticleModel(article);
+
+            return model;
         }
     }
 }

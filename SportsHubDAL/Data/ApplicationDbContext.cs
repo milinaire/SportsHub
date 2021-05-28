@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using SportsHubDAL.Constants;
 using SportsHubDAL.Entities;
 
 
@@ -96,6 +97,9 @@ namespace SportsHubDAL.Data
                 .HasKey(e => new { e.OptionId, e.UserId });
             modelBuilder.Entity<FollowedTeam>()
                .HasKey(e => new { e.TeamId, e.UserId });
+
+            modelBuilder.Entity<ApplicationUser>().Property(au => au.PreferredLanguage)
+                .HasDefaultValue(GlobalSiteConstants.EnglishLanguageId);
         }
     }
 

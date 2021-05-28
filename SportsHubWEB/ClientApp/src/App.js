@@ -1,24 +1,59 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
-import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
-import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
+import React from "react";
+import {connect} from "react-redux";
+import {getLanguages, setCurrentLanguage, setIsInitializing} from "./redux/languages/languageActionCreator";
+import {getNavigation} from "./redux/navigation/navigationActionCreator";
+import {Route} from "react-router";
+import AdminLayoutContainer from "./containers/Admin/AdminLayout/AdminLayout";
+import {Switch} from "react-router-dom";
+import UserLayoutContainer from "./containers/User/UserLayout/UserLayout";
+import {ApplicationPaths} from "./api-authorization/ApiAuthorizationConstants";
+import ApiAuthorizationRoutes from "./api-authorization/ApiAuthorizationRoutes";
+import Loader from "./CustomLoader/Loader";
 
-import './custom.css'
 
-export default class App extends Component {
-  static displayName = App.name;
+class App extends React.Component {
+  async componentDidMount() {
+    await this.props.getLanguages()
+    await this.props.setCurrentLanguage(localStorage.i18nextLng)
+    await this.props.setIsInitializing(false)
+    await this.props.getNavigation(this.props.languageReducer.currentLanguage.id)
+  }
 
-  render () {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.languageReducer.currentLanguage.id !== this.props.languageReducer.currentLanguage.id) {
+      this.props.getNavigation(this.props.languageReducer.currentLanguage.id)
+    }
+  }
+
+  render() {
     return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <AuthorizeRoute path='/fetch-data' component={FetchData} />
-        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-      </Layout>
-    );
+      !this.props.languageReducer.isInitializing?
+      <Switch>
+        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
+        <Route path="/admin">
+          <AdminLayoutContainer/>
+        </Route>
+        <Route path="/">
+          <UserLayoutContainer/>
+        </Route>
+      </Switch>:<Loader/>
+    )
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    languageReducer: state.languageReducer
+    ,
+  }
+}
+export default connect(mapStateToProps,
+  {
+    getLanguages,
+    getNavigation,
+    setCurrentLanguage,
+    setIsInitializing
+  }
+)(App)
+
+

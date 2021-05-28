@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SportsHubBL.Common;
 using SportsHubBL.Interfaces;
 using SportsHubBL.Services;
 using SportsHubDAL.Data;
@@ -49,14 +50,27 @@ namespace SportsHubWEB
             services.AddScoped(typeof(INoIdRepository<>),typeof(SportsHubBL.Common.NoIdRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(SportsHubBL.Common.Repository<>));
 
+            services.AddScoped<VideoRepository, VideoRepository>();
+            services.AddScoped<ViewsRepository, ViewsRepository>();
+            services.AddScoped<ArticleRepository, ArticleRepository>();
+            services.AddScoped<CommentRepository, CommentRepository>();
+
             services.AddScoped<IArticleModelService, ArticleModelService>();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            
 
             services.AddScoped<ISportArticleService, SportArticleService>();
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IAdvertisingService, AdvertisingService>();
+            services.AddScoped<IConferenceService, ConferenceService>();
 
+            services.AddScoped<IBannerService, BannerService>();
+            services.AddScoped<IBreakDownService, BreakDownService>();
+            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IMainArticleService, MainArticleService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 

@@ -14,17 +14,19 @@ namespace SportsHubBL.Services
     public class SportArticleService: ISportArticleService
     {
         private readonly IArticleModelService _articleModelService;
+        private readonly IArticleService _articleService;
         private readonly IRepository<Team> _teamRepository;
         private readonly INoIdRepository<SportArticle> _sportArticleRepository;
 
         public SportArticleService(
             IArticleModelService articleModelService,
             INoIdRepository<SportArticle> sportArticleRepository,
-            IRepository<Team> teamRepository)
+            IRepository<Team> teamRepository, IArticleService articleService)
         {
             _articleModelService = articleModelService;
             _sportArticleRepository = sportArticleRepository;
             _teamRepository = teamRepository;
+            _articleService = articleService;
         }
 
         public SportArticle GetConnectedSportArticle(Article article)
@@ -37,34 +39,46 @@ namespace SportsHubBL.Services
             return _sportArticleRepository.Set().Include(sa => sa.Article).FirstOrDefault(sa => sa.Article == article);
         }
 
+        public SportArticleModel GetBaseModel(SportArticle article)
+        {
+            return new()
+            {
+                ArticleId = article.ArticleId,
+                TeamId = article.TeamId,
+            };
+        }
+
         public SportArticle GetConnectedSportArticle(int articleId)
         {
             return _sportArticleRepository.Set().FirstOrDefault(sa => sa.ArticleId == articleId);
         }
 
-        public void AddSportArticleFromModel(SportArticleModel model)
+        public SportArticle AddSportArticleFromModel(SportArticleModel model)
         {
             var sportArticle = GetSportArticleFromModel(model);
 
             _sportArticleRepository.Insert(sportArticle);
+
+            return sportArticle;
         }
 
-        public void UpdateSportArticleFromModel(int sportArticleId, SportArticleModel model)
+        public SportArticle UpdateSportArticleFromModel(int sportArticleId, SportArticleModel model)
         {
             var sportArticle = _sportArticleRepository.Set()
-                .FirstOrDefault(sa => sa.ArticleId == model.ArticleId);
+                .FirstOrDefault(sa => sa.ArticleId == sportArticleId);
 
             if (sportArticle == null)
             {
-                throw new ArgumentException($"SportArticle {sportArticleId} not found", nameof(sportArticleId));
+                throw new Exception($"SportArticle {sportArticleId} not found");
             }
 
             var newSportArticle = GetSportArticleFromModel(model);
 
-            sportArticle.ArticleId = newSportArticle.ArticleId;
             sportArticle.TeamId = newSportArticle.TeamId;
 
             _sportArticleRepository.Update(sportArticle);
+
+            return sportArticle;
         }
 
         public void DeleteSportArticle(int sportArticleId)
@@ -74,7 +88,7 @@ namespace SportsHubBL.Services
 
             if (sportArticle == null)
             {
-                throw new ArgumentException($"SportArticle {sportArticleId} not found", nameof(sportArticleId));
+                throw new Exception($"SportArticle {sportArticleId} not found");
             }
 
             _sportArticleRepository.Delete(sportArticle);
@@ -147,9 +161,9 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(sportArticle));
             }
 
-            var articleModel = _articleModelService.GenerateArticleModel(sportArticle.Article, languageId);
+            var articleModel = _articleModelService.GetLocalizedArticleModel(sportArticle.Article, languageId);
 
-            var sportArticleModel = LocalizeSportArticleModel((SportArticleModel)articleModel, sportArticle, languageId);
+            var sportArticleModel = LocalizeSportArticleModel(new SportArticleModel(articleModel), sportArticle, languageId);
 
             return sportArticleModel;
         }
@@ -161,16 +175,18 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var article = _articleModelService.GetArticleFromModel(model);
+            var article = _articleService.GetArticleById(model.ArticleId)?? _articleModelService.GetArticleFromModel(model);
 
             var team = _teamRepository.Set()
                 .FirstOrDefault(t => t.Id == model.TeamId) ??
-                throw new ArgumentException($"team {model.TeamId} doesn\'t exist", nameof(model));
+                throw new Exception($"team {model.TeamId} doesn\'t exist");
 
             return new SportArticle
             {
+                ArticleId = model.ArticleId,
                 Article = article,
-                Team = team
+                Team = team,
+                TeamId = team.Id
             };
         }
     }

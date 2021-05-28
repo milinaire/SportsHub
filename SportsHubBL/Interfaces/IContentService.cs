@@ -1,15 +1,23 @@
 ﻿using SportsHubBL.Enums;
 using SportsHubBL.Models;
+using SportsHubDAL.Entities;
+using System.Collections.Generic;
 
 namespace SportsHubBL.Interfaces
 {
     public interface IContentService
     {
-        public ContentModel GetContent(int itemId, ContentItemType itemType);
+        public Content GetContentById(int contentId);
 
-        public void AddContentFromModel(ContentModel model, int itemId, ContentItemType itemType);
+        public IEnumerable<Content> GetAllContent();
 
-        public void UpdateContentFromModel(ContentModel model, int itemId, ContentItemType itemType);
+        public ContentModel GetBaseContentModel(Content content);
+
+        public ContentModel GetContentModel(int itemId, ContentItemType itemType);
+
+        public Content AddContentFromModel(ContentModel model, int itemId, ContentItemType itemType);
+
+        public Content UpdateContentFromModel(ContentModel model, int itemId, ContentItemType itemType);
 
         public void DeleteContent(int contentId);
 

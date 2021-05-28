@@ -1,0 +1,75 @@
+
+.laguages-block{ 
+    height:auto;
+    width:400px;
+    
+}
+
+.language-head{
+    background-color:rgba(242, 242, 242);
+    height:60px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sub-language-head{
+    height:60px;
+    width:40%; 
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.language-head>.sub-language-head>p{
+    margin: 0; 
+    padding: 0;
+    font-weight: bold;
+    color:rgba(64,76,93);
+    font-size: 15px;
+ 
+}
+.sub-language-block>.sub-sub-language-block>p{
+    margin: 0; 
+    padding: 0;
+    font-weight: bold;
+    color:rgba(64,76,93);
+    font-size: 15px;
+ 
+}
+
+.sub-language-block{
+    height:60px;
+    border-right:#c8c7c7 solid 1px;
+    border-bottom:#c8c7c7 solid 1px;
+    border-left:#c8c7c7 solid 1px;
+    color:rgba(64,76,93);
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-sub-language-block{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:40%; 
+}
+
+.switch-icon-language-block{
+    width:90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.switch-icon-language-block>label{
+    margin-top:16px;
+
+}
+.custom-switch>.react-switch-bg{
+    border:1px rgba(64,76,93) solid;
+  
+}
+div.sub-language-block:hover{
+    border: none;
+    box-shadow:0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+}

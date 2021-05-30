@@ -1,5 +1,17 @@
 import React, {Component, Fragment} from "react";
 import {NavLink} from "react-router-dom";
+import { RiChatCheckLine } from "react-icons/ri";
+import { MdLanguage } from "react-icons/md";
+import { RiLayoutBottomLine } from "react-icons/ri";
+import { MdShare } from "react-icons/md";
+import { FaUserFriends } from "react-icons/fa";
+import { CgMenuBoxed } from "react-icons/cg";
+import { RiDashboardLine } from "react-icons/ri";
+import { RiTeamLine } from "react-icons/ri";
+import { BiBriefcase } from "react-icons/bi";
+import { RiAdvertisementLine } from "react-icons/ri";
+
+import  "./AdminNavbar.css";
 
 export class AdminNavMenu extends Component {
   render() {
@@ -8,52 +20,52 @@ export class AdminNavMenu extends Component {
         <div className="admin-nav-menu">
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/surveys">
               <div className="admin-nav-menu-item">
-                <b>Surveys</b>
+                <RiChatCheckLine className="navIcon"/>
               </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/banners">
             <div className="admin-nav-menu-item">
-              <b>Banners</b>
+              <CgMenuBoxed className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/languages">
             <div className="admin-nav-menu-item">
-              <b>Languages</b>
+              <MdLanguage className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/footer">
             <div className="admin-nav-menu-item">
-              <b>Footer</b>
+              <RiLayoutBottomLine className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/social_networks">
             <div className="admin-nav-menu-item">
-              <b>Social Networks</b>
+              <MdShare className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/users">
             <div className="admin-nav-menu-item">
-              <b>Users</b>
+              <FaUserFriends className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/information_architecture">
             <div className="admin-nav-menu-item">
-              <b>IA</b>
+              <RiDashboardLine className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/teams">
             <div className="admin-nav-menu-item">
-              <b>Teams</b>
+              <RiTeamLine className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/news_partners">
             <div className="admin-nav-menu-item">
-              <b>News Partners</b>
+              <BiBriefcase  className="navIcon"/>
             </div>
           </NavLink>
           <NavLink className="admin-nav-menu-item-not-active" activeClassName="admin-nav-menu-item-active" to="/admin/advertising">
             <div className="admin-nav-menu-item">
-              <b>Advertising</b>
+              <RiAdvertisementLine className="navIcon"/>
             </div>
           </NavLink>
         </div>

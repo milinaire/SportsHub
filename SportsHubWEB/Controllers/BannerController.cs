@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
+using System.Text.Json;
 
 namespace SportsHubWEB.Controllers
 {
@@ -21,7 +22,7 @@ namespace SportsHubWEB.Controllers
             _bannerService = bannerService;
         }
         [HttpPost]
-        public ActionResult AddBanner([FromBody] BannerModel model)
+        public ActionResult<BannerModel> AddBanner([FromBody] BannerModel model)
         {
 
             if (model == null)
@@ -30,14 +31,14 @@ namespace SportsHubWEB.Controllers
             }
             try
             {
-                _bannerService.AddBannerFromModel(model);
-                _bannerService.AddNewBannerLocalizationFromModel(model);
+                var res = _bannerService.AddBannerFromModel(model);
+                return _bannerService.GetBaseBannerModel(res);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            return StatusCode(201);
+            
         }
 
 
@@ -99,22 +100,32 @@ namespace SportsHubWEB.Controllers
             (
             [FromQuery] int? categoryId,
             [FromQuery] int? bannerId,
-            [FromQuery] bool? IsClosed
+            [FromQuery] bool? IsClosed,
+            [FromQuery] int? languageId = null
             )
         {
-            int? languageId = 1;
-            try
+            var result = _bannerService.GetBanners(categoryId, bannerId, IsClosed);
+             try
             {
-                var result = _bannerService.GetBanners( categoryId, bannerId, IsClosed).Select(sa => _bannerService.GenerateBannerModel(sa, languageId ?? 1));
-                if (result.IsNullOrEmpty())
-                    return NotFound("Banners are not found");
-                return Ok(result);
+                IEnumerable<BannerModel> models;
+
+                if (languageId == null)
+                {
+                    models = result.Select(a => _bannerService.GetBaseBannerModel(a));
+                }
+                else
+                {
+                    models = result.Select(sa => _bannerService.GenerateBannerModel(sa, (int)languageId ));
+                }
+                return Ok(models);
             }
-            catch (ArgumentException)
+            catch (Exception e)
             {
-                return BadRequest("Banners are not found");
+                return BadRequest(e.Message);
             }
         }
+
+        
         [HttpPut("localization")]
         public ActionResult UpdateBannerLocalizationFromModel([FromBody] BannerModel model)
         {

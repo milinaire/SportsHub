@@ -1,0 +1,19 @@
+.allPageWrapper {
+    width: 100%;
+
+
+}
+
+.contentWrapper {
+    width: 100%;
+    padding-left: 100px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.content{
+    padding: 5%;
+    max-width: 1200px;
+    width: 100%;
+    box-sizing: content-box;
+}

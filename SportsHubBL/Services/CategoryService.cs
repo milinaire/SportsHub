@@ -14,30 +14,38 @@ namespace SportsHubBL.Services
         
         private readonly INoIdRepository<Category> _categoryRepository;
         private readonly INoIdRepository<CategoryLocalization> _categoryLocalizationRepository;
-        private readonly IRepository<Language> _languageRepository;
+        private readonly ILanguageService _languageService;
         public CategoryService(
             INoIdRepository<Category> categoryRepository,
             INoIdRepository<CategoryLocalization> categoryLocalizationRepository,
-            IRepository<Language> languageRepository)
+            ILanguageService languageService)
         {
             _categoryRepository = categoryRepository;
             _categoryLocalizationRepository = categoryLocalizationRepository;
-            _languageRepository = languageRepository;
+            _languageService = languageService;
         }
 
         public IEnumerable<CategoryModel> GetCategories(int languageId)
         {
-            var language = _languageRepository.GetById(languageId);
+            var language = _languageService.GetLanguage(languageId);
             var query = (from a in _categoryRepository.Set()
                 select a).ToList();
             var models = query.Select(ca => GetCategoryModel(ca ,language));
             return models;
         }
 
-        public void AddCategoryFromModel(CategoryModel model)
+        public Category AddCategoryFromModel(CategoryModel model)
         {
             var category = GetCategoryFromModel(model);
+
+            if (_categoryRepository.Set().Any(a => a.Id == category.Id))
+            {
+                throw new ArgumentException($"Category with id {category.Id} is already taken", nameof(model));
+            }
+
             _categoryRepository.Insert(category);
+
+            return category;
         }
         
         private Category GetCategoryFromModel(CategoryModel model)
@@ -47,10 +55,7 @@ namespace SportsHubBL.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (_categoryRepository.Set().Any(a => a.Id == model.Id))
-            {
-                throw new ArgumentException($"Category with id {model.Id} is already taken", nameof(model));
-            }
+
             return new Category
             {
                 IsEditable = model.IsEditable ?? default,
@@ -59,9 +64,25 @@ namespace SportsHubBL.Services
             
         }
         
-        public void AddNewCategoryLocalizationFromModel(CategoryModel model)
+        public CategoryLocalization AddNewCategoryLocalizationFromModel(CategoryModel model)
         {
-            throw new NotImplementedException();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            var category = _categoryRepository.Set().FirstOrDefault(c => c.Id == model.Id);
+
+            if (category == null)
+            {
+                throw new Exception($"category {model.Id} not found");
+            }
+
+            var categoryLocalization = GetCategoryLocalizationFromModel(category, model);
+
+            _categoryLocalizationRepository.Insert(categoryLocalization);
+
+            return categoryLocalization;
         }
 
         public CategoryModel GetCategoryModel(Category category, Language language)
@@ -88,7 +109,9 @@ namespace SportsHubBL.Services
                 }
             }
             
-            var categoryLocalization = category.CategoryLocalizations.FirstOrDefault(at => at.Language == language);
+            var categoryLocalization = category.CategoryLocalizations
+                .FirstOrDefault(at => at.Language == language)??
+                category.CategoryLocalizations.FirstOrDefault(cl => cl.LanguageId == _languageService.DefaultSiteLanguageId);
 
             
             return new CategoryModel
@@ -102,7 +125,7 @@ namespace SportsHubBL.Services
 
         public CategoryModel GenerateCategoryModel(Category category, int languageId)
         {
-            var language = _languageRepository.Set().FirstOrDefault(l => l.Id == languageId);
+            var language = _languageService.GetLanguage(languageId);
 
             if (language == null)
             {
@@ -136,7 +159,7 @@ namespace SportsHubBL.Services
 
         public void DeleteCategoryById(int id)
         {
-            var category = _categoryRepository.Set().FirstOrDefault(a => a.Id == id);
+            var category =_categoryRepository.Set().FirstOrDefault(a => a.Id == id);
 
             if (category == null)
             {
@@ -148,36 +171,122 @@ namespace SportsHubBL.Services
 
         public void DeleteCategoryLocalizationById(int categoryId, int languageId)
         {
-            var categoryLocalization = _categoryLocalizationRepository.Set()
-                .FirstOrDefault(al => al.CategoryId == categoryId && al.LanguageId == languageId);
+            var category = _categoryRepository.Set().Include(c => c.CategoryLocalizations).FirstOrDefault(c => c.Id == categoryId);
+            if (category == null)
+            {
+                throw new Exception($"category {categoryId} not found");
+            }
+
+            var localization = category.CategoryLocalizations.FirstOrDefault(cl => cl.LanguageId == languageId);
+
+            if (localization == null)
+            {
+                throw new Exception($"localization for category {categoryId} in language {languageId} not found");
+            }
+
+            _categoryLocalizationRepository.Delete(localization);
+        }
+
+        public Category UpdateCategoryFromModel(int categoryId, CategoryModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            var category = _categoryRepository.Set().FirstOrDefault(c => c.Id == model.Id);
+
+            if (category == null)
+            {
+                throw new Exception($"category {categoryId} not found");
+            }
+
+            var updatedCategory = GetCategoryFromModel(model);
+
+            category.IsEditable = updatedCategory.IsEditable;
+            category.Show = updatedCategory.Show;
+
+            _categoryRepository.Update(category);
+
+            return category;
+        }
+
+        private CategoryLocalization GetCategoryLocalizationFromModel(Category category, CategoryModel model)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            var language = _languageService.GetLanguage((int)model.LanguageId);
+
+            if (language == null)
+            {
+                throw new Exception($"can\'t find language {model.LanguageId}");
+            }
+
+            return new CategoryLocalization
+            {
+                Category = category,
+                CategoryId = category.Id,
+                Language = language,
+                LanguageId = language.Id,
+                Name = model.Name
+            };
+        }
+
+        public CategoryLocalization UpdateCategoryLocalizationFromModel(CategoryModel model)
+        {
+            var category = _categoryRepository.Set().Include(c => c.CategoryLocalizations).FirstOrDefault(c => c.Id == model.Id);
+
+            if (category == null)
+            {
+                throw new Exception($"category {model.Id} not found");
+            }
+
+            var categoryLocalization = category.CategoryLocalizations.FirstOrDefault(cl => cl.LanguageId == model.LanguageId);
 
             if (categoryLocalization == null)
             {
-                throw new Exception($"localization for conference {categoryId} in language {languageId} not found");
+                throw new Exception($"no previous localization in language {model.LanguageId} of category {model.Id}");
             }
 
-            _categoryLocalizationRepository.Delete(categoryLocalization);
+            var newLocalization = GetCategoryLocalizationFromModel(category, model);
+
+            categoryLocalization.Name = newLocalization.Name;
+
+            _categoryLocalizationRepository.Update(categoryLocalization);
+
+            return categoryLocalization;
         }
 
-        public void UpdateCategoryFromModel(int categoryId, CategoryModel model)
+        public Category GetCategoryById(int id)
         {
-            var originalCategory = _categoryRepository.Set().FirstOrDefault(a => a.Id == categoryId);
+            return _categoryRepository.Set().FirstOrDefault(c => c.Id == id);
+        }
 
-            if (originalCategory == null)
+        public CategoryLocalization GetCategoryLocalization(int categoryId, int languageId)
+        {
+            var category = _categoryRepository.Set()
+                .Include(c => c.CategoryLocalizations)
+                .FirstOrDefault(c => c.Id == categoryId);
+
+            if (category == null)
             {
-                throw new Exception($"can\'t find category {categoryId}");
+                throw new Exception($"category {categoryId} not found");
             }
-            var category = GetCategoryFromModel(model);
 
-            originalCategory.IsEditable = model.IsEditable != null ? category.IsEditable : originalCategory.IsEditable;
-            originalCategory.Show = model.Show != null ? category.Show : originalCategory.Show;
-
-            _categoryRepository.Update(originalCategory);
+            return category.CategoryLocalizations.FirstOrDefault(c => c.LanguageId == languageId);
         }
 
-        public void UpdateCategoryLocalizationFromModel(CategoryModel model)
+        public IEnumerable<CategoryLocalization> GetAllCategoryLocalizations(int categoryId)
         {
-            throw new NotImplementedException();
+            return _categoryLocalizationRepository.Set().Where(cl => cl.CategoryId == categoryId);
         }
     }
 }

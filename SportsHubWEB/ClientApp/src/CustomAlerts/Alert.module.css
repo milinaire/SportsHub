@@ -1,0 +1,57 @@
+.Alert {
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 500px;
+    height: 100px;
+    display: flex;
+
+}
+
+.AlertContent {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AlertContentTxt {
+    font-weight: normal;
+}
+
+.AlertHeaderTxt {
+    font-weight: bold;
+}
+
+.AlertCloseBtn {
+    margin-bottom: 60px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    font-size: 18px;
+    background: white;
+    color: #4e555b;
+}
+
+.AlertCircle {
+    border-radius: 50%;
+    margin: 20px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+}
+
+.Yellow {
+    background: cornflowerblue;
+}
+
+.Green {
+    background: green;
+}
+
+.Red {
+    background: red;
+}

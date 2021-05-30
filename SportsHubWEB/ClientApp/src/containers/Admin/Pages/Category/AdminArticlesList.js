@@ -79,7 +79,7 @@ class AdminArticlesList extends Component {
   }
 
   render() {
-    console.log(this.props)
+
     let articles = this.state.AllArticles
     if (this.props.team != 0) {
       articles = this.state.AllArticles.filter(a => this.props.team == a.teamId)
@@ -99,7 +99,7 @@ class AdminArticlesList extends Component {
       <Fragment>
         {
           articles.map(a => {
-            return <AdminArticleItem Article={a}/>
+            return <AdminArticleItem key={a.articleId} Article={a}/>
           })
         }
       </Fragment>

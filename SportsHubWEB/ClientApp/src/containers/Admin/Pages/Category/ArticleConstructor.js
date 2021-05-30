@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useState} from "react";
+import React, {Component, Fragment, } from "react";
 import "../../AdminPage.css";
 import "../../../Main/home.css"
 import Select from 'react-select';
@@ -157,6 +157,7 @@ class ArticleConstructor extends Component {
   }
 
   handleSubmit = event => {
+    console.log("constructor")
     event.preventDefault();
     if (!this.state.SelectedConference.value) {
       console.log("alert")
@@ -189,6 +190,7 @@ class ArticleConstructor extends Component {
       this.setState({showAlert: true, AlertHeader: "You got an error!", AlertText: "Make sure you correctly print content!", AlertVariant: "danger"})
       return;
     }
+    console.log("return not")
     const sportArticle = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -219,7 +221,8 @@ class ArticleConstructor extends Component {
         };
         fetch(`/article/${data.ArticleId}/localization`, articleLocalization)
           .then(response => response.json())
-          .then(data => data.ArticleId && this.setState({
+          .then(data => console.log(data),
+            data.ArticleId && this.setState({
             showAlert: true,
             AlertHeader: "Success!",
             AlertText: "New article successfully added!",

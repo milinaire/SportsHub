@@ -34,11 +34,12 @@ namespace SportsHubBL.Services
             _bannerLocalizationRepository = bannerLocalizationRepository;
             _imageRepository = imageRepository;
         }
-        public void AddBannerFromModel(BannerModel model)
+        public Banner AddBannerFromModel(BannerModel model)
         {
             var banner = GetBannerFromModel(model);
 
             _bannerRepository.Insert(banner);
+            return banner;
         }
         private Banner GetBannerFromModel(BannerModel model)
         {
@@ -133,9 +134,9 @@ namespace SportsHubBL.Services
             var bannerLocalization = banner.BannerLocalizations.FirstOrDefault(at => at.Language == language);
             if (bannerLocalization == null)
             {
-                throw new ArgumentException("can\'t find localization for banner");
+                bannerLocalization = banner.BannerLocalizations.FirstOrDefault(at => at.Language.Id == 1);
+                if (bannerLocalization == null) { throw new Exception($"Localization in language {language.Id} for banner {banner.Id} not found"); }
             }
-            
 
             return new BannerModel
             {
@@ -252,5 +253,52 @@ namespace SportsHubBL.Services
 
             return query.ToList();
         }
+        private BannerModel FormBaseBannerModel(Banner banner)
+        {
+            if (banner == null)
+            {
+                throw new ArgumentNullException(nameof(banner));
+            }
+
+            if (banner.Category == null
+                || banner.Image == null
+                || banner.BannerLocalizations == null)
+            {
+                banner = _bannerRepository.Set()
+                    .Include(a => a.Category)
+                    .Include(a => a.Image)
+                    .Include(a => a.BannerLocalizations)
+                    .FirstOrDefault(a => a == banner);
+
+                if (banner == null)
+                {
+                    throw new ArgumentNullException(nameof(banner));
+                }
+            }
+
+            return new BannerModel
+            {
+                BannerId = banner.Id,
+                ImageId = banner.Image?.Id,
+                ImageUri = banner.Image?.Uri,
+                CategoryId = banner.Category?.Id,
+                IsPublished = banner.IsPublished,
+                IsClosed = banner.IsClosed,
+                LastUpdateDate = banner.LastUpdateDate,
+            };
+        }
+
+        public BannerModel GetBaseBannerModel(Banner banner)
+        {
+            if (banner == null)
+            {
+                throw new ArgumentNullException(nameof(banner));
+            }
+
+            var model = FormBaseBannerModel(banner);
+
+            return model;
+        }
+        
     }
 }

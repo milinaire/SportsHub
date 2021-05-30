@@ -35,6 +35,8 @@ namespace SportsHubWEB
                 .UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("SportsHubDAL")));
             
+            services.Configure<ImageService>(Configuration.GetSection("ConnectionStrings").GetSection("Images"));
+            
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

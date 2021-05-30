@@ -7,8 +7,8 @@ using SportsHubDAL.Entities;
 using SportsHubDAL.Interfaces;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
-using SportsHubBL.Models;
 using Microsoft.Extensions.Configuration;
+using SportsHubBL.Models;
 
 
 
@@ -16,19 +16,19 @@ namespace SportsHubBL.Services
 {
     public class ImageService : IImageService
     {
-        
-        private const string ContainerName = "imagecontainer";  
         private readonly IRepository<Image> _imageRepository;
-        private readonly CloudStorageAccount _cloudStorageAccount = CloudStorageAccount
-            .Parse("DefaultEndpointsProtocol=https;AccountName=sporthubblob;AccountKey=Verb4f2R0CWvZ42zFq8hIQNlrs4s8ObTOs1GqAX+apKW+4PLSQsKaFsUoDT4zgROuVCSixtyhAZLVNtdREK2XQ==;EndpointSuffix=core.windows.net");
+        private readonly CloudStorageAccount _cloudStorageAccount;
+        private readonly string _containerName;
 
-        /*private readonly CloudStorageAccount _cloudStorageAccount1 = CloudStorageAccount
-            .Parse(_config["Images:ConnectionString"]);*/
-
-        public ImageService(IRepository<Image> imageRepository)
+        
+        public ImageService(IRepository<Image> imageRepository, IConfiguration config)
         {
             _imageRepository = imageRepository;
+            _cloudStorageAccount = CloudStorageAccount
+                .Parse(config.GetSection("ConnectionStrings").GetSection("Images").Value);
+            _containerName = config.GetSection("ConnectionStrings").GetSection("ContainerName").Value;
         }
+        
         public string GuidGeneration()
         {
             var imageGuid = Guid.NewGuid();
@@ -38,7 +38,7 @@ namespace SportsHubBL.Services
         public async Task AddImage(IFormFile imageFile, string imageName)
         {
             var cloudBlobClient = _cloudStorageAccount.CreateCloudBlobClient();
-            var cloudBlobContainer = cloudBlobClient.GetContainerReference(ContainerName);
+            var cloudBlobContainer = cloudBlobClient.GetContainerReference(_containerName);
             if (await cloudBlobContainer.CreateIfNotExistsAsync())
             {
                 await cloudBlobContainer.SetPermissionsAsync(new BlobContainerPermissions
@@ -51,12 +51,11 @@ namespace SportsHubBL.Services
             await cloudBlockBlob.UploadFromStreamAsync(imageFile.OpenReadStream());
             
         }
-
-
+        
         private void DeleteBlob(string fileName)   
         {   
             var blobClient = _cloudStorageAccount.CreateCloudBlobClient();  
-            var cloudBlobContainer = blobClient.GetContainerReference(ContainerName);
+            var cloudBlobContainer = blobClient.GetContainerReference(_containerName);
             var fileName1 = fileName.Split(new [] {"container/"}, StringSplitOptions.None)[1];
             var blockBlob = cloudBlobContainer.GetBlockBlobReference(fileName1);  
             //delete blob from container    

@@ -23,8 +23,6 @@ namespace SportsHubBL.Interfaces
         public ImageModel AddImageToDb(string uri);
         
         public string GuidGeneration();
-
-
-
+        
     }
 }

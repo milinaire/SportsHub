@@ -122,8 +122,7 @@ namespace SportsHubBL.Services
                 ImageUri = image.Uri
             };
         }
-
-
+        
         public Image GetImageById(int id)
         {
             return _imageRepository.GetById(id);
